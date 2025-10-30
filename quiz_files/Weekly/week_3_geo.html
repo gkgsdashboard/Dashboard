@@ -1,0 +1,2735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY TEST -3</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 GEOGRAPHY TEST -3</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 45,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following statements regarding the Shiwalik Range:<br/> </b>शिवालिक श्रेणी के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is the outermost range of the Himalayas.<br/> </b>यह हिमालय की सबसे बाहरी श्रेणी है।<b><br/> (b) It is mainly composed of unconsolidated sediments.<br/> </b>यह मुख्यतः असंलग्न अवसादों से बनी है।<b><br/> (c) Its average height is between 900 to 1100 metres.<br/> </b>इसकी औसत ऊँचाई <b>900 </b>से <b>1100 </b>मीटर के बीच होती है।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> 1 and 2 / 1 और 2</p>",
+      "option2": "<p> 1 and 3 / 1 और 3</p>",
+      "option3": "<p> 2 and 3 / 2 और 3</p>",
+      "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which Indian state has the longest international boundary?<br/> </b>भारत का कौन<b>-</b>सा राज्य सबसे लंबी अंतर्राष्ट्रीय सीमा साझा करता है<b>?</b></p>",
+      "option1": "<p> West Bengal / पश्चिम बंगाल</p>",
+      "option2": "<p> Rajasthan / राजस्थान</p>",
+      "option3": "<p> Uttar Pradesh / उत्तर प्रदेश</p>",
+      "option4": "<p> Sikkim / सिक्किम</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Which of the following states is not a part of the Northern Plains of India?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा राज्य भारत के उत्तरी मैदानों का भाग नहीं है<b>?</b></p>",
+      "option1": "<p> Haryana / हरियाणा</p>",
+      "option2": "<p> Bihar / बिहार</p>",
+      "option3": "<p> Jharkhand / झारखंड</p>",
+      "option4": "<p> Punjab / पंजाब</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>Consider the following statements regarding the Purvanchal Hills:<br/> </b>पूर्वांचल पर्वत के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They are located in the eastern part of India.<br/> (b) They are composed mainly of sedimentary rocks.<br/> (c) Patkai Bum, Naga Hills and Mizo Hills are part of it.<br/> Which of the statements given above are correct?</b></p>",
+      "option1": "<p> 1 and 3 only / केवल 1 और 3</p>",
+      "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+      "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+      "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>The Western Ghats are highest in which region?<br/> </b>पश्चिमी घाट किस क्षेत्र में सबसे ऊँचे हैं<b>?</b></p>",
+      "option1": "<p> Nilgiri Hills / नीलगिरी पहाड़ियाँ</p>",
+      "option2": "<p> Anaimalai Hills / अनैमलाई पहाड़ियाँ</p>",
+      "option3": "<p> Cardamom Hills / इलायची पहाड़ियाँ</p>",
+      "option4": "<p> Doddabetta Peak region / डोड्डाबेट्टा क्षेत्र</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which of the following pairs is correctly matched?<br/> </b>निम्नलिखित युग्मों में से कौन<b>-</b>सा सही सुमेलित है<b>?</b></p>",
+      "option1": "<p> Indo-Bangladesh Boundary – 1971 Treaty of Peace, Friendship and Cooperation / भारत-बांग्लादेश सीमा – 1971 की शांति, मैत्री और सहयोग संधि</p>",
+      "option2": "<p> Indo-China Boundary – McMahon Line (1914) / भारत-चीन सीमा – मैकमहन रेखा (1914)</p>",
+      "option3": "<p> Indo-Pakistan Boundary – Radcliffe Line (1935) / भारत-पाकिस्तान सीमा – रैडक्लिफ रेखा (1935)</p>",
+      "option4": "<p> Indo-Nepal Boundary – Simla Agreement (1950) / भारत-नेपाल सीमा – शिमला समझौता (1950)</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Which of the following plateaus is not a part of the Peninsular Plateau?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा पठार दक्षिणी पठार का भाग नहीं है<b>?</b></p>",
+      "option1": "<p> Chotanagpur Plateau / छोटानागपुर पठार</p>",
+      "option2": "<p> Malwa Plateau / मालवा पठार</p>",
+      "option3": "<p> Meghalaya Plateau / मेघालय पठार</p>",
+      "option4": "<p> Deccan Plateau / दक्कन पठार</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>The Deccan Plateau is bordered by which mountain ranges?<br/> </b>दक्कन पठार की सीमाएँ किन पर्वत श्रेणियों से घिरी हैं<b>?</b></p>",
+      "option1": "<p> Aravalli and Satpura / अरावली और सतपुड़ा</p>",
+      "option2": "<p> Western and Eastern Ghats / पश्चिमी और पूर्वी घाट</p>",
+      "option3": "<p> Vindhya and Aravalli / विंध्य और अरावली</p>",
+      "option4": "<p> Satpura and Himalaya / सतपुड़ा और हिमालय</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Which of the following statements is true about the Deccan Trap?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा कथन दक्कन ट्रैप के बारे में सही है<b>?</b></p>",
+      "option1": "<p> It was formed by volcanic eruptions during the Cretaceous period.</p>",
+      "option2": "<p> It is composed of basaltic lava flows.</p>",
+      "option3": "<p> It covers parts of Maharashtra, Madhya Pradesh and Gujarat.</p>",
+      "option4": "<p> All of the above.</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Which of the following passes connects Sikkim with Tibet?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा दर्रा सिक्किम को तिब्बत से जोड़ता है<b>?</b></p>",
+      "option1": "<p> Nathu La Pass / नाथू ला दर्रा</p>",
+      "option2": "<p> Shipki La Pass / शिपकी ला दर्रा</p>",
+      "option3": "<p> Lipulekh Pass / लिपुलेख दर्रा</p>",
+      "option4": "<p> Rohtang Pass / रोहतांग दर्रा</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Which state of India touches the maximum number of other states?<br/> </b>भारत का कौन<b>-</b>सा राज्य सबसे अधिक राज्यों को छूता है<b>?</b></p>",
+      "option1": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+      "option2": "<p> Chhattisgarh / छत्तीसगढ़</p>",
+      "option3": "<p> Uttar Pradesh / उत्तर प्रदेश</p>",
+      "option4": "<p> Maharashtra / महाराष्ट्र</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Consider the following statements about the Coastal Plains of India:<br/> </b>भारत के तटीय मैदानों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They lie between the Western and Eastern Ghats and the sea.<br/> </b>ये पश्चिमी और पूर्वी घाट तथा समुद्र के बीच स्थित हैं।<b><br/> (b) The Western Coastal Plain is narrower than the Eastern Coastal Plain.<br/> </b>पश्चिमी तटीय मैदान पूर्वी तटीय मैदान की तुलना में संकीर्ण है।<b><br/> (c) The Eastern Coastal Plain is formed mainly by the deltas of rivers like Mahanadi and Godavari.<br/> </b>पूर्वी तटीय मैदान मुख्य रूप से महानदी और गोदावरी जैसी नदियों के डेल्टा से बना है।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>The Great Himalayan Range is mainly composed of which type of rocks?<br/> </b>महान हिमालय मुख्यतः किस प्रकार की चट्टानों से बना है<b>?</b></p>",
+      "option1": "<p> Sedimentary / अवसादी</p>",
+      "option2": "<p> Metamorphic / रूपांतरित</p>",
+      "option3": "<p> Igneous / आग्नेय</p>",
+      "option4": "<p> Alluvial / जलोढ़</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>Which Indian state does not share boundaries with any foreign country?<br/> </b>भारत का कौन<b>-</b>सा राज्य किसी भी विदेशी देश से सीमा साझा नहीं करता<b>?</b></p>",
+      "option1": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+      "option2": "<p> Assam / असम</p>",
+      "option3": "<p> Bihar / बिहार</p>",
+      "option4": "<p> West Bengal / पश्चिम बंगाल</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Arrange the following Himalayan ranges from south to north:<br/> </b>निम्नलिखित हिमालयी श्रेणियों को दक्षिण से उत्तर की ओर क्रम में लगाएँ<b>:</b></p>",
+      "option1": "<p> Lesser Himalayas, Shiwaliks, Great Himalayas</p>",
+      "option2": "<p> Shiwaliks, Lesser Himalayas, Great Himalayas</p>",
+      "option3": "<p> Great Himalayas, Lesser Himalayas, Shiwaliks</p>",
+      "option4": "<p> Shiwaliks, Great Himalayas, Lesser Himalayas</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>The Western Coastal Plain between Goa and Daman is known as:<br/> </b>गोवा और दमन के बीच का पश्चिमी तटीय मैदान किस नाम से ज्ञात है<b>?</b></p>",
+      "option1": "<p> Konkan Coast / कोंकण तट</p>",
+      "option2": "<p> Malabar Coast / मालाबार तट</p>",
+      "option3": "<p> Coromandel Coast / कोरोमंडल तट</p>",
+      "option4": "<p> Kannada Coast / कन्नड़ तट</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following regions is called the ‘Doab’?<br/> </b>निम्नलिखित में से किस क्षेत्र को ‘दोआब’ कहा जाता है<b>?</b></p>",
+      "option1": "<p> Area between Ganga and Yamuna rivers / गंगा और यमुना नदियों के बीच का क्षेत्र</p>",
+      "option2": "<p> Area between Narmada and Tapti / नर्मदा और तापी के बीच का क्षेत्र</p>",
+      "option3": "<p> Area between Godavari and Krishna / गोदावरी और कृष्णा के बीच का क्षेत्र</p>",
+      "option4": "<p> Area between Indus and Jhelum / सिंधु और झेलम के बीच का क्षेत्र</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Which Indian state shares boundaries with both Bangladesh and Myanmar?<br/> </b>भारत का कौन<b>-</b>सा राज्य बांग्लादेश और म्यांमार दोनों से सीमा साझा करता है<b>?</b></p>",
+      "option1": "<p> Assam / असम</p>",
+      "option2": "<p> Mizoram / मिजोरम</p>",
+      "option3": "<p> Tripura / त्रिपुरा</p>",
+      "option4": "<p> Manipur / मणिपुर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which river marks the boundary between India and Pakistan in Punjab region?<br/> </b>कौन<b>-</b>सी नदी पंजाब क्षेत्र में भारत और पाकिस्तान की सीमा निर्धारित करती है<b>?</b></p>",
+      "option1": "<p> Ravi / रावी</p>",
+      "option2": "<p> Beas / ब्यास</p>",
+      "option3": "<p> Sutlej / सतलुज</p>",
+      "option4": "<p> Jhelum / झेलम</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>The Purvanchal Hills are located in which part of India?<br/> </b>पूर्वांचल पर्वत भारत के किस भाग में स्थित हैं<b>?</b></p>",
+      "option1": "<p> Western India / पश्चिमी भारत</p>",
+      "option2": "<p> Northern India / उत्तरी भारत</p>",
+      "option3": "<p> North-Eastern India / उत्तर-पूर्वी भारत</p>",
+      "option4": "<p> Southern India / दक्षिणी भारत</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>Which of the following statements about the Indo-Nepal border is correct?<br/> </b>भारत<b>-</b>नेपाल सीमा के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is a demarcated boundary marked by fencing.</p>",
+      "option2": "<p> It is an open border allowing free movement of people.</p>",
+      "option3": "<p> It was drawn under the Treaty of Shimla, 1950.</p>",
+      "option4": "<p> It runs entirely along the Terai region.</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Which of the following statements about the Central Highlands is correct?<br/> </b>मध्य उच्चभूमियों के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They are located to the south of the Narmada river. वे नर्मदा नदी के दक्षिण में स्थित हैं।</p>",
+      "option2": "<p> They extend between the Aravalli and Chotanagpur Plateau. वे अरावली और छोटानागपुर पठार के बीच फैले हैं।</p>",
+      "option3": "<p> They include the Malwa Plateau and Bundelkhand region. इनमें मालवा पठार और बुंदेलखंड क्षेत्र शामिल हैं।</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which part of India is known as the “Roof of the World”?<br/> </b>भारत का कौन<b>-</b>सा भाग ‘विश्व की छत’ के नाम से जाना जाता है<b>?</b></p>",
+      "option1": "<p> Ladakh Plateau / लद्दाख पठार</p>",
+      "option2": "<p> Deccan Plateau / दक्कन पठार</p>",
+      "option3": "<p> Meghalaya Plateau / मेघालय पठार</p>",
+      "option4": "<p> Malwa Plateau / मालवा पठार</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Which of the following rivers forms a gorge between the Satpura and Vindhya ranges?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी सतपुड़ा और विंध्य पर्वत श्रृंखलाओं के बीच एक गर्त बनाती है<b>?</b></p>",
+      "option1": "<p> Tapi / तापी</p>",
+      "option2": "<p> Chambal / चंबल</p>",
+      "option3": "<p> Narmada / नर्मदा</p>",
+      "option4": "<p> Betwa / बेतवा</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which among the following regions forms the oldest landmass of India?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा क्षेत्र भारत का सबसे प्राचीन भूभाग है<b>?</b></p>",
+      "option1": "<p> Himalayan Region / हिमालय क्षेत्र</p>",
+      "option2": "<p> Northern Plains / उत्तरी मैदान</p>",
+      "option3": "<p> Peninsular Plateau / दक्षिणी पठार</p>",
+      "option4": "<p> Coastal Plains / तटीय मैदान</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Consider the following statements regarding the Trans-Himalayas:<br/> </b>हिमालय के पार हिमालय <b>(</b>ट्रांस<b>-</b>हिमालय<b>) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It lies north of the Great Himalayas.<br/> (b) It includes Karakoram, Ladakh and Zanskar ranges.<br/> (c) It has very little vegetation.<br/> Which of the statements given above are correct?</b></p>",
+      "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+      "option2": "<p> 1 and 3 only / केवल 1 और 3</p>",
+      "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+      "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>Which part of India is called the ‘Water Divide’ of the country?<br/> </b>भारत के किस भाग को देश का ‘जल विभाजक’ कहा जाता है<b>?</b></p>",
+      "option1": "<p> Aravalli Hills / अरावली पर्वत</p>",
+      "option2": "<p> Western Ghats / पश्चिमी घाट</p>",
+      "option3": "<p> Vindhya Range / विंध्य पर्वत श्रृंखला</p>",
+      "option4": "<p> Amarkantak Plateau / अमरकंटक पठार</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Which of the following passes is located in Arunachal Pradesh?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा दर्रा अरुणाचल प्रदेश में स्थित है<b>?</b></p>",
+      "option1": "<p> Rohtang Pass / रोहतांग दर्रा</p>",
+      "option2": "<p> Bomdila Pass / बोंडिला दर्रा</p>",
+      "option3": "<p> Nathu La Pass / नाथू ला दर्रा</p>",
+      "option4": "<p> Shipki La Pass / शिपकी ला दर्रा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>Which among the following regions has the maximum concentration of minerals?<br/> </b>निम्नलिखित में से किस क्षेत्र में खनिजों का अधिकतम संकेन्द्रण है<b>?</b></p>",
+      "option1": "<p> Chotanagpur Plateau / छोटानागपुर पठार</p>",
+      "option2": "<p> Malwa Plateau / मालवा पठार</p>",
+      "option3": "<p> Deccan Plateau / दक्कन पठार</p>",
+      "option4": "<p> Meghalaya Plateau / मेघालय पठार</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Which of the following pairs is correctly matched?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा युग्म सही सुमेलित है<b>?</b></p>",
+      "option1": "<p> Konkan Coast – Kerala / कोंकण तट – केरल</p>",
+      "option2": "<p> Malabar Coast – Karnataka / मालाबार तट – कर्नाटक</p>",
+      "option3": "<p> Coromandel Coast – Tamil Nadu / कोरोमंडल तट – तमिलनाडु</p>",
+      "option4": "<p> Northern Circars – Gujarat / नॉर्दर्न सर्कार्स – गुजरात</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements about the Western Coastal Plain:<br/> </b>पश्चिमी तटीय मैदान के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is divided into Konkan, Kannad and Malabar coasts.<br/> </b>यह कोंकण<b>, </b>कन्नड़ और मालाबार तटों में विभाजित है।<b><br/> (b) It has several lagoons and estuaries.<br/> </b>इसमें अनेक झीलें और मुहाने हैं।<b><br/> (c) It is broader than the Eastern Coastal Plain.<br/> </b>यह पूर्वी तटीय मैदान की तुलना में अधिक चौड़ा है।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which of the following statements is true about the Indo-China boundary?<br/> </b>भारत<b>-</b>चीन सीमा के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is completely demarcated and accepted by both sides.</p>",
+      "option2": "<p> The boundary dispute mainly concerns the Aksai Chin and Arunachal Pradesh.</p>",
+      "option3": "<p> The boundary is known as the Radcliffe Line.</p>",
+      "option4": "<p> It was drawn in 1947.</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>The Shillong Plateau is a part of which geological feature?<br/> </b>शिलांग पठार किस भौगोलिक संरचना का भाग है<b>?</b></p>",
+      "option1": "<p> Himalayan System / हिमालय प्रणाली</p>",
+      "option2": "<p> Peninsular Block / प्रायद्वीपीय खंड</p>",
+      "option3": "<p> Indo-Gangetic Plain / इंडो-गंगा मैदान</p>",
+      "option4": "<p> Coastal Plain / तटीय मैदान</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Which state of India has the longest coastline?<br/> </b>भारत का कौन<b>-</b>सा राज्य सबसे लंबा समुद्र तट रखता है<b>?</b></p>",
+      "option1": "<p> Kerala / केरल</p>",
+      "option2": "<p> Maharashtra / महाराष्ट्र</p>",
+      "option3": "<p> Gujarat / गुजरात</p>",
+      "option4": "<p> Tamil Nadu / तमिलनाडु</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Which range separates the Indus and Ganga river systems?<br/> </b>कौन<b>-</b>सी पर्वत श्रृंखला सिंधु और गंगा नदी प्रणालियों को अलग करती है<b>?</b></p>",
+      "option1": "<p> Aravalli Range / अरावली पर्वत</p>",
+      "option2": "<p> Vindhya Range / विंध्य पर्वत</p>",
+      "option3": "<p> Shiwalik Range / शिवालिक पर्वत</p>",
+      "option4": "<p> Himadri Range / हिमाद्रि पर्वत</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which part of India is most prone to earthquakes?<br/> </b>भारत का कौन<b>-</b>सा भाग भूकंपों के प्रति सबसे अधिक संवेदनशील है<b>?</b></p>",
+      "option1": "<p> Indo-Gangetic Plain / इंडो-गंगा मैदान</p>",
+      "option2": "<p> Deccan Plateau / दक्कन पठार</p>",
+      "option3": "<p> Himalayan Region / हिमालय क्षेत्र</p>",
+      "option4": "<p> Western Coastal Plains / पश्चिमी तटीय मैदान</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Which of the following statements about the Indian mainland is correct?<br/> </b>भारतीय मुख्यभूमि के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Its latitudinal extent is greater than its longitudinal extent.</p>",
+      "option2": "<p> It extends from 8°4'N to 37°6'N latitudes.</p>",
+      "option3": "<p> The mainland extends between 68°7'E and 97°25'E longitudes.</p>",
+      "option4": "<p> Both 2 and 3.</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Which of the following rivers does not flow into the Bay of Bengal?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी बंगाल की खाड़ी में नहीं गिरती<b>?</b></p>",
+      "option1": "<p> Mahanadi / महानदी</p>",
+      "option2": "<p> Godavari / गोदावरी</p>",
+      "option3": "<p> Krishna / कृष्णा</p>",
+      "option4": "<p> Narmada / नर्मदा</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Which plateau lies between the Aravalli and Vindhya ranges?<br/> </b>अरावली और विंध्य पर्वतमालाओं के बीच कौन<b>-</b>सा पठार स्थित है<b>?</b></p>",
+      "option1": "<p> Malwa Plateau / मालवा पठार</p>",
+      "option2": "<p> Deccan Plateau / दक्कन पठार</p>",
+      "option3": "<p> Bundelkhand Plateau / बुंदेलखंड पठार</p>",
+      "option4": "<p> Chotanagpur Plateau / छोटानागपुर पठार</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Which of the following statements about the Peninsular Rivers is correct?<br/> </b>दक्षिणी नदियों के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They are mostly perennial.</p>",
+      "option2": "<p> They flow through rift valleys and have meandering courses.</p>",
+      "option3": "<p> They are mostly seasonal and flow eastward into the Bay of Bengal.</p>",
+      "option4": "<p> They form large deltas rarely.</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>The Northern Plains of India are formed mainly by which type of deposits?<br/> </b>भारत के उत्तरी मैदान मुख्यतः किस प्रकार के निक्षेपों से बने हैं<b>?</b></p>",
+      "option1": "<p> Igneous rocks / आग्नेय शैलें</p>",
+      "option2": "<p> Alluvial deposits / जलोढ़ निक्षेप</p>",
+      "option3": "<p> Sedimentary rocks / अवसादी शैलें</p>",
+      "option4": "<p> Aeolian deposits / पवनजन्य निक्षेप</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which of the following is the southernmost tip of the Indian mainland?<br/> </b>भारतीय मुख्यभूमि का सबसे दक्षिणी सिरा कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Indira Point / इंदिरा पॉइंट</p>",
+      "option2": "<p> Kanyakumari / कन्याकुमारी</p>",
+      "option3": "<p> Cape Comorin / केप कोमोरिन</p>",
+      "option4": "<p> Point Calimere / पॉइंट कलीमेयर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Which plateau is known as the “Storehouse of Minerals”?<br/> </b>कौन<b>-</b>सा पठार “खनिजों का भंडार” कहलाता है<b>?</b></p>",
+      "option1": "<p> Deccan Plateau / दक्कन पठार</p>",
+      "option2": "<p> Malwa Plateau / मालवा पठार</p>",
+      "option3": "<p> Chotanagpur Plateau / छोटानागपुर पठार</p>",
+      "option4": "<p> Meghalaya Plateau / मेघालय पठार</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>Which of the following statements about the Aravalli Range is correct?<br/> </b>अरावली पर्वत श्रृंखला के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is the oldest fold mountain range in India.</p>",
+      "option2": "<p> It runs from Gujarat to Delhi in a southwest–northeast direction.</p>",
+      "option3": "<p> It separates the semi-arid region from the Thar Desert.</p>",
+      "option4": "<p> All of the above.</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Which range forms the northern boundary of the Peninsular Plateau?<br/> </b>कौन<b>-</b>सी श्रृंखला दक्षिणी पठार की उत्तरी सीमा बनाती है<b>?</b></p>",
+      "option1": "<p> Satpura Range / सतपुड़ा पर्वतमाला</p>",
+      "option2": "<p> Vindhya Range / विंध्य पर्वतमाला</p>",
+      "option3": "<p> Aravalli Range / अरावली पर्वतमाला</p>",
+      "option4": "<p> Western Ghats / पश्चिमी घाट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Which Indian state shares its boundary with three countries—China, Bhutan and Nepal?<br/> </b>भारत का कौन<b>-</b>सा राज्य चीन<b>, </b>भूटान और नेपाल तीनों से सीमा साझा करता है<b>?</b></p>",
+      "option1": "<p> Sikkim / सिक्किम</p>",
+      "option2": "<p> Arunachal Pradesh / अरुणाचल प्रदेश</p>",
+      "option3": "<p> Assam / असम</p>",
+      "option4": "<p> West Bengal / पश्चिम बंगाल</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>The Himalayas were formed due to which geological process?<br/> </b>हिमालय का निर्माण किस भूवैज्ञानिक प्रक्रिया के कारण हुआ था<b>?</b></p>",
+      "option1": "<p> Folding of sediments / अवसादों का मोड़ना</p>",
+      "option2": "<p> Faulting of rocks / चट्टानों का भ्रंश</p>",
+      "option3": "<p> Volcanic eruption / ज्वालामुखी विस्फोट</p>",
+      "option4": "<p> Glacial deposition / हिमनद निक्षेपण</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Which among the following ranges is also known as the “Himadri”?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी श्रेणी “हिमाद्रि” के नाम से जानी जाती है<b>?</b></p>",
+      "option1": "<p> Great Himalaya / महान हिमालय</p>",
+      "option2": "<p> Lesser Himalaya / मध्य हिमालय</p>",
+      "option3": "<p> Shiwalik Range / शिवालिक श्रेणी</p>",
+      "option4": "<p> Trans-Himalaya / पार-हिमालय</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Which plateau lies between the Aravalli and Vindhya ranges?<br/> </b>अरावली और विंध्य पर्वत श्रृंखलाओं के बीच कौन<b>-</b>सा पठार स्थित है<b>?</b></p>",
+      "option1": "<p> Bundelkhand Plateau / बुंदेलखंड पठार</p>",
+      "option2": "<p> Malwa Plateau / मालवा पठार</p>",
+      "option3": "<p> Baghelkhand Plateau / बघेलखंड पठार</p>",
+      "option4": "<p> Chotanagpur Plateau / छोटानागपुर पठार</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Consider the following statements about the Peninsular Plateau:<br/> </b>प्रायद्वीपीय पठार के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is one of the oldest landmasses of the world.<br/> </b>यह विश्व की सबसे प्राचीन भू<b>-</b>आकृतियों में से एक है।<b><br/> (b) It is composed mainly of igneous and metamorphic rocks.<br/> </b>यह मुख्य रूप से आग्नेय और रूपांतरित शैलों से बना है।<b><br/> (c) It has an average elevation of 500–800 m.<br/> </b>इसकी औसत ऊँचाई <b>500–800 </b>मीटर है।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Which Indian state touches both the Arabian Sea and the Western Ghats?<br/> </b>भारत का कौन<b>-</b>सा राज्य अरब सागर और पश्चिमी घाट दोनों को स्पर्श करता है<b>?</b></p>",
+      "option1": "<p> Gujarat / गुजरात</p>",
+      "option2": "<p> Kerala / केरल</p>",
+      "option3": "<p> Karnataka / कर्नाटक</p>",
+      "option4": "<p> Maharashtra / महाराष्ट्र</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Which of the following mountain passes lies in Jammu &amp; Kashmir?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा दर्रा जम्मू और कश्मीर में स्थित है<b>?</b></p>",
+      "option1": "<p> Zoji La Pass / जो़जी ला दर्रा</p>",
+      "option2": "<p> Rohtang Pass / रोहतांग दर्रा</p>",
+      "option3": "<p> Bara-Lacha La / बारा-लाचा ला</p>",
+      "option4": "<p> Nathu La / नाथू ला</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Which river forms the Dhuandhar Falls near Jabalpur?<br/> </b>जबलपुर के पास धुआंधार जलप्रपात किस नदी पर बनता है<b>?</b></p>",
+      "option1": "<p> Godavari / गोदावरी</p>",
+      "option2": "<p> Narmada / नर्मदा</p>",
+      "option3": "<p> Tapi / तापी</p>",
+      "option4": "<p> Mahanadi / महानदी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Which of the following plains lies between the Ganga and the Yamuna?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा मैदान गंगा और यमुना के बीच स्थित है<b>?</b></p>",
+      "option1": "<p> Doab Plain / दोआब मैदान</p>",
+      "option2": "<p> Tarai Region / तराई क्षेत्र</p>",
+      "option3": "<p> Delta Region / डेल्टा क्षेत्र</p>",
+      "option4": "<p> Punjab Plain / पंजाब मैदान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>Which of the following river valleys does NOT form part of the Northern Plains?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी घाटी उत्तरी मैदानों का भाग नहीं है<b>?</b></p>",
+      "option1": "<p> Ganga / गंगा</p>",
+      "option2": "<p> Indus / सिंधु</p>",
+      "option3": "<p> Godavari / गोदावरी</p>",
+      "option4": "<p> Brahmaputra / ब्रह्मपुत्र</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Which of the following is the highest peak of the Indian Himalayas located entirely within India?<br/> </b>भारत के हिमालय की वह कौन<b>-</b>सी सबसे ऊँची चोटी है जो पूरी तरह भारत में स्थित है<b>?</b></p>",
+      "option1": "<p> Nanda Devi / नंदा देवी</p>",
+      "option2": "<p> Kanchenjunga / कंचनजंघा</p>",
+      "option3": "<p> Kamet / कामेत</p>",
+      "option4": "<p> Trisul / त्रिशूल</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which Indian state is the easternmost state of India?<br/> </b>भारत का सबसे पूर्वी राज्य कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Assam / असम</p>",
+      "option2": "<p> Arunachal Pradesh / अरुणाचल प्रदेश</p>",
+      "option3": "<p> Manipur / मणिपुर</p>",
+      "option4": "<p> Mizoram / मिजोरम</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>The Lakshadweep Islands are formed from which of the following?<br/> </b>लक्षद्वीप द्वीप निम्नलिखित में से किससे बने हैं<b>?</b></p>",
+      "option1": "<p> Coral deposits / मूँगे के निक्षेप</p>",
+      "option2": "<p> Volcanic rocks / ज्वालामुखीय शैलें</p>",
+      "option3": "<p> Sedimentary formations / अवसादी संरचनाएँ</p>",
+      "option4": "<p> Granite bedrocks / ग्रेनाइट शिलाएँ</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>Which of the following is the southernmost part of the Indian mainland?<br/> </b>निम्नलिखित में से कौन भारत की मुख्य भूमि का सबसे दक्षिणी भाग है<b>?</b></p>",
+      "option1": "<p> Indira Point / इंदिरा पॉइंट</p>",
+      "option2": "<p> Kanyakumari / कन्याकुमारी</p>",
+      "option3": "<p> Rameswaram / रामेश्वरम</p>",
+      "option4": "<p> Kovalam / कोवलम</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Which part of India is known as the ‘Seven Sisters’?<br/> </b>भारत के किस भाग को ‘सात बहनें’ कहा जाता है<b>?</b></p>",
+      "option1": "<p> Northern States / उत्तरी राज्य</p>",
+      "option2": "<p> Western States / पश्चिमी राज्य</p>",
+      "option3": "<p> North-Eastern States / उत्तर-पूर्वी राज्य</p>",
+      "option4": "<p> Southern States / दक्षिणी राज्य</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEOGRAPHY TEST -3</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

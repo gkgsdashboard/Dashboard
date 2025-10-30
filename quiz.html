@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Dashboard</title> 
+    <script src="quizData.js"></script> 
+    <style>
+        /* Base CSS Styling (COMMON for All Devices) */
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{
+            min-height:100vh;
+            display:flex;
+            flex-direction: column;
+            justify-content:center;
+            align-items:center;
+            padding: 15px 10px;
+            overflow-y: auto;
+            
+            /* 🌟 VIBGYOR ANIMATED BACKGROUND STYLES 🌟 */
+            background: linear-gradient(135deg, #8A2BE2, #4B0082, #0000FF, #008000, #FFFF00, #FFA500, #FF0000); 
+            background-size: 400% 400%; 
+            animation: gradientMove 20s ease infinite; 
+        }
+
+        /* 🌟 KEYFRAMES FOR BACKGROUND ANIMATION 🌟 */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Dashboard Container - FIXED TO SINGLE COLUMN (All Devices) */
+        .dashboard{
+            display:grid;
+            grid-template-columns: 1fr;
+            gap:15px;
+            max-width: 500px; 
+            padding:25px;
+            margin-bottom: 35px;
+            width: 100%;
+            opacity: 1; 
+            transform: none; 
+            animation: none; 
+        }
+
+        /* Card Styles */
+        .card{
+            background-color: rgba(52, 73, 94, 0.85); /* Slightly transparent dark background */
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-align: center;
+        }
+        .card:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        .card h2{
+            margin-bottom: 5px;
+            font-size: 1.2em;
+        }
+        .card p{
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Modal Styles */
+        .modal-bg{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-bg.active{
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal{
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80%;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        .modal-bg.active .modal{
+            transform: scale(1);
+        }
+        .modal h2{
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .topic-list{
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px 0;
+            flex-grow: 1;
+        }
+        .topic-btn{
+            display: block;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.2s, transform 0.1s;
+            font-size: 1em;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+        .topic-btn:hover{
+            background-color: #2980b9;
+            transform: translateY(-1px);
+        }
+        .close-btn{
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            font-size: 1em;
+        }
+        .close-btn:hover{
+            background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        /* Heading for Quiz Dashboard */
+        .page-heading {
+            color: white;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <h1 class="page-heading">🎯 Subject-wise Quiz Dashboard</h1>
+
+    <div class="dashboard">
+        </div>
+
+    <div class="modal-bg" id="modal-bg">
+        <div class="modal">
+            <h2 id="modal-title"></h2> 
+            
+            <div class="topic-list" id="topic-list"></div>
+            
+            <button class="close-btn" id="close-btn">Close Dashboard</button>
+        </div>
+    </div>
+    
+    <script>
+        // 1. Data variable (Assuming quizData.js loads 'quizSubjects')
+        const data = typeof quizSubjects !== 'undefined' ? quizSubjects : []; 
+        
+        // 2. DOM elements
+        const dashboard = document.querySelector('.dashboard');
+        const modalBg = document.getElementById('modal-bg');
+        const modalTitle = document.getElementById('modal-title');
+        const topicList = document.getElementById('topic-list');
+        const closeBtn = document.getElementById('close-btn');
+
+        
+        if(data.length > 0) {
+            
+            // 3. Dashboard Cards Render
+            data.forEach(sub => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.backgroundColor = sub.color;
+                
+                const title = document.createElement('h2');
+                title.textContent = sub.title;
+                
+                const hint = document.createElement('p');
+                hint.textContent = `Total Quizzes: ${sub.quizzes.length}`; 
+                
+                card.appendChild(title);
+                card.appendChild(hint);
+                dashboard.appendChild(card);
+
+                card.addEventListener('click', () => {
+                    openModal(sub); 
+                });
+            });
+
+            // 4. Modal खोलना
+            function openModal(subject){
+                
+                modalTitle.textContent = subject.title + ' Quizzes'; 
+                topicList.innerHTML = ''; 
+                
+                subject.quizzes.forEach(quiz => { 
+                    const link = document.createElement('a');
+                    link.className = 'topic-btn';
+                    link.textContent = quiz.name;
+                    link.href = quiz.link; 
+                    link.target = '_blank'; 
+                    topicList.appendChild(link);
+                });
+                
+                closeBtn.textContent = 'Close Dashboard';
+                modalBg.classList.add('active');
+            }
+            
+
+            // 5. Close modal functions
+            function closeModals(){
+                modalBg.classList.remove('active');
+                closeBtn.textContent = 'Close Dashboard'; // Reset text
+            }
+
+            closeBtn.addEventListener('click',closeModals);
+            // Close modal when clicking outside
+            modalBg.addEventListener('click',(e)=>{if(e.target===modalBg) closeModals();});
+            
+        } else {
+             dashboard.innerHTML = "<h2 style='color: white; text-align: center; margin-top: 50px;'>Quiz Data failed to load. Please check quizData.js.</h2>";
+        }
+    </script>
+</body>
+</html>

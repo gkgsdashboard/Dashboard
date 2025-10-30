@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY TEST -2</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 GEOGRAPHY TEST -2</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 30,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "Which of the following is an example of an exogenic geomorphic process? निम्नलिखित में से कौन - सी बाह्य भू - आकृतिक प्रक्रिया का उदाहरण है ?",
+      "option1": "Volcanic eruption / ज्वालामुखी विस्फोट",
+      "option2": "Earthquake / भूकंप",
+      "option3": "Weathering / अपक्षय",
+      "option4": "Mountain building / पर्वत निर्माण",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Exogenic processes originate from external forces like weathering, erosion, and deposition acting on the Earth’s surface. बाह्य प्रक्रियाएँ पृथ्वी की सतह पर कार्य करने वाली बाहरी शक्तियों जैसे अपक्षय , अपरदन और निक्षेपण से उत्पन्न होती हैं।"
+    },
+    {
+      "sr_no": 2,
+      "question": "Which of the following is a necessary condition for condensation? संघनन के लिए आवश्यक शर्त क्या है ?",
+      "option1": "High temperature / उच्च तापमान",
+      "option2": "Cooling of air / वायु का ठंडा होना",
+      "option3": "Low humidity / कम आर्द्रता",
+      "option4": "High pressure / उच्च दाब",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Condensation begins when air cools to its dew point and becomes saturated. संघनन तब शुरू होता है जब वायु ओसांक तक ठंडी होकर संतृप्त हो जाती है।"
+    },
+    {
+      "sr_no": 3,
+      "question": "The depositional feature formed at the foot of a mountain by a stream is: पहाड़ की तलहटी में धारा द्वारा बना निक्षेपण स्थलरूप कौन - सा है ?",
+      "option1": "Delta / डेल्टा",
+      "option2": "Alluvial fan / निक्षेप पंखा",
+      "option3": "Oxbow lake / घोड़े की नाल झील",
+      "option4": "Meander / मीयंडर",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "An alluvial fan forms where a stream loses velocity and deposits sediments at foothills. जब धारा की वेग घट जाती है और वह तलहटी में निक्षेप करती है , तब निक्षेप पंखा बनता है।"
+    },
+    {
+      "sr_no": 4,
+      "question": "Consider the following statements regarding Cumulonimbus clouds: क्यूम्यूलोनिम्बस बादलों के संबंध में निम्नलिखित कथनों पर विचार करें : (a) They are vertically developed clouds. ये ऊर्ध्वाधर रूप से विकसित बादल हैं। (b) They produce lightning, thunder, and heavy rainfall. ये बिजली , गर्जन और भारी वर्षा उत्पन्न करते हैं। (c) They are uniform grey clouds covering the entire sky. ये आकाश को ढकने वाले समान धूसर बादल होते हैं। Which of the above statements are correct? उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 3 / 1 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Cumulonimbus clouds produce storms and lightning but are not uniform grey clouds. क्यूम्यूलोनिम्बस बादल तूफ़ान और बिजली उत्पन्न करते हैं लेकिन समान धूसर बादल नहीं होते।"
+    },
+    {
+      "sr_no": 5,
+      "question": "Consider the following statements regarding mechanical weathering: यांत्रिक अपक्षय के संबंध में निम्नलिखित कथनों पर विचार करें : (a) It occurs due to chemical alteration of rocks. / यह चट्टानों के रासायनिक परिवर्तन के कारण होता है। (b) It involves the disintegration of rocks without any chemical change. / इसमें बिना किसी रासायनिक परिवर्तन के चट्टानों का विखंडन होता है। (c) It mainly occurs in humid regions. / यह मुख्यतः आर्द्र क्षेत्रों में होता है। Which of the above statements is/are correct? / उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "a only / केवल a",
+      "option2": "b only / केवल b",
+      "option3": "a and c / a और c",
+      "option4": "b and c / b और c",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mechanical weathering breaks rocks physically without altering their chemical composition. यांत्रिक अपक्षय में चट्टानों का भौतिक रूप से विखंडन होता है , जबकि उनकी रासायनिक संरचना अपरिवर्तित रहती है।"
+    },
+    {
+      "sr_no": 6,
+      "question": "Which of the following statements is correct about sleet? स्लीट के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It is frozen rain / यह जमी हुई वर्षा है",
+      "option2": "It is snow mixed with dust / यह धूल मिली बर्फ है",
+      "option3": "It is condensed fog / यह संघनित कोहरा है",
+      "option4": "It is dew / यह ओस है",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sleet consists of raindrops that freeze before reaching the ground. स्लीट में वे वर्षाबिंदु होते हैं जो भूमि पर पहुँचने से पहले जम जाते हैं।"
+    },
+    {
+      "sr_no": 7,
+      "question": "The horizontal movement of air parallel to the Earth’s surface is called— पृथ्वी की सतह के समानांतर वायु की क्षैतिज गति को क्या कहा जाता है ?",
+      "option1": "Storm / तूफ़ान",
+      "option2": "Wind / पवन",
+      "option3": "Cyclone / चक्रवात",
+      "option4": "Breeze / समीर",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Wind is the horizontal motion of air from high to low pressure areas. पवन उच्च दबाव क्षेत्र से निम्न दबाव क्षेत्र की ओर वायु की क्षैतिज गति है।"
+    },
+    {
+      "sr_no": 8,
+      "question": "Which of the following is a depositional landform of river? नदी का निक्षेपण स्थलरूप कौन - सा है ?",
+      "option1": "Gorge / गर्ज",
+      "option2": "Canyon / कैन्यन",
+      "option3": "Delta / डेल्टा",
+      "option4": "Waterfall / जलप्रपात",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": ""
+    },
+    {
+      "sr_no": 9,
+      "question": "Which landform is formed by wind erosion in deserts? मरुस्थलों में पवन अपरदन से कौन - सा स्थलरूप बनता है ?",
+      "option1": "Mushroom rock / मशरूम शैल",
+      "option2": "Delta / डेल्टा",
+      "option3": "Drumlin / ड्रमलिन",
+      "option4": "Alluvial fan / निक्षेप पंखा",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mushroom rocks form due to wind abrasion stronger near the ground. मशरूम शैल पवन के निचले स्तर पर अधिक घर्षण से बनते हैं।"
+    },
+    {
+      "sr_no": 10,
+      "question": "Which of the following processes is endogenic in nature? निम्नलिखित में से कौन - सी प्रक्रिया अंतर्जात प्रकृति की है ?",
+      "option1": "Denudation / अभिक्षरण",
+      "option2": "Erosion / अपरदन",
+      "option3": "Earthquake / भूकंप",
+      "option4": "Weathering / अपक्षय",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Endogenic processes originate from within the Earth, such as volcanic activity and earthquakes. अंतर्जात प्रक्रियाएँ पृथ्वी के भीतर से उत्पन्न होती हैं , जैसे ज्वालामुखी गतिविधि और भूकंप।"
+    },
+    {
+      "sr_no": 11,
+      "question": "The process by which ice directly changes into vapour is— जिस प्रक्रिया में बर्फ सीधे वाष्प में परिवर्तित हो जाती है , उसे क्या कहते हैं ?",
+      "option1": "Condensation / संघनन",
+      "option2": "Sublimation / उत्क्रमण",
+      "option3": "Deposition / निक्षेपण",
+      "option4": "Evaporation / वाष्पीकरण",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sublimation is the direct change of solid ice into vapour without becoming liquid. उत्क्रमण वह प्रक्रिया है जिसमें ठोस बर्फ तरल बने बिना सीधे वाष्प में बदल जाती है।"
+    },
+    {
+      "sr_no": 12,
+      "question": "Which atmospheric layer contains the ozone layer? वायुमंडल की कौन - सी परत ओज़ोन परत को समेटे हुए है ?",
+      "option1": "Troposphere / क्षोभमंडल",
+      "option2": "Stratosphere / समतापमंडल",
+      "option3": "Mesosphere / मध्यमंडल",
+      "option4": "Thermosphere / तापमंडल",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The ozone layer lies mainly within the stratosphere between 15 – 35 km altitude. ओज़ोन परत मुख्यतः समतापमंडल में 15 से 35 किमी ऊँचाई के बीच स्थित होती है।"
+    },
+    {
+      "sr_no": 13,
+      "question": "The process of wearing down of land surface by different agents is known as: विभिन्न कारकों द्वारा भूमि सतह को घिसने की प्रक्रिया को क्या कहा जाता है ?",
+      "option1": "Erosion / अपरदन",
+      "option2": "Deposition / निक्षेपण",
+      "option3": "Diastrophism / भू - विकृति",
+      "option4": "Volcanism / ज्वालामुखीयता",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The wearing away of land surface by running water, wind, or glaciers is called erosion. नदियों , हवा या हिमनदों द्वारा भूमि की सतह के घिसने की प्रक्रिया अपरदन कहलाती है।"
+    },
+    {
+      "sr_no": 14,
+      "question": "Drizzle refers to— फुहार से तात्पर्य है—",
+      "option1": "Heavy rainfall / तेज वर्षा",
+      "option2": "Light rain with small droplets / सूक्ष्म बूंदों वाली हल्की वर्षा",
+      "option3": "Rain mixed with snow / बर्फ मिली वर्षा",
+      "option4": "Rain with hail / ओलों वाली वर्षा",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Drizzle consists of very small, uniform droplets producing light rain. फुहार बहुत सूक्ष्म एवं समान बूंदों वाली हल्की वर्षा होती है।"
+    },
+    {
+      "sr_no": 15,
+      "question": "Which one of the following is an erosional coastal landform? निम्नलिखित में से कौन - सा तटीय अपरदनी स्थलरूप है ?",
+      "option1": "Beach / समुद्र तट",
+      "option2": "Spit / थूक",
+      "option3": "Cliff / खड़ी चट्टान",
+      "option4": "Lagoon / लैगून",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Cliffs are steep rock faces formed by marine wave erosion along coasts. खड़ी चट्टानें समुद्री लहरों के अपरदन से बनती हैं।"
+    },
+    {
+      "sr_no": 16,
+      "question": "The instrument used to measure wind speed is— वायु की गति मापने के लिए किस यंत्र का उपयोग किया जाता है ?",
+      "option1": "Hygrometer / आर्द्रतामापी",
+      "option2": "Anemometer / पवनवेगमापी",
+      "option3": "Barometer / वायुदाबमापी",
+      "option4": "Wind vane / पवनदर्शक",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "An anemometer measures wind velocity and direction in meteorology. पवनवेगमापी वायु की गति और दिशा को मापने के लिए प्रयुक्त होता है।"
+    },
+    {
+      "sr_no": 17,
+      "question": "Which one of the following statements about the troposphere is correct? क्षोभमंडल के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Temperature increases with height. / ऊँचाई के साथ तापमान बढ़ता है।",
+      "option2": "Weather phenomena occur here. / मौसम संबंधी घटनाएँ यहाँ घटित होती हैं।",
+      "option3": "It lies above the thermosphere. / यह तापमंडल के ऊपर स्थित है।",
+      "option4": "It contains auroras. / इसमें ऑरोरा पाए जाते हैं।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "All weather events like rain, storms, and winds occur in the troposphere. वर्षा , आँधी , बादल जैसी सभी मौसम घटनाएँ क्षोभमंडल में घटित होती हैं।"
+    },
+    {
+      "sr_no": 18,
+      "question": "Winds move from— वायु प्रवाहित होती है—",
+      "option1": "High to low pressure / उच्च से निम्न दाब की ओर",
+      "option2": "Low to high pressure / निम्न से उच्च दाब की ओर",
+      "option3": "West to east always / सदैव पश्चिम से पूर्व की ओर",
+      "option4": "Poles to equator only / केवल ध्रुवों से भूमध्य रेखा की ओर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Pressure gradient drives air from high pressure to low pressure regions. दाब प्रवणता के कारण वायु उच्च दाब क्षेत्र से निम्न दाब क्षेत्र की ओर प्रवाहित होती है।"
+    },
+    {
+      "sr_no": 19,
+      "question": "Identify the depositional feature formed by glaciers: हिमनदों द्वारा निर्मित निक्षेपण स्थलरूप की पहचान करें :",
+      "option1": "Esker / एस्कर",
+      "option2": "Cirque / सर्क",
+      "option3": "Arete / एरिट",
+      "option4": "Horn / हॉर्न",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Eskers are long ridges of sand and gravel deposited by melt-water streams under glaciers. एस्कर पिघलते हिमनदों के नीचे बहने वाली धाराओं द्वारा जमा रेत - कंकड़ की लंबी रिज होती हैं।"
+    },
+    {
+      "sr_no": 20,
+      "question": "Which of the following statements about hailstones is correct? ओलों के बारे में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "They form in stratus clouds / ये स्तरीय बादलों में बनते हैं",
+      "option2": "They form in cumulonimbus clouds / ये क्यूम्यूलोनिंबस बादलों में बनते हैं",
+      "option3": "They form only at sea level / ये केवल समुद्र तल पर बनते हैं",
+      "option4": "They are made of dust / ये धूल से बने होते हैं",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Hailstones form in cumulonimbus clouds where strong updrafts freeze water droplets. ओले क्यूम्यूलोनिंबस बादलों में बनते हैं जहाँ प्रबल ऊर्ध्व प्रवाह जलबिंदुओं को जमाता है।"
+    },
+    {
+      "sr_no": 21,
+      "question": "The upper boundary of the troposphere is known as: क्षोभमंडल की ऊपरी सीमा को क्या कहा जाता है ?",
+      "option1": "Tropopause / क्षोभ विराम",
+      "option2": "Stratopause / समताप विराम",
+      "option3": "Mesopause / मध्यमंडल विराम",
+      "option4": "Ionosphere / आयनमंडल",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The boundary separating the troposphere and stratosphere is called the tropopause. क्षोभमंडल और समतापमंडल के बीच की सीमा को क्षोभ विराम कहा जाता है।"
+    },
+    {
+      "sr_no": 22,
+      "question": "The Coriolis force causes wind to deflect— कोरिओलिस बल वायु को किस दिशा में विचलित करता है ?",
+      "option1": "Left in Northern Hemisphere / उत्तरी गोलार्द्ध में बाईं ओर",
+      "option2": "Right in Northern Hemisphere / उत्तरी गोलार्द्ध में दाईं ओर",
+      "option3": "Northward / उत्तर की ओर",
+      "option4": "Southward / दक्षिण की ओर",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Due to Earth’s rotation, Coriolis force deflects wind to the right in the Northern Hemisphere. पृथ्वी के घूर्णन के कारण कोरिओलिस बल वायु को उत्तरी गोलार्द्ध में दाईं ओर मोड़ देता है।"
+    },
+    {
+      "sr_no": 23,
+      "question": "Inselbergs are typical features of which region? इन्सेलबर्ग किस क्षेत्र की विशिष्ट स्थलरूप हैं ?",
+      "option1": "Glacial / हिमनदी",
+      "option2": "Arid / शुष्क",
+      "option3": "Fluvial / नदीय",
+      "option4": "Karst / कार्स्ट",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Inselbergs are isolated residual hills found in arid and semi-arid regions. इन्सेलबर्ग शुष्क एवं अर्ध - शुष्क क्षेत्रों में पाई जाने वाली एकाकी अवशिष्ट पहाड़ियाँ हैं।"
+    },
+    {
+      "sr_no": 24,
+      "question": "Which of the following is not an agent of gradation? निम्नलिखित में से कौन - सा श्रेणीकरण का कारक नहीं है ?",
+      "option1": "River / नदी",
+      "option2": "Wind / पवन",
+      "option3": "Volcano / ज्वालामुखी",
+      "option4": "Glacier / हिमनद",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Volcano is an endogenic agent that builds landforms, not one that levels or grades the surface. ज्वालामुखी एक अंतर्जात कारक है जो स्थलरूपों का निर्माण करता है , न कि सतह को समतल करता है।"
+    },
+    {
+      "sr_no": 25,
+      "question": "Which of the following gases is a greenhouse gas? निम्नलिखित में से कौन - सी गैस एक ग्रीनहाउस गैस है ?",
+      "option1": "Nitrogen / नाइट्रोजन",
+      "option2": "Oxygen / ऑक्सीजन",
+      "option3": "Methane / मीथेन",
+      "option4": "Argon / आर्गन",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Methane traps outgoing infrared radiation and contributes to the greenhouse effect. मीथेन अवरक्त विकिरण को रोककर ग्रीनहाउस प्रभाव में योगदान देती है।"
+    },
+    {
+      "sr_no": 26,
+      "question": "Which atmospheric layer helps in radio communication? वायुमंडल की कौन - सी परत रेडियो संचार में सहायता करती है ?",
+      "option1": "Troposphere / क्षोभमंडल",
+      "option2": "Stratosphere / समतापमंडल",
+      "option3": "Mesosphere / मध्यमंडल",
+      "option4": "Ionosphere / आयनमंडल",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The ionosphere reflects radio waves back to Earth, enabling long-distance communication. आयनमंडल रेडियो तरंगों को वापस पृथ्वी की ओर परावर्तित करता है , जिससे दूरस्थ संचार संभव होता है।"
+    },
+    {
+      "sr_no": 27,
+      "question": "Consider the following statements regarding Stratus clouds: स्ट्रैटस बादलों के संबंध में निम्नलिखित कथनों पर विचार करें : (a) They are low, grey, uniform clouds. ये निम्न , धूसर , समान बादल हैं। (b) They often produce drizzle or light rain. ये अक्सर बूंदाबांदी या हल्की वर्षा करते हैं। (c) They are high-altitude, wispy clouds. ये उच्च - ऊँचाई वाले रेशेदार बादल हैं। Which of the above statements are correct? उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 3 / 1 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Stratus clouds are low-level, grey clouds that bring light rain or drizzle. स्ट्रैटस बादल निम्न - स्तरीय धूसर बादल हैं जो हल्की वर्षा या बूंदाबांदी करते हैं।"
+    },
+    {
+      "sr_no": 28,
+      "question": "Which of the following landforms indicates the maturity stage of a river? नदी के परिपक्व चरण का संकेत देने वाला स्थलरूप कौन - सा है ?",
+      "option1": "Gorge / गर्ज",
+      "option2": "Meander / मीयंडर",
+      "option3": "Delta / डेल्टा",
+      "option4": "Waterfall / जलप्रपात",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Meanders develop when vertical erosion decreases and lateral erosion dominates. मीयंडर तब बनते हैं जब ऊर्ध्वाधर अपरदन घटता है और पार्श्व अपरदन बढ़ता है।"
+    },
+    {
+      "sr_no": 29,
+      "question": "The planetary wind blowing between 30° N and 60° N is known as— 30° उ . अ . से 60° उ . अ . के बीच बहने वाली ग्रह पवन कहलाती है—",
+      "option1": "Trade wind / व्यापारिक पवन",
+      "option2": "Westerlies / पश्‍चिमी पवन",
+      "option3": "Polar wind / ध्रुवीय पवन",
+      "option4": "Easterlies / पूर्वी पवन",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Westerlies blow from subtropical high to sub-polar low between 30° and 60° latitudes. पश्‍चिमी पवनें 30° से 60° अक्षांशों के बीच उपोष्ण उच्च दाब से उपध्रुवीय निम्न दाब की ओर बहती हैं।"
+    },
+    {
+      "sr_no": 30,
+      "question": "Which of the following types of rainfall occurs due to heating of land surface? निम्नलिखित में से किस प्रकार की वर्षा भूमि की सतह के गर्म होने के कारण होती है ?",
+      "option1": "Cyclonic rainfall / चक्रवाती वर्षा",
+      "option2": "Convectional rainfall / संवहनात्मक वर्षा",
+      "option3": "Orographic rainfall / पर्वतीय वर्षा",
+      "option4": "Frontal rainfall / मोर्चीय वर्षा",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Convectional rainfall results from the vertical ascent of warm moist air due to surface heating. संवहनात्मक वर्षा गर्म आर्द्र वायु के ऊर्ध्वगमन से होती है जो भूमि की ऊष्मा से प्रेरित होती है।"
+    },
+    {
+      "sr_no": 31,
+      "question": "Exogenic processes derive their energy from which of the following? बाह्य प्रक्रियाएँ अपनी ऊर्जा निम्नलिखित में से किससे प्राप्त करती हैं ?",
+      "option1": "Earth’s interior / पृथ्वी का आंतरिक भाग",
+      "option2": "Sun / सूर्य",
+      "option3": "Ocean tides / महासागरीय ज्वार",
+      "option4": "Earth’s rotation / पृथ्वी का घूर्णन",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Exogenic processes are driven by solar energy, which powers weathering, erosion, and deposition. बाह्य प्रक्रियाएँ सौर ऊर्जा द्वारा संचालित होती हैं जो अपक्षय , अपरदन और निक्षेपण का कारण बनती है।"
+    },
+    {
+      "sr_no": 32,
+      "question": "Which of the following is a local wind? निम्नलिखित में से कौन - सी स्थानीय पवन है ?",
+      "option1": "Trade wind / व्यापारिक पवन",
+      "option2": "Westerlies / पश्‍चिमी पवन",
+      "option3": "Loo / लू",
+      "option4": "Polar easterlies / ध्रुवीय पूर्वी पवन",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Loo’ is a hot, dry summer wind blowing over northwestern India. ‘ लू’ उत्तर - पश्चिम भारत में गर्मियों में चलने वाली शुष्क गर्म स्थानीय पवन है।"
+    },
+    {
+      "sr_no": 33,
+      "question": "Which layer of the atmosphere shows temperature inversion with altitude? वायुमंडल की कौन - सी परत ऊँचाई के साथ तापमान वृद्धि दर्शाती है ?",
+      "option1": "Troposphere / क्षोभमंडल",
+      "option2": "Stratosphere / समतापमंडल",
+      "option3": "Mesosphere / मध्यमंडल",
+      "option4": "Exosphere / बहिर्मंडल",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "In the stratosphere, temperature increases with height due to ozone absorption of UV rays. समतापमंडल में ओज़ोन द्वारा पराबैंगनी किरणों के अवशोषण के कारण ऊँचाई के साथ तापमान बढ़ता है।"
+    },
+    {
+      "sr_no": 34,
+      "question": "The temperature at which air becomes saturated is called— वह तापमान जिस पर वायु संतृप्त हो जाती है , कहलाता है—",
+      "option1": "Dew point / ओसांक",
+      "option2": "Condensation level / संघनन स्तर",
+      "option3": "Freezing point / हिमांक",
+      "option4": "Lapse rate / ताप घट दर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Dew point is the temperature when air’s moisture content reaches saturation. ओसांक वह तापमान है जब वायु में उपस्थित नमी संतृप्ति तक पहुँच जाती है।"
+    },
+    {
+      "sr_no": 35,
+      "question": "Which of the following features is associated with groundwater deposition? निम्नलिखित में से कौन - सा स्थलरूप भूजल निक्षेपण से जुड़ा है ?",
+      "option1": "Delta / डेल्टा",
+      "option2": "Stalactite / स्टैलैक्टाइट",
+      "option3": "Cirque / सर्क",
+      "option4": "Yardang / यार्डांग",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Stalactites hang from cave roofs due to calcium carbonate deposition from dripping water. स्टैलैक्टाइट गुफा की छत से लटकते हैं और टपकते जल में घुले कैल्शियम कार्बोनेट के निक्षेपण से बनते हैं।"
+    },
+    {
+      "sr_no": 36,
+      "question": "Which one of the following pairs is correctly matched? निम्नलिखित में से कौन - सा युग्म सही सुमेलित है ?",
+      "option1": "Earthquake – Exogenic process / भूकंप – बाह्य प्रक्रिया",
+      "option2": "Weathering – Endogenic process / अपक्षय – अंतर्जात प्रक्रिया",
+      "option3": "Folding – Endogenic process / मोचन – अंतर्जात प्रक्रिया",
+      "option4": "River erosion – Endogenic process / नदी अपरदन – अंतर्जात प्रक्रिया",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Folding occurs due to forces within the Earth’s crust, hence it is endogenic. मोचन पृथ्वी की पपड़ी के भीतर की शक्तियों से होता है , इसलिए यह अंतर्जात प्रक्रिया है।"
+    },
+    {
+      "sr_no": 37,
+      "question": "The Doldrums are characterized by— ‘ डोलड्रम्स’ की विशेषता है—",
+      "option1": "Calm and light variable winds / शांत और परिवर्तनीय मंद पवनें",
+      "option2": "Strong trade winds / प्रबल व्यापारिक पवनें",
+      "option3": "Constant storms / लगातार तूफ़ान",
+      "option4": "Polar blizzards / ध्रुवीय बर्फ़ीले तूफ़ान",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The equatorial region (5° N–5° S) has calm air with weak, variable winds known as Doldrums. भूमध्यरेखीय क्षेत्र (5° उ . अ .–5° द . अ .) में शांत एवं परिवर्तनीय मंद पवनें पाई जाती हैं जिन्हें डोलड्रम्स कहा जाता है।"
+    },
+    {
+      "sr_no": 38,
+      "question": "Monsoon winds are— मानसून पवनें हैं—",
+      "option1": "Periodic winds / आवधिक पवनें",
+      "option2": "Permanent winds / स्थायी पवनें",
+      "option3": "Local winds / स्थानीय पवनें",
+      "option4": "Trade winds / व्यापारिक पवनें",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Monsoons reverse direction seasonally, hence called periodic winds. मानसून मौसमी रूप से दिशा बदलती हैं , इसलिए इन्हें आवधिक पवनें कहा जाता है।"
+    },
+    {
+      "sr_no": 39,
+      "question": "Which of the following is not a type of weathering? निम्नलिखित में से कौन - सा अपक्षय का प्रकार नहीं है ?",
+      "option1": "Physical / भौतिक",
+      "option2": "Chemical / रासायनिक",
+      "option3": "Biological / जैविक",
+      "option4": "Structural / संरचनात्मक",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Structural weathering is not recognized; weathering types are physical, chemical, and biological. संरचनात्मक अपक्षय कोई स्वीकृत प्रकार नहीं है ; प्रमुख प्रकार भौतिक , रासायनिक और जैविक हैं।"
+    },
+    {
+      "sr_no": 40,
+      "question": "A narrow ridge between two glacial valleys is called: दो हिमनदी घाटियों के बीच की संकरी रिज को क्या कहा जाता है ?",
+      "option1": "Arete / एरिट",
+      "option2": "Cirque / सर्क",
+      "option3": "Drumlin / ड्रमलिन",
+      "option4": "Esker / एस्कर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "An Arete is a sharp ridge formed by erosion from two adjacent glaciers. एरिट दो समीपवर्ती हिमनदों के अपरदन से बनने वाली धारदार रिज होती है।"
+    },
+    {
+      "sr_no": 41,
+      "question": "When warm moist air rises and cools, clouds form due to— जब गर्म आर्द्र वायु ऊपर उठकर ठंडी होती है , तो बादल बनते हैं क्योंकि—",
+      "option1": "Expansion and condensation / प्रसार और संघनन",
+      "option2": "Compression and heating / संपीड़न और ऊष्मन",
+      "option3": "Frictional heating / घर्षणीय ऊष्मा",
+      "option4": "Solar radiation / सौर विकिरण",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": ""
+    },
+    {
+      "sr_no": 42,
+      "question": "Which of the following features indicates rejuvenation of a river? नदी के पुनर्जीवन का संकेत कौन - सा स्थलरूप देता है ?",
+      "option1": "Knick point / निक पॉइंट",
+      "option2": "Oxbow lake / घोड़े की नाल झील",
+      "option3": "Delta / डेल्टा",
+      "option4": "Meander / मीयंडर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "A knick point marks renewed downward erosion due to uplift or sea-level fall. निक पॉइंट नदी के तल के पुनः कटाव का संकेत देता है , जो भू - उत्थान या समुद्र - स्तर घटने से होता है।"
+    },
+    {
+      "sr_no": 43,
+      "question": "The hot, dry wind blowing down the eastern slopes of the Rockies is called— रॉकी पर्वतों की पूर्वी ढालों पर चलने वाली गर्म शुष्क पवन कहलाती है—",
+      "option1": "Chinook / चिनूक",
+      "option2": "Bora / बौरा",
+      "option3": "Foehn / फ्योन",
+      "option4": "Mistral / मिस्ट्राल",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Chinook warms the leeward side of the Rockies by adiabatic heating. चिनूक रॉकी पर्वत की पवनविपरीत ढाल को ऐडियाबैटिक ऊष्मन से गर्म करती है।"
+    },
+    {
+      "sr_no": 44,
+      "question": "Which landform results from the collapse of a cave roof in limestone areas? चूना पत्थर क्षेत्रों में गुफा की छत धंसने से कौन - सा स्थलरूप बनता है ?",
+      "option1": "Sinkhole / सिंकहोल",
+      "option2": "Drumlin / ड्रमलिन",
+      "option3": "Esker / एस्कर",
+      "option4": "Cirque / सर्क",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sinkholes are depressions formed due to dissolution and roof collapse in limestone. सिंकहोल चूना पत्थर के घुलने और छत के धंसने से बने अवसाद हैं।"
+    },
+    {
+      "sr_no": 45,
+      "question": "Which of the following is not a form of precipitation? निम्नलिखित में से कौन - सा वर्षण का रूप नहीं है ?",
+      "option1": "Rain / वर्षा",
+      "option2": "Snow / हिमपात",
+      "option3": "Dew / ओस",
+      "option4": "Hail / ओलावृष्टि",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Dew forms by condensation on surfaces, not by precipitation from clouds. ओस सतहों पर संघनन से बनती है , यह बादलों से वर्षण द्वारा नहीं बनती।"
+    },
+    {
+      "sr_no": 46,
+      "question": "Which of the following pairs is correctly matched? निम्नलिखित में से कौन - सा युग्म सही सुमेलित है ?",
+      "option1": "Moraine – Wind deposition / मोरेन – पवन निक्षेपण",
+      "option2": "Yardang – River erosion / यार्डांग – नदी अपरदन",
+      "option3": "Mushroom rock – Wind erosion / मशरूम शैल – पवन अपरदन",
+      "option4": "Drumlin – Karst region / ड्रमलिन – कार्स्ट क्षेत्र",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mushroom rocks are formed by wind abrasion near the ground. मशरूम शैल पवन के घर्षण से भूमि के निकट बनती हैं।"
+    },
+    {
+      "sr_no": 47,
+      "question": "The coldest part of the atmosphere is: वायुमंडल का सबसे ठंडा भाग कौन - सा है ?",
+      "option1": "Tropopause / क्षोभ विराम",
+      "option2": "Stratosphere / समतापमंडल",
+      "option3": "Mesopause / मध्यमंडल विराम",
+      "option4": "Thermosphere / तापमंडल",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The mesopause, top of the mesosphere, records the lowest temperatures in the atmosphere. मध्यमंडल का शीर्ष भाग जिसे मध्यमंडल विराम कहते हैं , वायुमंडल का सबसे ठंडा क्षेत्र होता है।"
+    },
+    {
+      "sr_no": 48,
+      "question": "Which of the following agents is responsible for the formation of loess deposits? निम्नलिखित में से कौन - सा कारक लोस निक्षेपों के निर्माण के लिए उत्तरदायी है ?",
+      "option1": "Wind / पवन",
+      "option2": "Glacier / हिमनद",
+      "option3": "River / नदी",
+      "option4": "Groundwater / भूजल",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Loess is fine silt deposited by wind over large areas, mainly in semi-arid regions. लोस महीन गाद होती है जो पवन द्वारा शुष्क क्षेत्रों में व्यापक रूप से निक्षेपित होती है।"
+    },
+    {
+      "sr_no": 49,
+      "question": "The normal lapse rate in the troposphere is approximately: क्षोभमंडल में सामान्य ऊष्मा घट दर लगभग कितनी होती है ?",
+      "option1": "4°C per km / प्रति किमी 4°C",
+      "option2": "6.5°C per km / प्रति किमी 6.5°C",
+      "option3": "8°C per km / प्रति किमी 8°C",
+      "option4": "10°C per km / प्रति किमी 10°C",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "On average, temperature decreases by 6.5°C per km ascent in the troposphere. क्षोभमंडल में ऊँचाई बढ़ने पर तापमान औसतन 6.5°C प्रति किमी घटता है।"
+    },
+    {
+      "sr_no": 50,
+      "question": "he aurora phenomenon occurs mainly in which layer? ऑरोरा घटना मुख्यतः वायुमंडल की किस परत में होती है ?",
+      "option1": "Troposphere / क्षोभमंडल",
+      "option2": "Stratosphere / समतापमंडल",
+      "option3": "Thermosphere / तापमंडल",
+      "option4": "Exosphere / बहिर्मंडल",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Auroras form in the thermosphere where charged solar particles interact with gases. ऑरोरा तापमंडल में बनते हैं जहाँ सौर आवेशित कण वायुमंडलीय गैसों से टकराते हैं।"
+    },
+    {
+      "sr_no": 51,
+      "question": "Which of the following winds is cold and dry? निम्नलिखित में से कौन - सी पवन ठंडी और शुष्क होती है ?",
+      "option1": "Foehn / फ्योन",
+      "option2": "Mistral / मिस्ट्राल",
+      "option3": "Chinook / चिनूक",
+      "option4": "Loo / लू",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mistral is a cold, dry wind blowing from the Alps to the Mediterranean coast. मिस्ट्राल आल्प्स से भूमध्य सागर की ओर बहने वाली ठंडी एवं शुष्क पवन है।"
+    },
+    {
+      "sr_no": 52,
+      "question": "Denudation refers to which of the following processes? अभिक्षरण निम्नलिखित में से किस प्रक्रिया को संदर्भित करता है ?",
+      "option1": "Wearing down of the Earth’s surface / पृथ्वी की सतह का क्षरण",
+      "option2": "Building up of mountains / पर्वत निर्माण",
+      "option3": "Volcanic activity / ज्वालामुखीय क्रिया",
+      "option4": "Folding of crust / पपड़ी का मोचन",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Denudation is the overall lowering of the Earth’s surface by weathering, erosion, and mass wasting. अभिक्षरण वह समग्र प्रक्रिया है जिसमें अपक्षय , अपरदन और भू - स्खलन द्वारा पृथ्वी की सतह नीचे जाती है।"
+    },
+    {
+      "sr_no": 53,
+      "question": "Which of the following layers protects life on Earth from harmful UV radiation? निम्नलिखित में से कौन - सी परत पृथ्वी पर जीवन को हानिकारक पराबैंगनी विकिरण से बचाती है ?",
+      "option1": "Troposphere / क्षोभमंडल",
+      "option2": "Stratosphere / समतापमंडल",
+      "option3": "Mesosphere / मध्यमंडल",
+      "option4": "Ionosphere / आयनमंडल",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The ozone layer in the stratosphere absorbs most of the Sun’s harmful ultraviolet rays. समतापमंडल की ओज़ोन परत सूर्य की हानिकारक पराबैंगनी किरणों को अवशोषित कर जीवन की रक्षा करती है।"
+    },
+    {
+      "sr_no": 54,
+      "question": "Which of the following is an example of fluvial landform? निम्नलिखित में से कौन - सा स्थलरूप नदी जनित है ?",
+      "option1": "Stalactite / स्टैलैक्टाइट",
+      "option2": "Cirque / सर्क",
+      "option3": "Meander / मीयंडर",
+      "option4": "Yardang / यार्डांग",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Meanders are bends formed by lateral erosion and deposition of a river. मीयंडर नदी के पार्श्व अपरदन और निक्षेपण से बनने वाले घुमावदार मोड़ हैं।"
+    },
+    {
+      "sr_no": 55,
+      "question": "The pressure belt located at 30° latitude in both hemispheres is— दोनों गोलार्द्धों में 30° अक्षांश पर स्थित दाब पट्टी है—",
+      "option1": "Equatorial low / भूमध्यरेखीय निम्न",
+      "option2": "Subtropical high / उपोष्ण उच्च",
+      "option3": "Subpolar low / उपध्रुवीय निम्न",
+      "option4": "Polar high / ध्रुवीय उच्च",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Descending air at 30° latitude creates subtropical high-pressure belts. 30° अक्षांश पर उतरती हुई वायु उपोष्ण उच्च दाब पट्टियों का निर्माण करती है।"
+    },
+    {
+      "sr_no": 56,
+      "question": "Which of the following statements about chemical weathering is correct? रासायनिक अपक्षय के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It is most effective in arid regions. / यह शुष्क क्षेत्रों में सर्वाधिक प्रभावी होता है।",
+      "option2": "It involves physical disintegration only. / इसमें केवल भौतिक विखंडन शामिल होता है।",
+      "option3": "It alters the chemical composition of rocks. / यह चट्टानों की रासायनिक संरचना को बदलता है।",
+      "option4": "It is caused by frost action. / यह पाले की क्रिया से होता है।",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Chemical weathering changes the mineral composition of rocks through oxidation, carbonation, and hydration. रासायनिक अपक्षय ऑक्सीकरण , कार्बोनेशन और जलयोजन जैसी प्रक्रियाओं से चट्टानों की रासायनिक संरचना को बदल देता है।"
+    },
+    {
+      "sr_no": 57,
+      "question": "Match the following pairs correctly: निम्नलिखित युग्मों का सही सुमेलन करें – (a) Karst topography – Limestone / कार्स्ट स्थलाकृति – चूना पत्थर (b) Delta – River deposition / डेल्टा – नदी निक्षेपण (c) Loess – Glacier / लोस – हिमनद",
+      "option1": "a and b only / केवल a और b",
+      "option2": "a and c only / केवल a और c",
+      "option3": "b and c only / केवल b और c",
+      "option4": "a, b and c / a, b और c",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Karst forms in limestone, and deltas by river deposition; loess forms by wind, not glacier. कार्स्ट चूना पत्थर में बनता है और डेल्टा नदी निक्षेपण से ; लोस पवन द्वारा बनता है , हिमनद से नहीं।"
+    },
+    {
+      "sr_no": 58,
+      "question": "Fog is an example of— कोहरा किसका उदाहरण है ?",
+      "option1": "Sublimation / उत्क्रमण",
+      "option2": "Condensation near surface / सतह के निकट संघनन",
+      "option3": "Evaporation / वाष्पीकरण",
+      "option4": "Precipitation / वर्षण",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": ""
+    },
+    {
+      "sr_no": 59,
+      "question": "Precipitation in the form of ice pellets is known as— बर्फीली गोलियों के रूप में होने वाली वर्षा को क्या कहा जाता है ?",
+      "option1": "Snowfall / हिमपात",
+      "option2": "Sleet / स्लीट",
+      "option3": "Hail / ओले",
+      "option4": "Frost / पाला",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Hail consists of hard ice pellets formed in cumulonimbus clouds. ओले कठोर बर्फीली गोलियाँ होती हैं जो क्यूम्यूलोनिंबस बादलों में बनती हैं।"
+    },
+    {
+      "sr_no": 60,
+      "question": "Mass wasting occurs primarily due to: भू - स्खलन मुख्य रूप से किस कारण से होता है ?",
+      "option1": "Gravity / गुरुत्वाकर्षण",
+      "option2": "Rainfall / वर्षा",
+      "option3": "Wind / पवन",
+      "option4": "Volcanism / ज्वालामुखीयता",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mass wasting is the downslope movement of rock debris under the influence of gravity. भू - स्खलन चट्टानों के मलबे का गुरुत्वाकर्षण के प्रभाव से नीचे की ओर खिसकना है।"
+    },
+    {
+      "sr_no": 61,
+      "question": "Which of the following gases is responsible for acid rain? निम्नलिखित में से कौन - सी गैस अम्लीय वर्षा के लिए उत्तरदायी है ?",
+      "option1": "Carbon dioxide / कार्बन डाइऑक्साइड",
+      "option2": "Sulphur dioxide / सल्फर डाइऑक्साइड",
+      "option3": "Methane / मीथेन",
+      "option4": "Nitrogen / नाइट्रोजन",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sulphur dioxide reacts with water vapour to form sulphuric acid, causing acid rain. सल्फर डाइऑक्साइड जलवाष्प से मिलकर सल्फ्यूरिक अम्ल बनाती है जो अम्लीय वर्षा का कारण बनता है।"
+    },
+    {
+      "sr_no": 62,
+      "question": "Which instrument is used to measure humidity? आर्द्रता मापने के लिए किस यंत्र का उपयोग किया जाता है ?",
+      "option1": "Barometer / वायुदाबमापी",
+      "option2": "Hygrometer / आर्द्रतामापी",
+      "option3": "Anemometer / पवनवेगमापी",
+      "option4": "Thermometer / तापमापी",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Hygrometer measures the moisture content of air or relative humidity. आर्द्रतामापी वायुमंडल में नमी या सापेक्ष आर्द्रता को मापता है।"
+    },
+    {
+      "sr_no": 63,
+      "question": "Which wind system is mainly responsible for rainfall in India during summer? गर्मी के मौसम में भारत में वर्षा के लिए मुख्य रूप से कौन - सी पवन प्रणाली उत्तरदायी है ?",
+      "option1": "Northeast monsoon / उत्तर - पूर्व मानसून",
+      "option2": "Southwest monsoon / दक्षिण - पश्चिम मानसून",
+      "option3": "Westerlies / पश्‍चिमी पवनें",
+      "option4": "Trade winds / व्यापारिक पवनें",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The southwest monsoon brings moisture-laden winds from the Indian Ocean causing summer rainfall. दक्षिण - पश्चिम मानसून हिंद महासागर से नमी युक्त पवनें लाता है जिससे भारत में ग्रीष्मकालीन वर्षा होती है।"
+    },
+    {
+      "sr_no": 64,
+      "question": "Which landform is created due to wind deposition? कौन - सा स्थलरूप पवन निक्षेपण से बनता है ?",
+      "option1": "Inselberg / इन्सेलबर्ग",
+      "option2": "Yardang / यार्डांग",
+      "option3": "Sand dune / बालू का टीला",
+      "option4": "Mushroom rock / मशरूम शैल",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sand dunes are depositional features of wind in arid regions. बालू के टीले शुष्क क्षेत्रों में पवन के निक्षेपण से बनते हैं।"
+    },
+    {
+      "sr_no": 65,
+      "question": "Which of the following is not an example of slow mass movement? निम्नलिखित में से कौन - सा धीमी भू - स्खलन का उदाहरण नहीं है ?",
+      "option1": "Soil creep / मृदा रेंगन",
+      "option2": "Solifluction / सोलिफ्लक्शन",
+      "option3": "Landslide / भूस्खलन",
+      "option4": "Rock creep / शैल रेंगन",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Landslides occur rapidly, while creep and solifluction are slow forms of mass movement. भूस्खलन तेज़ी से होता है जबकि रेंगन और सोलिफ्लक्शन धीमी भू - स्खलन प्रक्रियाएँ हैं।"
+    },
+    {
+      "sr_no": 66,
+      "question": "Consider the following statements regarding Cirrus clouds: सिरस बादलों के संबंध में निम्नलिखित कथनों पर विचार करें : (a) They are high-level clouds made of ice crystals. ये उच्च स्तर के बर्फ़ के क्रिस्टल से बने बादल हैं। (b) They appear wispy or feather-like. ये पतले और रेशेदार दिखाई देते हैं। (c) They usually bring heavy rainfall. ये आमतौर पर भारी वर्षा लाते हैं। Which of the above statements are correct? उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 3 / 1 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Cirrus clouds are high, wispy clouds that do not produce heavy rain. सिरस बादल उच्च और रेशेदार होते हैं , जो भारी वर्षा नहीं करते।"
+    },
+    {
+      "sr_no": 67,
+      "question": "In which layer do meteors generally burn up upon entry? किस परत में उल्काएँ प्रवेश करते ही जलकर नष्ट हो जाती हैं ?",
+      "option1": "Stratosphere / समतापमंडल",
+      "option2": "Mesosphere / मध्यमंडल",
+      "option3": "Thermosphere / तापमंडल",
+      "option4": "Exosphere / बहिर्मंडल",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Most meteors burn in the mesosphere due to friction with air molecules. अधिकांश उल्काएँ वायु अणुओं के घर्षण से मध्यमंडल में जलकर नष्ट हो जाती हैं।"
+    },
+    {
+      "sr_no": 68,
+      "question": "Dew forms when— ओस तब बनती है जब—",
+      "option1": "Air temperature rises above dew point / वायु का तापमान ओसांक से ऊपर बढ़ता है",
+      "option2": "Air temperature falls below dew point / वायु का तापमान ओसांक से नीचे गिरता है",
+      "option3": "Humidity becomes zero / आर्द्रता शून्य हो जाती है",
+      "option4": "Winds blow strongly / तेज हवाएँ चलती हैं",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "When air cools below the dew point, water vapour condenses on surfaces forming dew. जब वायु ओसांक से नीचे ठंडी होती है , तो जलवाष्प सतहों पर संघनित होकर ओस बनाती है।"
+    },
+    {
+      "sr_no": 69,
+      "question": "The energy source for endogenic processes is: अंतर्जात प्रक्रियाओं का ऊर्जा स्रोत क्या है ?",
+      "option1": "Sun / सूर्य",
+      "option2": "Earth’s internal heat / पृथ्वी की आंतरिक ऊष्मा",
+      "option3": "Moon’s gravity / चंद्रमा का गुरुत्वाकर्षण",
+      "option4": "Ocean currents / महासागरीय धाराएँ",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Endogenic processes derive their energy from radioactive decay and heat within the Earth. अंतर्जात प्रक्रियाएँ पृथ्वी के भीतर की ऊष्मा और रेडियोधर्मी अपघटन से अपनी ऊर्जा प्राप्त करती हैं।"
+    },
+    {
+      "sr_no": 70,
+      "question": "Which among the following is an erosional feature of glaciers? निम्नलिखित में से कौन - सा हिमनद का अपरदनी स्वरूप है ?",
+      "option1": "Moraine / मोरेन",
+      "option2": "Drumlin / ड्रमलिन",
+      "option3": "Cirque / सर्क",
+      "option4": "Outwash plain / बहाव मैदान",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Cirques are bowl-shaped depressions formed by glacial erosion at mountain heads. सर्क पर्वत शिखरों पर हिमनदी अपरदन से बने कटोरा - आकृति अवसाद होते हैं।"
+    },
+    {
+      "sr_no": 71,
+      "question": "Consider the following statements regarding Nimbostratus clouds: निम्नलिखित कथनों पर विचार करें – निम्बोस्ट्रैटस बादलों के संबंध में : (a) They are thick, low-level clouds. ये मोटे और निम्न - स्तरीय बादल होते हैं। (b) They produce steady and continuous rainfall. ये निरंतर वर्षा करते हैं। (c) They are composed mainly of ice crystals and found above 6,000 m. ये मुख्यतः बर्फ़ के क्रिस्टल से बने होते हैं और 6,000 मीटर से ऊपर पाए जाते हैं। Which of the above statements are correct? उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 3 / 1 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Nimbostratus clouds are low, thick clouds causing continuous rainfall; the third statement is incorrect because they are not high-altitude ice clouds. निम्बोस्ट्रैटस बादल निम्न स्तर के मोटे बादल हैं जो लगातार वर्षा करते हैं; तीसरा कथन सही नहीं है क्योंकि ये उच्च-स्तरीय बर्फ़ बादल नहीं होते।"
+    },
+    {
+      "sr_no": 72,
+      "question": "The proportion of carbon dioxide in the atmosphere is about: वायुमंडल में कार्बन डाइऑक्साइड की मात्रा लगभग कितनी है ?",
+      "option1": "0.03%",
+      "option2": "0.3%",
+      "option3": "0.003%",
+      "option4": "3%",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "CO₂ constitutes about 0.03% (now around 0.04%) of the total atmospheric gases. कार्बन डाइऑक्साइड वायुमंडल का लगभग 0.03% ( अब लगभग 0.04%) भाग बनाती है।"
+    },
+    {
+      "sr_no": 73,
+      "question": "Which one of the following processes results in mountain building? निम्नलिखित में से कौन - सी प्रक्रिया पर्वत निर्माण में सहायक होती है ?",
+      "option1": "Folding / मोचन",
+      "option2": "Erosion / अपरदन",
+      "option3": "Weathering / अपक्षय",
+      "option4": "Deposition / निक्षेपण",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Folding caused by compressional forces inside the Earth leads to mountain formation. पृथ्वी के भीतर संपीडन बलों के कारण होने वाला मोचन पर्वत निर्माण का कारण बनता है।"
+    },
+    {
+      "sr_no": 74,
+      "question": "The process of changing water vapour into water is called— जलवाष्प के जल में परिवर्तन की प्रक्रिया को क्या कहा जाता है ?",
+      "option1": "Evaporation / वाष्पीकरण",
+      "option2": "Condensation / संघनन",
+      "option3": "Sublimation / उत्क्रमण",
+      "option4": "Transpiration / वाष्पोत्सर्जन",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Condensation is the conversion of water vapour into liquid water when air cools below its dew point. संघनन वह प्रक्रिया है जिसमें वायु के ओसांक से नीचे ठंडा होने पर जलवाष्प द्रव जल में परिवर्तित हो जाती है।"
+    },
+    {
+      "sr_no": 75,
+      "question": "Which of the following landforms is formed by river erosion? निम्नलिखित में से कौन - सा स्थलरूप नदी अपरदन से बनता है ?",
+      "option1": "Delta / डेल्टा",
+      "option2": "V-shaped valley / V- आकार की घाटी",
+      "option3": "Alluvial fan / निक्षेप पंखा",
+      "option4": "Floodplain / बाढ़ मैदान",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "V-shaped valleys are carved by rivers through vertical erosion in youthful stages. V- आकार की घाटियाँ नदियों द्वारा उनके आरंभिक चरण में ऊर्ध्वाधर अपरदन से निर्मित होती हैं।"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEOGRAPHY TEST -2</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

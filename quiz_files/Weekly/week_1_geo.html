@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY TEST -1</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 GEOGRAPHY TEST -1</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 30,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "Which of the following lines divides the Earth into the Northern and Southern Hemispheres? निम्नलिखित में से कौन - सी रेखा पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में विभाजित करती है ?",
+      "option1": "Equator / भूमध्य रेखा",
+      "option2": "Tropic of Cancer / कर्क रेखा",
+      "option3": "Tropic of Capricorn / मकर रेखा",
+      "option4": "Prime Meridian / प्रधान लाभांश",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Equator is an imaginary line at 0° latitude dividing the Earth into Northern and Southern Hemispheres. भूमध्य रेखा 0° अक्षांश पर एक काल्पनिक रेखा है , जो पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में विभाजित करती है।"
+    },
+    {
+      "sr_no": 2,
+      "question": "Which of the following is the smallest ocean? निम्नलिखित में से सबसे छोटा महासागर कौन - सा है ?",
+      "option1": "Atlantic Ocean / अटलांटिक महासागर",
+      "option2": "Indian Ocean / हिंद महासागर",
+      "option3": "Southern Ocean / दक्षिणी महासागर",
+      "option4": "Arctic Ocean / आर्कटिक महासागर",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Arctic Ocean, surrounding the North Pole, is the smallest and shallowest. आर्कटिक महासागर , जो उत्तरी ध्रुव के चारों ओर है , सबसे छोटा और उथला है।"
+    },
+    {
+      "sr_no": 3,
+      "question": "Which of the following statements about volcanoes is correct? ज्वालामुखियों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "They are formed mainly at convergent and divergent boundaries / वे मुख्यतः अभिसारी और अपसारी सीमाओं पर बनते हैं।",
+      "option2": "They are absent along plate margins / वे प्लेट सीमाओं पर नहीं पाए जाते।",
+      "option3": "All volcanoes are extinct. / सभी ज्वालामुखी मृत हैं।",
+      "option4": "They occur only on land / वे केवल भूमि पर होते हैं।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Volcanoes form mostly at convergent and divergent plate boundaries where magma reaches the surface. ज्वालामुखी मुख्यतः अभिसारी और अपसारी सीमाओं पर बनते हैं , जहाँ मैग्मा सतह पर पहुँचता है।"
+    },
+    {
+      "sr_no": 4,
+      "question": "Which ocean is named after a country? कौन - सा महासागर एक देश के नाम पर रखा गया है ?",
+      "option1": "Atlantic Ocean / अटलांटिक महासागर",
+      "option2": "Pacific Ocean / प्रशांत महासागर",
+      "option3": "Indian Ocean / हिंद महासागर",
+      "option4": "Arctic Ocean / आर्कटिक महासागर",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Indian Ocean is named after India. हिंद महासागर का नाम भारत के नाम पर रखा गया है।"
+    },
+    {
+      "sr_no": 5,
+      "question": "Which of the following statements about the Earth's core is correct? पृथ्वी के कोर के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "The outer core is solid and the inner core is liquid. / बाहरी कोर ठोस और आंतरिक कोर द्रव है।",
+      "option2": "The outer core is liquid and the inner core is solid. / बाहरी कोर द्रव और आंतरिक कोर ठोस है।",
+      "option3": "Both cores are solid. / दोनों कोर ठोस हैं।",
+      "option4": "Both cores are liquid. / दोनों कोर द्रव हैं।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The outer core is molten iron and nickel, while the inner core is solid due to immense pressure. बाहरी कोर लोहा - निकल का द्रव रूप है , जबकि अत्यधिक दाब के कारण आंतरिक कोर ठोस होता है।"
+    },
+    {
+      "sr_no": 6,
+      "question": "Which of the following statements about igneous rocks is correct? आग्नेय चट्टानों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "They form from the cooling of magma or lava. / ये मैग्मा या लावा के ठंडा होने से बनती हैं।",
+      "option2": "They are formed by sediment deposition. / ये तलछट के जमाव से बनती हैं।",
+      "option3": "They are formed only under water. / ये केवल पानी के नीचे बनती हैं।",
+      "option4": "They contain fossils. / इनमें जीवाश्म पाए जाते हैं।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Igneous rocks originate from the solidification of magma or lava. आग्नेय चट्टानें मैग्मा या लावा के ठोस होने से बनती हैं।"
+    },
+    {
+      "sr_no": 7,
+      "question": "Consider the following statements about sedimentary rocks: आवसादी चट्टानों के संबंध में निम्नलिखित कथनों पर विचार करें : (a) They form by compaction and cementation of sediments. ये तलछट के संघनन और सीमेंटेशन से बनती हैं। (b) They are layered in structure. इनकी संरचना परतदार होती है। (c) They are crystalline in texture. इनकी बनावट क्रिस्टलीय होती है। Which of the above statements are correct? उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "1 and 3 / 1 और 3",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 2 / 1 और 2",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sedimentary rocks are formed by compression and are usually layered, not crystalline. आवसादी चट्टानें तलछट के दाब से बनती हैं और परतदार होती हैं , क्रिस्टलीय नहीं।"
+    },
+    {
+      "sr_no": 8,
+      "question": "Which of the following is a metamorphic rock? निम्नलिखित में से कौन - सी कायांतरित चट्टान है ?",
+      "option1": "Slate / स्लेट",
+      "option2": "Basalt / बेसाल्ट",
+      "option3": "Limestone / चूना पत्थर",
+      "option4": "Sandstone / बलुआ पत्थर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Slate forms from shale under heat and pressure. स्लेट शेल के ऊष्मा और दाब से कायांतरण से बनता है।"
+    },
+    {
+      "sr_no": 9,
+      "question": "Which of the following statements about plate tectonics is correct? प्लेट विवर्तनिकी के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "The Earth's crust is divided into several large and small plates. / पृथ्वी की पर्पटी कई बड़ी और छोटी प्लेटों में विभाजित है।",
+      "option2": "These plates float over the rigid mantle. / ये प्लेटें कठोर मेंटल पर तैरती हैं।",
+      "option3": "Plates move due to convection currents in the mantle. / मेंटल में संवहन धाराओं के कारण प्लेटें चलती हैं।",
+      "option4": "All of the above. / उपरोक्त सभी।",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Tectonic plates move due to mantle convection, forming the basic concept of plate tectonics. मेंटल में संवहन धाराओं के कारण प्लेटों की गति होती है , यही प्लेट विवर्तनिकी का मूल सिद्धांत है।"
+    },
+    {
+      "sr_no": 10,
+      "question": "Which of the following statements about longitude is correct? देशांतर के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Longitude lines are parallel to each other. / देशांतर रेखाएँ एक - दूसरे के समानांतर होती हैं।",
+      "option2": "Longitude ranges from 0° to 90° only. / देशांतर केवल 0° से 90° तक होता है।",
+      "option3": "Longitude measures east–west distance from the Prime Meridian. / देशांतर प्रधान लाभांश से पूर्व–पश्चिम दूरी मापता है।",
+      "option4": "Longitude has no impact on time zones. / देशांतर का समय क्षेत्रों पर कोई प्रभाव नहीं है।",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Longitude measures angular distance east or west of the Prime Meridian. देशांतर प्रधान लाभांश से पूर्व या पश्चिम की कोणीय दूरी मापता है।"
+    },
+    {
+      "sr_no": 11,
+      "question": "Which of the following continents has the highest average elevation? निम्नलिखित महाद्वीपों में से किसकी औसत ऊँचाई सबसे अधिक है ?",
+      "option1": "Antarctica / अंटार्कटिका",
+      "option2": "Asia / एशिया",
+      "option3": "South America / दक्षिण अमेरिका",
+      "option4": "Africa / अफ्रीका",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Antarctica’s thick ice sheet gives it the highest mean elevation among continents. अंटार्कटिका की मोटी हिम - चादर इसे सबसे ऊँचा महाद्वीप बनाती है।"
+    },
+    {
+      "sr_no": 12,
+      "question": "Which type of volcano erupts most frequently but mildly? किस प्रकार का ज्वालामुखी सबसे अधिक बार परंतु हल्के रूप में विस्फोट करता है ?",
+      "option1": "Dome volcano / गुंबदाकार ज्वालामुखी",
+      "option2": "Composite volcano / मिश्रित ज्वालामुखी",
+      "option3": "Shield volcano / शील्ड ज्वालामुखी",
+      "option4": "Cinder cone volcano / सिंडर कोन ज्वालामुखी",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Shield volcanoes have gentle eruptions with low-viscosity lava. शील्ड ज्वालामुखियों में कम गाढ़े लावा से हल्के विस्फोट होते हैं।"
+    },
+    {
+      "sr_no": 13,
+      "question": "Which of the following statements about volcanic activity is correct? ज्वालामुखीय गतिविधि के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Volcanoes are formed only on land. / ज्वालामुखी केवल भूमि पर बनते हैं।",
+      "option2": "Many volcanoes are found under oceans. / अनेक ज्वालामुखी महासागरों के नीचे पाए जाते हैं।",
+      "option3": "Volcanoes form due to water erosion. / ज्वालामुखी जल अपक्षय से बनते हैं।",
+      "option4": "All volcanoes are extinct. / सभी ज्वालामुखी मृत हैं।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Submarine volcanoes are common, forming islands like Hawaii. समुद्र के नीचे अनेक ज्वालामुखी सक्रिय हैं , जैसे हवाई द्वीप।"
+    },
+    {
+      "sr_no": 14,
+      "question": "Which line marks the southernmost point where the Sun can be directly overhead? कौन - सी रेखा वह दक्षिणी बिंदु चिह्नित करती है जहाँ सूर्य सीधे सिर के ऊपर होता है ?",
+      "option1": "Antarctic Circle / अंटार्कटिक वृत्त",
+      "option2": "Tropic of Cancer / कर्क रेखा",
+      "option3": "Equator / भूमध्य रेखा",
+      "option4": "Tropic of Capricorn / मकर रेखा",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Tropic of Capricorn (23.5° S) is the southernmost latitude where the Sun can be overhead. मकर रेखा (23.5° दक्षिण ) वह दक्षिणी अक्षांश है जहाँ सूर्य सीधे ऊपर होता है।"
+    },
+    {
+      "sr_no": 15,
+      "question": "Which of the following statements about the Kuiper Belt is correct? कुईपर बेल्ट के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It lies beyond Neptune’s orbit. / यह नेप्च्यून की कक्षा के परे स्थित है।",
+      "option2": "It is the main source of asteroids. / यह एस्ट्रॉयड का मुख्य स्रोत है।",
+      "option3": "It contains mostly gaseous planets. / यह मुख्य रूप से गैसीय ग्रहों से बना है।",
+      "option4": "It is located between Mars and Jupiter. / यह मंगल और बृहस्पति के बीच स्थित है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Kuiper Belt is a region beyond Neptune containing icy bodies and dwarf planets. कुईपर बेल्ट नेप्च्यून के परे एक क्षेत्र है , जिसमें बर्फीले पिंड और बौने ग्रह होते हैं।"
+    },
+    {
+      "sr_no": 16,
+      "question": "The Mid-Atlantic Ridge is associated with which process? मध्य अटलांटिक पर्वत श्रृंखला किस प्रक्रिया से जुड़ी है ?",
+      "option1": "Subduction / अवगमन",
+      "option2": "Sea-floor spreading / समुद्री तल प्रसार",
+      "option3": "Folding / मोड़ बनना",
+      "option4": "Faulting / भ्रंशन",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The ridge marks a divergent boundary where new oceanic crust forms. यह एक अपसारी सीमा है जहाँ नई महासागरीय पर्पटी बनती है।"
+    },
+    {
+      "sr_no": 17,
+      "question": "Which of the following is the largest planet in the Solar System? सौर मंडल में निम्नलिखित में से सबसे बड़ा ग्रह कौन सा है ?",
+      "option1": "Jupiter / बृहस्पति",
+      "option2": "Saturn / शनि",
+      "option3": "Uranus / यूरेनस",
+      "option4": "Neptune / नेप्च्यून",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Jupiter is the largest planet in the Solar System, with a diameter of about 142,984 km. बृहस्पति सौर मंडल का सबसे बड़ा ग्रह है , जिसकी व्यास लगभग 1,42,984 किमी है।"
+    },
+    {
+      "sr_no": 18,
+      "question": "The Pacific Ring of Fire is associated with which phenomenon? प्रशांत महासागर की “रिंग ऑफ फायर” किस घटना से संबंधित है ?",
+      "option1": "Trade winds / व्यापारिक पवनें",
+      "option2": "Ocean currents / महासागरीय धाराएँ",
+      "option3": "Glacial movement / हिमनद गति",
+      "option4": "Volcanic eruptions and earthquakes / ज्वालामुखी विस्फोट और भूकंप",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Ring of Fire is a tectonically active belt of volcanoes and quakes. रिंग ऑफ फायर ज्वालामुखी और भूकंप की अत्यधिक सक्रिय क्षेत्रीय पट्टी है।"
+    },
+    {
+      "sr_no": 19,
+      "question": "Which of the following continents has the longest coastline? निम्नलिखित में से किस महाद्वीप की तटरेखा सबसे लंबी है ?",
+      "option1": "Asia / एशिया",
+      "option2": "Africa / अफ्रीका",
+      "option3": "North America / उत्तर अमेरिका",
+      "option4": "Europe / यूरोप",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Asia’s indented coastline is the longest among all continents. एशिया की गहराई लिए तटरेखा सबसे लंबी है।"
+    },
+    {
+      "sr_no": 20,
+      "question": "Which line marks the northernmost point where the Sun can be directly overhead? कौन - सी रेखा वह उत्तरी बिंदु चिह्नित करती है जहाँ सूर्य सीधे सिर के ऊपर होता है ?",
+      "option1": "Tropic of Cancer / कर्क रेखा",
+      "option2": "Tropic of Capricorn / मकर रेखा",
+      "option3": "Equator / भूमध्य रेखा",
+      "option4": "Arctic Circle / उत्तरी ध्रुवीय वृत्त",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Tropic of Cancer (23.5° N) is the northernmost latitude where the Sun can be directly overhead. कर्क रेखा (23.5° उत्तर ) वह उत्तरी अक्षांश है जहाँ सूर्य सीधे ऊपर दिखाई देता है।"
+    },
+    {
+      "sr_no": 21,
+      "question": "Consider the following statements about Earth's crust: पृथ्वी की भू - पर्पटी के संबंध में निम्नलिखित कथनों पर विचार करें : (a) It is composed mainly of iron and nickel. / यह मुख्य रूप से लोहा और निकल से बनी होती है। (b) It is the outermost layer of the Earth. / यह पृथ्वी की सबसे बाहरी परत है। (c) Oceanic crust is denser than continental crust. / महासागरीय पर्पटी महाद्वीपीय पर्पटी से अधिक घनी होती है। Which of the above statements are correct? उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 3 / 1 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The crust is the outermost layer, with oceanic crust denser than continental crust; iron and nickel dominate the core, not crust. भू - पर्पटी पृथ्वी की सबसे बाहरी परत है ; महासागरीय पर्पटी महाद्वीपीय से अधिक घनी होती है , जबकि लोहा और निकल कोर में पाए जाते हैं।"
+    },
+    {
+      "sr_no": 22,
+      "question": "Which continent has the highest number of active volcanoes? किस महाद्वीप में सक्रिय ज्वालामुखियों की संख्या सबसे अधिक है ?",
+      "option1": "Asia / एशिया",
+      "option2": "North America / उत्तर अमेरिका",
+      "option3": "Antarctica / अंटार्कटिका",
+      "option4": "South America / दक्षिण अमेरिका",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Indonesia alone has around 55 active volcanoes, and Japan has about 40 active volcanoes as of 2025. This makes Asia the leading continent in terms of active volcanic activity. Indonesia में लगभग 55 सक्रिय ज्वालामुखी हैं, और जापान में लगभग 40 सक्रिय ज्वालामुखी हैं, जो 2025 तक की स्थिति है। इससे एशिया महाद्वीप सक्रिय ज्वालामुखी गतिविधि के मामले में अग्रणी है।"
+    },
+    {
+      "sr_no": 23,
+      "question": "Which ocean is the deepest? कौन - सा महासागर सबसे गहरा है ?",
+      "option1": "Pacific Ocean / प्रशांत महासागर",
+      "option2": "Atlantic Ocean / अटलांटिक महासागर",
+      "option3": "Indian Ocean / हिंद महासागर",
+      "option4": "Arctic Ocean / आर्कटिक महासागर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Mariana Trench in the Pacific is the deepest point on Earth. प्रशांत महासागर में स्थित मारियाना गर्त पृथ्वी का सबसे गहरा बिंदु है।"
+    },
+    {
+      "sr_no": 24,
+      "question": "Which of the following statements about longitude is correct? देशांतर के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Longitude lines converge at the poles. / देशांतर रेखाएँ ध्रुवों पर मिलती हैं।",
+      "option2": "Longitude lines are parallel like latitude lines. / देशांतर रेखाएँ अक्षांश की तरह समानांतर होती हैं।",
+      "option3": "Longitude does not affect local time. / देशांतर स्थानीय समय को प्रभावित नहीं करता।",
+      "option4": "The maximum longitude is 90°. / अधिकतम देशांतर 90° है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Longitude lines converge at the poles, unlike latitude lines which are parallel. देशांतर रेखाएँ ध्रुवों पर मिलती हैं , जबकि अक्षांश रेखाएँ समानांतर होती हैं।"
+    },
+    {
+      "sr_no": 25,
+      "question": "The Himalayan mountain range is an example of which type of plate boundary? हिमालय पर्वत श्रृंखला किस प्रकार की प्लेट सीमा का उदाहरण है ?",
+      "option1": "Divergent boundary / अपसारी सीमा",
+      "option2": "Convergent boundary / अभिसारी सीमा",
+      "option3": "Transform boundary / रूपांतरण सीमा",
+      "option4": "Passive boundary / निष्क्रिय सीमा",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Himalayas formed by the collision of the Indian and Eurasian plates at a convergent boundary. हिमालय का निर्माण भारतीय और यूरेशियन प्लेटों के अभिसरण से हुआ।"
+    },
+    {
+      "sr_no": 26,
+      "question": "Which of the following statements about mid-ocean ridges is correct? मध्य महासागरीय पर्वत श्रृंखलाओं के संबंध में कौन - सा कथन सही है ?",
+      "option1": "They are formed at transform boundaries. / ये रूपांतरण सीमाओं पर बनती हैं।",
+      "option2": "They are regions of plate collision. / ये प्लेट टकराव के क्षेत्र हैं।",
+      "option3": "They are associated with subduction zones. / ये अवगमन क्षेत्रों से जुड़ी हैं।",
+      "option4": "They are formed at divergent plate boundaries. / ये अपसारी प्लेट सीमाओं पर बनती हैं।",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mid-ocean ridges form at divergent boundaries where new crust is created. मध्य महासागरीय पर्वत अपसारी सीमाओं पर बनते हैं जहाँ नई पर्पटी बनती है।"
+    },
+    {
+      "sr_no": 27,
+      "question": "Which of the following statements about the Moon is correct? चंद्रमा के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It has no atmosphere. / इसका कोई वायुमंडल नहीं है।",
+      "option2": "Its gravity is the same as Earth’s. / इसका गुरुत्वाकर्षण पृथ्वी के समान है।",
+      "option3": "It produces its own light. / यह अपनी रोशनी खुद उत्पन्न करता है।",
+      "option4": "It completes one rotation in 12 hours. / यह 12 घंटे में एक घूर्णन पूरा करता है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Moon has a negligible atmosphere, so it cannot support weather. चंद्रमा का वायुमंडल नगण्य है , इसलिए यह मौसम का समर्थन नहीं कर सकता।"
+    },
+    {
+      "sr_no": 28,
+      "question": "Which of the following is a cold ocean current? निम्नलिखित में से कौन - सी ठंडी महासागरीय धारा है ?",
+      "option1": "Kuroshio Current / कुरोशियो धारा",
+      "option2": "Brazil Current / ब्राज़ील धारा",
+      "option3": "Canary Current / कैनेरी धारा",
+      "option4": "North Equatorial Current / उत्तर भूमध्यीय धारा",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Canary Current, off northwest Africa, is cold. कैनेरी धारा उत्तर - पश्चिम अफ्रीका के तट के पास बहने वाली ठंडी धारा है।"
+    },
+    {
+      "sr_no": 29,
+      "question": "Which of the following statements about the Equator is correct? भूमध्य रेखा के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It passes through South America, Africa, and Asia. / यह दक्षिण अमेरिका , अफ्रीका और एशिया से गुजरती है।",
+      "option2": "It is the longest line of latitude. / यह अक्षांश की सबसे लंबी रेखा है।",
+      "option3": "All locations on it have equal day and night all year. / इसके सभी स्थानों पर पूरे वर्ष दिन और रात बराबर होते हैं।",
+      "option4": "All of the above. / उपरोक्त सभी।",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Equator passes through multiple continents, is the longest latitude line, and has equal day and night year-round. भूमध्य रेखा कई महाद्वीपों से गुजरती है , सबसे लंबी अक्षांश रेखा है और पूरे वर्ष दिन और रात बराबर होती है।"
+    },
+    {
+      "sr_no": 30,
+      "question": "Which of the following planets is known as the Red Planet? निम्नलिखित में से कौन - सा ग्रह ‘लाल ग्रह’ के नाम से जाना जाता है ?",
+      "option1": "Venus / शुक्र",
+      "option2": "Jupiter / बृहस्पति",
+      "option3": "Mars / मंगल",
+      "option4": "Saturn / शनि",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mars is called the Red Planet due to the iron oxide on its surface giving it a reddish appearance. मंगल को लाल ग्रह इसलिए कहा जाता है क्योंकि इसकी सतह पर लौह ऑक्साइड होने के कारण यह लाल रंग का दिखाई देता है।"
+    },
+    {
+      "sr_no": 31,
+      "question": "The Mohorovičić discontinuity separates which two layers of the Earth? मोहोरोविसिक असंततता पृथ्वी की किन दो परतों को अलग करती है ?",
+      "option1": "Crust and Mantle / भू - पर्पटी और मेंटल",
+      "option2": "Mantle and Core / मेंटल और कोर",
+      "option3": "Inner and Outer Core / आंतरिक और बाहरी कोर",
+      "option4": "Lithosphere and Asthenosphere / लिथोस्फीयर और एस्थेनोस्फीयर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Moho discontinuity separates the crust from the mantle. मोहो असंततता भू - पर्पटी और मेंटल के बीच की सीमा है।"
+    },
+    {
+      "sr_no": 32,
+      "question": "Which planet has a retrograde rotation? कौन - सा ग्रह उल्टे घूर्णन करता है ?",
+      "option1": "Mars / मंगल",
+      "option2": "Venus / शुक्र",
+      "option3": "Earth / पृथ्वी",
+      "option4": "Mercury / बुध",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Venus rotates in the opposite direction to most planets, called retrograde rotation. शुक्र अधिकांश ग्रहों के विपरीत दिशा में घूमता है , जिसे उल्टा घूर्णन कहा जाता है।"
+    },
+    {
+      "sr_no": 33,
+      "question": "Which of the following statements about Pluto is correct? प्लूटो के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It has no moons. / इसके कोई चंद्रमा नहीं हैं।",
+      "option2": "It is the ninth planet in the Solar System. / यह सौर मंडल का नौवां ग्रह है।",
+      "option3": "It has a solid surface covered with liquid oceans. / इसकी सतह तरल महासागरों से ढकी हुई है।",
+      "option4": "It is considered a dwarf planet. / इसे बौना ग्रह माना जाता है।",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Pluto is classified as a dwarf planet by the IAU. प्लूटो को IAU द्वारा बौना ग्रह के रूप में वर्गीकृत किया गया है।"
+    },
+    {
+      "sr_no": 34,
+      "question": "Which of the following statements about continents is correct? महाद्वीपों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Asia is the largest continent. / एशिया सबसे बड़ा महाद्वीप है।",
+      "option2": "Australia is the smallest continent. / ऑस्ट्रेलिया सबसे छोटा महाद्वीप है।",
+      "option3": "Both 1 and 2 / 1 और 2 दोनों",
+      "option4": "None / कोई नहीं",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Asia is the largest and Australia the smallest continent. एशिया सबसे बड़ा और ऑस्ट्रेलिया सबसे छोटा महाद्वीप है।"
+    },
+    {
+      "sr_no": 35,
+      "question": "Consider the following statements about Saturn’s rings: शनि के छल्लों के संबंध में निम्नलिखित कथनों पर विचार करें : (a) They are made of ice and rock particles. / वे बर्फ और चट्टानी कणों से बने हैं। (b) They were discovered by Galileo Galilei. / इनकी खोज गैलीलियो गैलीली ने की थी। (c) They are permanent and unchanging. / वे स्थायी और अपरिवर्तनीय हैं। Which statements are correct? कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "2 only / केवल 1",
+      "option4": "1 and 3 / 1 और 3",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Saturn’s rings are made of ice and rock; Galileo first observed them, but they are not permanent and change over time. शनि के छल्ले बर्फ और चट्टानी कणों से बने हैं; गैलीलियो ने इन्हें पहली बार देखा था, लेकिन ये स्थायी नहीं हैं।"
+    },
+    {
+      "sr_no": 36,
+      "question": "Which of the following statements about the Antarctic Circle is correct? अंटार्कटिक वृत्त के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It lies at approximately 66.5° S latitude. / यह लगभग 66.5° दक्षिण अक्षांश पर स्थित है।",
+      "option2": "Inside this circle, the Sun never rises in summer. / इस वृत्त के भीतर , गर्मियों में सूर्य कभी नहीं उगता।",
+      "option3": "It passes through Africa. / यह अफ्रीका से गुजरता है।",
+      "option4": "It coincides with the Tropic of Capricorn. / यह मकर रेखा के साथ मेल खाता है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Antarctic Circle is at 66.5° S; during polar night, the Sun remains below the horizon. अंटार्कटिक वृत्त 66.5° दक्षिण पर स्थित है ; ध्रुवीय रात में सूर्य क्षितिज से नीचे रहता है।"
+    },
+    {
+      "sr_no": 37,
+      "question": "Which scale measures the magnitude of earthquakes? भूकंपों की तीव्रता मापने के लिए कौन - सा पैमाना उपयोग किया जाता है ?",
+      "option1": "Beaufort scale / ब्यूफोर्ट पैमाना",
+      "option2": "Richter scale / रिक्टर पैमाना",
+      "option3": "Mercalli scale / मर्कैली पैमाना",
+      "option4": "Celsius scale / सेल्सियस पैमाना",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Richter scale measures the energy released by an earthquake. रिक्टर पैमाना भूकंप द्वारा छोड़ी गई ऊर्जा को मापता है।"
+    },
+    {
+      "sr_no": 38,
+      "question": "Which of the following statements about the Earth’s hemispheres is correct? पृथ्वी के गोलार्धों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "The Tropic of Cancer divides the Earth into Eastern and Western Hemispheres. / कर्क रेखा पृथ्वी को पूर्वी और पश्चिमी गोलार्ध में विभाजित करती है।",
+      "option2": "The Prime Meridian divides the Earth into Northern and Southern Hemispheres. / प्रधान लाभांश पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में विभाजित करता है।",
+      "option3": "The Equator divides the Earth into Northern and Southern Hemispheres. / भूमध्य रेखा पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में विभाजित करती है।",
+      "option4": "Longitude divides the Earth into Northern and Southern Hemispheres. / देशांतर पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में विभाजित करता है।",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Equator divides the Earth into Northern and Southern Hemispheres. भूमध्य रेखा पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में विभाजित करती है।"
+    },
+    {
+      "sr_no": 39,
+      "question": "Which ocean has the highest salinity on average? औसतन किस महासागर का लवणता स्तर सबसे अधिक है ?",
+      "option1": "Arctic Ocean / आर्कटिक महासागर",
+      "option2": "Indian Ocean / हिंद महासागर",
+      "option3": "Pacific Ocean / प्रशांत महासागर",
+      "option4": "Atlantic Ocean / अटलांटिक महासागर",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Atlantic has high salinity due to strong evaporation and limited inflow. अटलांटिक महासागर में उच्च वाष्पीकरण और सीमित मीठे जल के कारण लवणता अधिक है।"
+    },
+    {
+      "sr_no": 40,
+      "question": "Which of the following statements about the rock cycle is correct? शैल चक्र के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It describes transformation among all three rock types. / यह तीनों शैल प्रकारों के परिवर्तन को दर्शाता है।",
+      "option2": "It involves only igneous and sedimentary rocks. / यह केवल आग्नेय और आवसादी शैलों से संबंधित है।",
+      "option3": "It is a one-way process. / यह एक दिशा में होने वाली प्रक्रिया है।",
+      "option4": "Rocks do not change type. / शैलों का प्रकार नहीं बदलता।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The rock cycle explains how igneous, sedimentary, and metamorphic rocks transform into each other. शैल चक्र आग्नेय , आवसादी और कायांतरित शैलों के परस्पर परिवर्तन को दर्शाता है।"
+    },
+    {
+      "sr_no": 41,
+      "question": "Which of the following is the largest ocean on Earth? निम्नलिखित में से पृथ्वी का सबसे बड़ा महासागर कौन - सा है ?",
+      "option1": "Atlantic Ocean / अटलांटिक महासागर",
+      "option2": "Indian Ocean / हिंद महासागर",
+      "option3": "Arctic Ocean / आर्कटिक महासागर",
+      "option4": "Pacific Ocean / प्रशांत महासागर",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Pacific Ocean covers about one-third of Earth’s surface area. प्रशांत महासागर पृथ्वी की सतह का लगभग एक - तिहाई भाग घेरता है।"
+    },
+    {
+      "sr_no": 42,
+      "question": "Which of the following ocean currents is warm? निम्नलिखित में से कौन - सी महासागरीय धारा गर्म है ?",
+      "option1": "Labrador Current / लैब्राडोर धारा",
+      "option2": "Gulf Stream / गल्फ स्ट्रीम",
+      "option3": "Oyashio Current / ओयाशियो धारा",
+      "option4": "Peru Current / पेरू धारा",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Gulf Stream carries warm water from the Gulf of Mexico toward Europe. गल्फ स्ट्रीम मैक्सिको की खाड़ी से यूरोप की ओर गर्म जल प्रवाहित करती है।"
+    },
+    {
+      "sr_no": 43,
+      "question": "Which rock is metamorphic in nature? कौन - सी चट्टान कायांतरित प्रकृति की है ?",
+      "option1": "Granite / ग्रेनाइट",
+      "option2": "Basalt / बेसाल्ट",
+      "option3": "Marble / संगमरमर",
+      "option4": "Shale / शेल",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Marble forms when limestone undergoes metamorphism under heat and pressure. संगमरमर चूना पत्थर के ऊष्मा और दाब में कायांतरण से बनता है।"
+    },
+    {
+      "sr_no": 44,
+      "question": "Which of the following statements about isostasy is correct? आइसोस्टेसी के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It explains the gravitational balance of Earth's crust. / यह पृथ्वी की पर्पटी के गुरुत्वीय संतुलन को समझाता है।",
+      "option2": "It is related to ocean currents. / यह महासागरीय धाराओं से संबंधित है।",
+      "option3": "It explains Earth’s rotation. / यह पृथ्वी के घूर्णन को समझाता है।",
+      "option4": "It deals with plate boundaries. / यह प्लेट सीमाओं से संबंधित है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Isostasy explains how Earth's crust maintains gravitational equilibrium over the denser mantle. आइसोस्टेसी बताता है कि पृथ्वी की पर्पटी घने मेंटल पर गुरुत्वीय संतुलन कैसे बनाए रखती है।"
+    },
+    {
+      "sr_no": 45,
+      "question": "Which of the following statements about latitude is correct? अक्षांश के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Latitude lines are vertical lines running from pole to pole. / अक्षांश रेखाएँ लंबवत होती हैं और ध्रुव से ध्रुव तक जाती हैं।",
+      "option2": "Latitude lines measure distance north or south of the Equator. / अक्षांश रेखाएँ भूमध्य रेखा से उत्तर या दक्षिण की दूरी मापती हैं।",
+      "option3": "Latitude ranges from 0° to 180°. / अक्षांश 0° से 180° तक होता है।",
+      "option4": "Latitude affects time zones directly. / अक्षांश सीधे समय क्षेत्रों को प्रभावित करता है।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Latitude lines are horizontal and measure north–south distance from the Equator. अक्षांश रेखाएँ क्षैतिज होती हैं और भूमध्य रेखा से उत्तर - दक्षिण दूरी मापती हैं।"
+    },
+    {
+      "sr_no": 46,
+      "question": "Which of the following planets has the most moons? निम्नलिखित में से किस ग्रह के सबसे अधिक चंद्रमा हैं ?",
+      "option1": "Saturn / शनि",
+      "option2": "Jupiter / बृहस्पति",
+      "option3": "Uranus / यूरेनस",
+      "option4": "Neptune / नेप्च्यून",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Saturn currently has the highest known number of moons, over 275. शनि के वर्तमान में ज्ञात सबसे अधिक चंद्रमा हैं, 275 से अधिक।"
+    },
+    {
+      "sr_no": 47,
+      "question": "Which ocean current keeps the western coast of Europe warm? कौन - सी महासागरीय धारा यूरोप के पश्चिमी तट को गर्म रखती है ?",
+      "option1": "Canary Current / कैनेरी धारा",
+      "option2": "Labrador Current / लैब्राडोर धारा",
+      "option3": "Gulf Stream / गल्फ स्ट्रीम",
+      "option4": "Oyashio Current / ओयाशियो धारा",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The warm Gulf Stream moderates Europe’s western climate. गल्फ स्ट्रीम यूरोप के पश्चिमी भाग को गर्म बनाए रखती है।"
+    },
+    {
+      "sr_no": 48,
+      "question": "Which of the following statements about sedimentary rocks is correct? आवसादी चट्टानों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "They form by solidification of magma. / ये मैग्मा के ठोस होने से बनती हैं।",
+      "option2": "They often contain fossils. / इनमें अक्सर जीवाश्म पाए जाते हैं।",
+      "option3": "They are formed deep inside the Earth. / ये पृथ्वी के गहराई में बनती हैं।",
+      "option4": "They are crystalline in nature. / इनकी संरचना क्रिस्टलीय होती है।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sedimentary rocks form from deposition and compression of sediments; fossils are common. आवसादी चट्टानें तलछट के जमाव और दाब से बनती हैं ; इनमें जीवाश्म सामान्यतः पाए जाते हैं।"
+    },
+    {
+      "sr_no": 49,
+      "question": "Which of the following ocean currents is cold? निम्नलिखित में से कौन - सी महासागरीय धारा ठंडी है ?",
+      "option1": "Gulf Stream / गल्फ स्ट्रीम",
+      "option2": "Peru (Humboldt) Current / पेरू ( हंबोल्ट ) धारा",
+      "option3": "Kuroshio Current / कुरोशियो धारा",
+      "option4": "North Atlantic Drift / उत्तर अटलांटिक प्रवाह",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Peru Current flows northward along South America’s west coast carrying cold water. पेरू धारा दक्षिण अमेरिका के पश्चिमी तट के साथ ठंडा जल उत्तर की ओर ले जाती है।"
+    },
+    {
+      "sr_no": 50,
+      "question": "Which of the following continents is known as the ‘White Continent’? कौन - सा महाद्वीप ' श्वेत महाद्वीप ' के नाम से जाना जाता है ?",
+      "option1": "Antarctica / अंटार्कटिका",
+      "option2": "Europe / यूरोप",
+      "option3": "Asia / एशिया",
+      "option4": "North America / उत्तर अमेरिका",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Antarctica is called the White Continent due to its ice cover. अंटार्कटिका अपनी बर्फीली सतह के कारण ‘श्वेत महाद्वीप’ कहलाता है।"
+    },
+    {
+      "sr_no": 51,
+      "question": "Which of the following statements about the Tropic of Capricorn is correct? मकर रेखा के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It passes through South America, Africa, and Australia. / यह दक्षिण अमेरिका , अफ्रीका और ऑस्ट्रेलिया से गुजरती है।",
+      "option2": "It is at 23.5° N latitude. / यह 23.5° उत्तर अक्षांश पर स्थित है।",
+      "option3": "It marks the northernmost point of the Sun’s overhead path. / यह सूर्य के ऊपर जाने का उत्तरीतम बिंदु है।",
+      "option4": "It passes through India. / यह भारत से गुजरती है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Tropic of Capricorn (23.5° S) passes through South America, Africa, and Australia. मकर रेखा (23.5° दक्षिण ) दक्षिण अमेरिका , अफ्रीका और ऑस्ट्रेलिया से गुजरती है।"
+    },
+    {
+      "sr_no": 52,
+      "question": "Consider the following statements about the Sun: सूर्य के संबंध में निम्नलिखित कथनों पर विचार करें : (a) It is a G-type main-sequence star. / यह एक G- प्रकार का मुख्य अनुक्रम तारा है। (b) Its energy is produced by nuclear fusion of hydrogen into helium. / इसकी ऊर्जा हाइड्रोजन से हीलियम में नाभिकीय संलयन द्वारा उत्पन्न होती है। (c) It is the largest star in the Milky Way. / यह आकाशगंगा का सबसे बड़ा तारा है। Which statements are correct? कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 3 / 1 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Sun is a G-type main-sequence star, producing energy through hydrogen fusion, but not the largest star in the Milky Way. सूर्य G- प्रकार का मुख्य अनुक्रम तारा है और हाइड्रोजन संलयन द्वारा ऊर्जा उत्पन्न करता है , लेकिन यह आकाशगंगा का सबसे बड़ा तारा नहीं है।"
+    },
+    {
+      "sr_no": 53,
+      "question": "Which of the following statements about seismic waves is correct? भूकंपीय तरंगों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "P-waves cannot travel through liquids. / P- तरंगें द्रवों से नहीं गुजर सकतीं।",
+      "option2": "S-waves can travel through both solids and liquids. / S- तरंगें ठोस और द्रव दोनों से गुजर सकती हैं।",
+      "option3": "P-waves are faster than S-waves. / P- तरंगें S- तरंगों से तेज़ होती हैं।",
+      "option4": "Surface waves travel faster than P-waves. / सतही तरंगें P- तरंगों से तेज़ होती हैं।",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "P-waves (primary waves) are the fastest seismic waves and travel through both solids and liquids. P- तरंगें सबसे तेज़ होती हैं और ठोस तथा द्रव दोनों माध्यमों से गुजर सकती हैं।"
+    },
+    {
+      "sr_no": 54,
+      "question": "Which planet has the fastest rotation period in the Solar System? सौर मंडल में किस ग्रह का घूर्णन अवधि सबसे तेज़ है ?",
+      "option1": "Earth / पृथ्वी",
+      "option2": "Jupiter / बृहस्पति",
+      "option3": "Mercury / बुध",
+      "option4": "Saturn / शनि",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Jupiter completes one rotation in about 10 hours, making it the fastest rotating planet. बृहस्पति लगभग 10 घंटे में एक बार घूर्णन करता है , जिससे यह सबसे तेज़ घूमने वाला ग्रह है।"
+    },
+    {
+      "sr_no": 55,
+      "question": "Which ocean separates Africa from Australia? कौन - सा महासागर अफ्रीका को ऑस्ट्रेलिया से अलग करता है ?",
+      "option1": "Indian Ocean / हिंद महासागर",
+      "option2": "Atlantic Ocean / अटलांटिक महासागर",
+      "option3": "Pacific Ocean / प्रशांत महासागर",
+      "option4": "Arctic Ocean / आर्कटिक महासागर",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Indian Ocean lies between Africa and Australia. हिंद महासागर अफ्रीका और ऑस्ट्रेलिया के बीच स्थित है।"
+    },
+    {
+      "sr_no": 56,
+      "question": "Which of the following statements about the lithosphere is correct? लिथोस्फीयर के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It is completely molten. / यह पूरी तरह द्रवित होता है।",
+      "option2": "It includes both crust and uppermost mantle. / इसमें भू - पर्पटी और मेंटल का ऊपरी भाग शामिल है।",
+      "option3": "It lies below the asthenosphere. / यह एस्थेनोस्फीयर के नीचे स्थित है।",
+      "option4": "It does not include the crust. / इसमें भू - पर्पटी शामिल नहीं है।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The lithosphere consists of the crust and the rigid upper mantle forming tectonic plates. लिथोस्फीयर भू - पर्पटी और मेंटल के कठोर ऊपरी भाग से बना होता है , जो प्लेटों का निर्माण करता है।"
+    },
+    {
+      "sr_no": 57,
+      "question": "Consider the following statements about the Arctic Circle: आर्कटिक वृत्त के संबंध में निम्नलिखित कथनों पर विचार करें : (a) It lies at the Equator. / यह भूमध्य रेखा पर स्थित है। (b) Inside this circle, the Sun remains above the horizon for 24 hours in summer. / इस वृत्त के भीतर , गर्मियों में सूर्य 24 घंटे क्षितिज के ऊपर रहता है। (c) It lies at approximately 66.5° N latitude. / यह लगभग 66.5° उत्तर अक्षांश पर स्थित है। Which statements are correct? कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "1 and 3 / 1 और 3",
+      "option3": "2 and 3 / 2 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Arctic Circle is at 66.5° N, where summer sun stays above the horizon for 24 hours. आर्कटिक वृत्त 66.5° उत्तर पर स्थित है , जहाँ गर्मियों में सूर्य 24 घंटे ऊपर रहता है।"
+    },
+    {
+      "sr_no": 58,
+      "question": "Which of the following statements about comets is correct? धूमकेतुओं के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "They are primarily composed of rock and metal. / वे मुख्य रूप से चट्टान और धातु से बने होते हैं।",
+      "option2": "They have highly elliptical orbits around the Sun. / इनकी सूर्य के चारों ओर अत्यधिक दीर्घवृत्ताकार कक्षाएँ होती हैं।",
+      "option3": "They remain visible even without approaching the Sun. / सूर्य के निकट आए बिना ये दृश्य रहते हैं।",
+      "option4": "They are larger than planets. / वे ग्रहों से बड़े होते हैं।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Comets have highly elliptical orbits and develop tails when approaching the Sun. धूमकेतुओं की कक्षाएँ अत्यधिक दीर्घवृत्ताकार होती हैं और सूर्य के पास आने पर उनकी पूंछ बनती है।"
+    },
+    {
+      "sr_no": 59,
+      "question": "Which of the following statements about Mercury is correct? बुध ग्रह के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It has a thick atmosphere rich in oxygen. / इसकी मोटी ऑक्सीजन युक्त वायुमंडलीय है।",
+      "option2": "It is the closest planet to the Sun. / यह सूर्य के सबसे निकट ग्रह है।",
+      "option3": "It has rings like Saturn. / इसके छल्ले शनि की तरह हैं।",
+      "option4": "It rotates slower than Venus. / यह शुक्र से धीमी गति से घूमता है।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Mercury is the closest planet to the Sun and has a very thin atmosphere. बुध सूर्य के सबसे निकट ग्रह है और इसका वायुमंडल बहुत पतला है।"
+    },
+    {
+      "sr_no": 60,
+      "question": "Which of the following continents lies entirely in the Southern Hemisphere? निम्नलिखित में से कौन - सा महाद्वीप पूर्णतः दक्षिणी गोलार्ध में स्थित है ?",
+      "option1": "Africa / अफ्रीका",
+      "option2": "South America / दक्षिण अमेरिका",
+      "option3": "Australia / ऑस्ट्रेलिया",
+      "option4": "Asia / एशिया",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Australia lies completely south of the equator. ऑस्ट्रेलिया पूरी तरह भूमध्य रेखा के दक्षिण में स्थित है।"
+    },
+    {
+      "sr_no": 61,
+      "question": "Consider the following statements about the Prime Meridian: प्रधान लाभांश के संबंध में निम्नलिखित कथनों पर विचार करें : (a) It passes through Greenwich, England. / यह ग्रीनविच , इंग्लैंड से गुजरती है। (b) It is at 0° longitude. / यह 0° देशांतर पर स्थित है। (c) It divides the Earth into the Eastern and Western Hemispheres. / यह पृथ्वी को पूर्वी और पश्चिमी गोलार्ध में विभाजित करती है। Which statements are correct? कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "2 and 3 / 2 और 3",
+      "option3": "1 and 3 / 1 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Prime Meridian passes through Greenwich at 0° longitude and divides the Earth into Eastern and Western Hemispheres. प्रधान लाभांश ग्रीनविच से 0° देशांतर पर गुजरती है और पृथ्वी को पूर्वी और पश्चिमी गोलार्ध में विभाजित करती है।"
+    },
+    {
+      "sr_no": 62,
+      "question": "Which of the following statements about the Tropic of Cancer is correct? कर्क रेखा के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It passes through India. / यह भारत से गुजरती है।",
+      "option2": "It marks the southernmost point of the Sun’s overhead path. / यह सूर्य के ऊपर जाने का दक्षिणतम बिंदु है।",
+      "option3": "It lies at 23.5° S latitude. / यह 23.5° दक्षिण अक्षांश पर स्थित है।",
+      "option4": "It passes through the North Pole. / यह उत्तरी ध्रुव से गुजरती है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Tropic of Cancer (23.5° N) passes through India. कर्क रेखा (23.5° उत्तर ) भारत से गुजरती है।"
+    },
+    {
+      "sr_no": 63,
+      "question": "Which of the following pairs is correctly matched? निम्नलिखित युग्मों में से कौन - सा सही मेल है ?",
+      "option1": "Granite – Extrusive igneous / ग्रेनाइट – बहिर्गामी आग्नेय",
+      "option2": "Basalt – Intrusive igneous / बेसाल्ट – अंतर्गामी आग्नेय",
+      "option3": "Sandstone – Sedimentary / बलुआ पत्थर – आवसादी",
+      "option4": "Slate – Igneous / स्लेट – आग्नेय",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Sandstone is formed by the compaction of sand particles—thus sedimentary. बलुआ पत्थर रेत कणों के संघनन से बनता है , इसलिए यह आवसादी है।"
+    },
+    {
+      "sr_no": 64,
+      "question": "Which of the following is an example of an igneous rock? निम्नलिखित में से कौन - सा एक आग्नेय शिला का उदाहरण है ?",
+      "option1": "Marble / संगमरमर",
+      "option2": "Limestone / चूना पत्थर",
+      "option3": "Slate / स्लेट",
+      "option4": "Basalt / बेसाल्ट",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Basalt forms from cooling lava; it’s a primary igneous rock. बेसाल्ट लावा के ठंडा होने से बनती है और यह प्रमुख आग्नेय शिला है।"
+    },
+    {
+      "sr_no": 65,
+      "question": "Which of the following statements about time zones is correct? समय क्षेत्रों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Each time zone generally spans 15° of longitude. / प्रत्येक समय क्षेत्र आमतौर पर 15° देशांतर तक फैला होता है।",
+      "option2": "All countries strictly follow exact 15° divisions. / सभी देश सख्ती से 15° विभाजन का पालन करते हैं।",
+      "option3": "Time zones are based on latitude. / समय क्षेत्र अक्षांश पर आधारित होते हैं।",
+      "option4": "The Prime Meridian is not related to time zones. / प्रधान लाभांश समय क्षेत्रों से संबंधित नहीं है।",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Time zones are approximately 15° apart in longitude, though actual borders may vary. समय क्षेत्र लगभग 15° देशांतर पर स्थित होते हैं , हालांकि वास्तविक सीमाएँ भिन्न हो सकती हैं।"
+    },
+    {
+      "sr_no": 66,
+      "question": "Which of the following statements about continental drift is correct? महाद्वीपीय विस्थापन के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "Continents were once joined in Pangaea. / महाद्वीप पहले पैंजिया नामक स्थलखंड में जुड़े थे।",
+      "option2": "Continents have been fixed since formation. / महाद्वीप निर्माण के बाद स्थिर रहे हैं।",
+      "option3": "The theory was proposed by Alfred Wegener. / यह सिद्धांत ऐल्फ्रेड वेगेनर ने दिया।",
+      "option4": "Both 1 and 3 / 1 और 3 दोनों",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Wegener proposed that continents drifted apart from Pangaea. वेगेनर ने प्रस्तावित किया कि सभी महाद्वीप पैंजिया से अलग हुए।"
+    },
+    {
+      "sr_no": 67,
+      "question": "Consider the following plate boundaries: निम्नलिखित प्लेट सीमाओं पर विचार करें :",
+      "option1": "Divergent – Plates move toward each other / डायवर्जेंट – प्लेटें एक - दूसरे की ओर बढ़ती हैं",
+      "option2": "Convergent – Plates move away from each other / कनवर्जेंट – प्लेटें दूर जाती हैं",
+      "option3": "Transform – Plates slide past each other / ट्रांसफॉर्म – प्लेटें एक - दूसरे के समानांतर खिसकती हैं",
+      "option4": "None of the above / उपरोक्त में से कोई नहीं",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "At transform boundaries, plates slide horizontally past one another. ट्रांसफॉर्म सीमा पर प्लेटें एक - दूसरे के समानांतर खिसकती हैं।"
+    },
+    {
+      "sr_no": 68,
+      "question": "Which of the following statements about the International Date Line (IDL) is correct? अंतर्राष्ट्रीय तारीख रेखा (IDL) के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It lies at 0° longitude. / यह 0° देशांतर पर स्थित है।",
+      "option2": "Crossing it eastward loses a day, westward gains a day. / इसे पूर्व की ओर पार करने पर एक दिन घटता है , पश्चिम की ओर पार करने पर एक दिन बढ़ता है।",
+      "option3": "It passes through Greenwich, England. / यह ग्रीनविच , इंग्लैंड से गुजरती है।",
+      "option4": "It divides the Earth into Northern and Southern Hemispheres. / यह पृथ्वी को उत्तरी और दक्षिणी गोलार्ध में विभाजित करती है।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The International Date Line roughly follows the 180° longitude; eastward crossing subtracts a day, westward crossing adds a day. अंतर्राष्ट्रीय तारीख रेखा लगभग 180° देशांतर पर स्थित है ; इसे पूर्व की ओर पार करने पर एक दिन घटता है , पश्चिम की ओर पार करने पर जोड़ता है।"
+    },
+    {
+      "sr_no": 69,
+      "question": "Which of the following statements about earthquakes is correct? भूकंपों के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "They do not release energy. / वे ऊर्जा नहीं छोड़ते।",
+      "option2": "They are caused by volcanic activity only. / वे केवल ज्वालामुखीय गतिविधि से होते हैं।",
+      "option3": "They cannot occur in oceanic regions. / वे महासागरीय क्षेत्रों में नहीं होते।",
+      "option4": "They occur mainly along plate boundaries. / वे मुख्यतः प्लेट सीमाओं पर होते हैं।",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Most earthquakes occur along plate boundaries due to the movement and collision of plates. अधिकांश भूकंप प्लेट सीमाओं के साथ प्लेटों की गति और टकराव से होते हैं।"
+    },
+    {
+      "sr_no": 70,
+      "question": "Consider the following statements regarding the asteroid belt: एस्ट्रॉयड बेल्ट के संबंध में निम्नलिखित कथनों पर विचार करें : (a) It lies between Mars and Jupiter. / यह मंगल और बृहस्पति के बीच स्थित है। (b) It contains millions of small rocky bodies. / इसमें लाखों छोटे चट्टानी पिंड होते हैं। (c) It is the origin of most comets in the Solar System. / यह सौर मंडल में अधिकांश धूमकेतुओं का स्रोत है। Which of the above statements are correct? उपरोक्त में से कौन - से कथन सही हैं ?",
+      "option1": "1 and 2 / 1 और 2",
+      "option2": "1 and 3 / 1 और 3",
+      "option3": "2 and 3 / 2 और 3",
+      "option4": "1, 2 and 3 / 1, 2 और 3",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The asteroid belt lies between Mars and Jupiter and contains millions of rocky bodies, but it is not the main source of comets. एस्ट्रॉयड बेल्ट मंगल और बृहस्पति के बीच स्थित है और इसमें लाखों चट्टानी पिंड होते हैं , लेकिन यह अधिकांश धूमकेतुओं का मुख्य स्रोत नहीं है।"
+    },
+    {
+      "sr_no": 71,
+      "question": "Which type of boundary forms mid-ocean ridges? किस प्रकार की प्लेट सीमा पर मध्य महासागरीय पर्वत श्रृंखला बनती है ?",
+      "option1": "Transform / रूपांतरण",
+      "option2": "Convergent / अभिसारी",
+      "option3": "Divergent / अपसारी",
+      "option4": "Passive / निष्क्रिय",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Divergent boundaries form ridges where new oceanic crust is created. अपसारी सीमाओं पर नई महासागरीय पर्पटी के निर्माण से पर्वत श्रृंखलाएँ बनती हैं।"
+    },
+    {
+      "sr_no": 72,
+      "question": "Which of the following is the correct sequence of Earth's internal layers from the surface to the centre? पृथ्वी की आंतरिक परतों का सतह से केंद्र तक सही क्रम कौन - सा है ?",
+      "option1": "Crust → Mantle → Core / भू - पर्पटी → मेंटल → कोर",
+      "option2": "Mantle → Core → Crust / मेंटल → कोर → भू - पर्पटी",
+      "option3": "Core → Mantle → Crust / कोर → मेंटल → भू - पर्पटी",
+      "option4": "Crust → Core → Mantle / भू - पर्पटी → कोर → मेंटल",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The Earth’s structure consists of crust, mantle, and core in order from the surface to the center. पृथ्वी की संरचना सतह से केंद्र की ओर क्रमशः भू - पर्पटी , मेंटल और कोर से बनी है।"
+    },
+    {
+      "sr_no": 73,
+      "question": "Which of the following statements about Neptune is correct? नेप्च्यून के संबंध में निम्नलिखित में से कौन - सा कथन सही है ?",
+      "option1": "It is the coldest planet in the Solar System. / यह सौर मंडल का सबसे ठंडा ग्रह है।",
+      "option2": "It has a strong magnetic field and fast winds. / इसका मजबूत चुंबकीय क्षेत्र और तेज हवाएँ हैं।",
+      "option3": "It is visible to the naked eye from Earth. / यह पृथ्वी से नग्न नेत्रों से दिखाई देता है।",
+      "option4": "It is closer to the Sun than Uranus. / यह यूरेनस से सूर्य के अधिक निकट है।",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Neptune has a strong magnetic field and experiences the fastest winds in the Solar System. नेप्च्यून का मजबूत चुंबकीय क्षेत्र है और इसमें सौर मंडल की सबसे तेज़ हवाएँ चलती हैं।"
+    },
+    {
+      "sr_no": 74,
+      "question": "Which planet is called the Earth’s twin due to similar size and mass? किस ग्रह को आकार और द्रव्यमान में पृथ्वी का जुड़वां कहा जाता है ?",
+      "option1": "Mercury / बुध",
+      "option2": "Venus / शुक्र",
+      "option3": "Mars / मंगल",
+      "option4": "Saturn / शनि",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "Venus is similar to Earth in size and mass, earning the nickname “Earth’s twin.” शुक्र आकार और द्रव्यमान में पृथ्वी के समान है , इसलिए इसे “पृथ्वी का जुड़वां” कहा जाता है।"
+    },
+    {
+      "sr_no": 75,
+      "question": "Which of the following layers is responsible for the movement of tectonic plates? निम्नलिखित में से कौन - सी परत प्लेटों की गति के लिए जिम्मेदार है ?",
+      "option1": "Crust / भू - पर्पटी",
+      "option2": "Lithosphere / लिथोस्फीयर",
+      "option3": "Core / कोर",
+      "option4": "Asthenosphere / एस्थेनोस्फीयर",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "The asthenosphere, a semi-molten layer beneath the lithosphere, allows plate movement. लिथोस्फीयर के नीचे स्थित अर्ध - द्रवित एस्थेनोस्फीयर परत प्लेटों की गति की अनुमति देती है।"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEOGRAPHY TEST -1</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
