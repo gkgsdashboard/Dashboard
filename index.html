@@ -1,114 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Dashboard</title>
-    <style>
-        /* Base Styling */
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-        body{
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            color: white;
-            text-align: center;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(120deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+      background-size: 300% 300%;
+      animation: gradientShift 10s infinite alternate;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+    }
 
-            /* 🌟 VIBGYOR ANIMATED BACKGROUND STYLES 🌟 */
-            /* Violet (#8A2BE2), Indigo (#4B0082), Blue (#0000FF), Green (#008000), Yellow (#FFFF00), Orange (#FFA500), Red (#FF0000) */
-            background: linear-gradient(135deg, #8A2BE2, #4B0082, #0000FF, #008000, #FFFF00, #FFA500, #FF0000); 
-            background-size: 400% 400%; /* Larger background to allow movement */
-            animation: gradientMove 20s ease infinite; /* Animation speed increased for a smoother flow */
-        }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
 
-        /* 🌟 KEYFRAMES FOR BACKGROUND ANIMATION 🌟 */
-        @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%; 
-            }
-            50% {
-                background-position: 100% 50%; 
-            }
-            100% {
-                background-position: 0% 50%; 
-            }
-        }
+    /* --- Content Styling --- */
+    .content {
+      position: relative;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(15px);
+      padding: 40px 70px;
+      border-radius: 30px;
+      text-align: center;
+      z-index: 2;
+      box-shadow: 0 0 40px rgba(0,0,0,0.2);
+      border: 2px solid rgba(255,255,255,0.4);
+    }
 
+    .content h1 {
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 20px;
+    }
 
-        /* --- Modal Styles --- */
-        .modal-bg{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .modal{
-            /* Modal background ko light/white hi rakha hai takki buttons visible rahein */
-            background: #ecf0f1; 
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transform: scale(1);
-            animation: bounceIn 0.5s forwards;
-        }
+    .btns button {
+      margin: 10px;
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transition: transform 0.3s;
+    }
 
-        /* Animation for dramatic entrance */
-        @keyframes bounceIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-
-        .modal h2{
-            color: #2c3e50;
-            margin-bottom: 25px;
-            font-size: 1.8em;
-        }
-        .option-container{
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .option-btn{
-            display: block;
-            padding: 15px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-        .option-btn:hover{
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-    </style>
+    .btns button:hover {
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
-    
-    <div class="modal-bg">
-        <div class="modal">
-            <h2>Select Your Path</h2> 
-            
-            <div class="option-container">
-                <a href="notes.html" class="option-btn">📚 Notes Dashboard</a>
-                
-                <a href="quiz.html" class="option-btn">🧠 Quiz Dashboard</a>
-            </div>
-            
-        </div>
+
+  <div class="content">
+    <h1>Choose Your Path</h1>
+    <div class="btns">
+      <button onclick="window.location.href='quiz.html'">🧠 Quiz Dashboard</button>
+      <button onclick="window.location.href='notes.html'">📚 Notes Dashboard</button>
     </div>
-    
+  </div>
+
+  <script>
+    // Emoji rain script has been removed.
+  </script>
 </body>
 </html>

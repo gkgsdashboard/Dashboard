@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>General Notes Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
     <script src="notesData.js"></script> 
     <style>
         /* Base CSS Styling (COMMON for All Devices) */
@@ -17,17 +18,16 @@
             padding: 15px 10px;
             overflow-y: auto;
 
-            /* 🌟 VIBGYOR ANIMATED BACKGROUND STYLES 🌟 */
-            background: linear-gradient(135deg, #8A2BE2, #4B0082, #0000FF, #008000, #FFFF00, #FFA500, #FF0000); 
-            background-size: 400% 400%; 
-            animation: gradientMove 20s ease infinite; 
+            /* 🌟 NEW GRADIENT BACKGROUND STYLES 🌟 */
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb); 
+            background-size: 300% 300%; 
+            animation: gradientShift 10s infinite alternate; 
         }
 
-        /* 🌟 KEYFRAMES FOR BACKGROUND ANIMATION 🌟 */
-        @keyframes gradientMove {
+        /* 🌟 NEW KEYFRAMES FOR BACKGROUND ANIMATION 🌟 */
+        @keyframes gradientShift {
             0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         /* Dashboard Container - FIXED TO SINGLE COLUMN (All Devices) */
@@ -42,6 +42,11 @@
             opacity: 1; 
             transform: none; 
             animation: none; 
+             /* To make it stand out against the light background */
+            background: rgba(0, 0, 0, 0.2); 
+            border-radius: 15px; 
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* Card Styles */
@@ -152,11 +157,11 @@
 
         /* Heading for Notes Dashboard */
         .page-heading {
-            color: white;
+            color: #2c3e50; /* Changed color for better contrast with new light background */
             font-size: 2.2em;
             margin-bottom: 20px;
             font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); /* Changed shadow for better contrast */
             text-align: center;
             width: 100%;
         }
@@ -330,7 +335,7 @@
             // 6. 'Adding Soon' संदेश दिखाना
             function showAddingSoonMessage(itemTitle) {
                 const emoji = document.createElement('p');
-                emoji.style.cssText = "font-size: 3.5em; text-align: center; margin-bottom: 20px; opacity: 0.8;";
+                emoji.style.cssText = "font-size: 3.5em; text-align: center; margin-bottom: 20px; opacity: 0.8; color: #34495e;"; /* Added color for visibility */
                 emoji.textContent = '🚧'; // Construction emoji
                 
                 const message = document.createElement('h2');
@@ -343,7 +348,7 @@
             }
             
         } else {
-             dashboard.innerHTML = "<h2 style='color: white; text-align: center; margin-top: 50px;'>Notes failed to load. Please check notesData.js and ensure it is in the same folder.</h2>";
+             dashboard.innerHTML = "<h2 style='color: #2c3e50; text-align: center; margin-top: 50px;'>Notes failed to load. Please check notesData.js and ensure it is in the same folder.</h2>";
         }
     </script>
 </body>
