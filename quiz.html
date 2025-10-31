@@ -181,7 +181,7 @@
     </div>
     
     <script>
-        // 1. Data variable (Assuming quizData.js loads 'quizSubjects')
+        // 1. Data variable (using quizSubjects from quizData.js)
         const data = typeof quizSubjects !== 'undefined' ? quizSubjects : []; 
         
         // 2. DOM elements
@@ -189,11 +189,48 @@
         const modalBg = document.getElementById('modal-bg');
         const modalTitle = document.getElementById('modal-title');
         const topicList = document.getElementById('topic-list');
-        const closeBtn = document.getElementById('close-btn');
+        let closeBtn = document.getElementById('close-btn'); // Changed to 'let' so it can be re-assigned
+
+        // PLACEHOLDER_PREFIX को बनाए रखा गया है, लेकिन अब 'Adding Soon' पर भी जाँच करेंगे।
+        const PLACEHOLDER_PREFIX = 'YOUR_QUIZ_LINK_FOR_'; 
+        const ADDING_SOON_TEXT = 'Adding Soon'; // नया कॉन्स्टेंट
+        let currentSubject = null; // Store the currently open subject
+
+        // Function to remove and re-add the Close button to clear all listeners (The FIX)
+        function resetCloseButton(defaultAction) {
+            const oldCloseBtn = document.getElementById('close-btn');
+            const newCloseBtn = oldCloseBtn.cloneNode(true);
+            oldCloseBtn.parentNode.replaceChild(newCloseBtn, oldCloseBtn);
+            
+            closeBtn = newCloseBtn;
+
+            if (defaultAction) {
+                closeBtn.addEventListener('click', closeModals);
+            }
+        }
+        
+        // 7. Close modal functions (Default closing function)
+        function closeModals(){
+            modalBg.classList.remove('active');
+            currentSubject = null; // Clear current subject
+            resetCloseButton(true); // Ensure the default close listener is set back
+            closeBtn.textContent = 'Close Dashboard'; // Reset text
+            modalTitle.textContent = ''; // Clear title
+            topicList.innerHTML = ''; // Clear list
+        }
 
         
         if(data.length > 0) {
-            
+             
+            // Initial setup for close events
+            resetCloseButton(true);
+            // Close modal when clicking outside
+            modalBg.addEventListener('click',(e)=>{
+                if(e.target===modalBg) {
+                    closeModals();
+                }
+            });
+
             // 3. Dashboard Cards Render
             data.forEach(sub => {
                 const card = document.createElement('div');
@@ -211,42 +248,99 @@
                 dashboard.appendChild(card);
 
                 card.addEventListener('click', () => {
-                    openModal(sub); 
+                    openSubjectModal(sub); 
                 });
             });
 
-            // 4. Modal खोलना
-            function openModal(subject){
-                
-                modalTitle.textContent = subject.title + ' Quizzes'; 
-                topicList.innerHTML = ''; 
-                
-                subject.quizzes.forEach(quiz => { 
-                    const link = document.createElement('a');
-                    link.className = 'topic-btn';
-                    link.textContent = quiz.name;
-                    link.href = quiz.link; 
-                    link.target = '_blank'; 
-                    topicList.appendChild(link);
-                });
-                
+            // 4. विषय (Subject) Modal खोलना
+            function openSubjectModal(subject){
+                currentSubject = subject; // Set current subject
+                modalTitle.textContent = subject.title + ' Quizzes';
+                topicList.innerHTML = ''; // Clear content first
+                resetCloseButton(true); // Reset button to default action
                 closeBtn.textContent = 'Close Dashboard';
+
+                if (subject.quizzes.length > 0) {
+                    
+                    // Display quiz links
+                    subject.quizzes.forEach(quiz => {
+                        const button = document.createElement('button'); // Use button for consistent click handling
+                        button.className = 'topic-btn';
+                        button.textContent = quiz.name;
+                        
+                        // यदि लिंक 'Adding Soon' है, तो बटन का रंग बदलें
+                        if (quiz.link === ADDING_SOON_TEXT) {
+                             button.style.backgroundColor = '#95a5a6'; // एक हल्का ग्रे रंग
+                             button.style.cursor = 'not-allowed'; // कर्सर बदलें
+                        }
+                        
+                        button.addEventListener('click', () => {
+                            handleQuizClick(quiz); // New click handler
+                        });
+                        
+                        topicList.appendChild(button);
+                    });
+                    
+                } else {
+                    // यहाँ 'Adding Soon' संदेश नहीं, बल्कि खाली विषय सूची के लिए 'notes' संदेश दिखाते हैं
+                    showAddingSoonMessage(subject.title, 'notes'); 
+                }
+                
                 modalBg.classList.add('active');
             }
             
+            // 5. Quiz क्लिक हैंडलर (New) - यह फ़ंक्शन आपके अनुरोध को लागू करता है
+            function handleQuizClick(quiz) {
+                
+                // ** मुख्य लॉजिक: यदि लिंक प्लेसहोल्डर से शुरू होता है या 'Adding Soon' है तो संदेश दिखाएँ **
+                if (quiz.link && (quiz.link.startsWith(PLACEHOLDER_PREFIX) || quiz.link === ADDING_SOON_TEXT)) {
+                    
+                    modalTitle.textContent = 'Content Status'; // स्थिति शीर्षक
+                    topicList.innerHTML = '';
+                    
+                    // यदि 'Adding Soon' है, तो नोट्स संदेश दिखाएँ (आपके अनुरोध के अनुसार)
+                    if (quiz.link === ADDING_SOON_TEXT) {
+                        showAddingSoonMessage(quiz.name, 'notes');
+                    } else {
+                        // अन्यथा, डिफ़ॉल्ट 'क्विज' संदेश दिखाएँ
+                        showAddingSoonMessage(quiz.name, 'quiz');
+                    }
 
-            // 5. Close modal functions
-            function closeModals(){
-                modalBg.classList.remove('active');
-                closeBtn.textContent = 'Close Dashboard'; // Reset text
+
+                    // Close button action को "Go Back" में बदलें
+                    closeBtn.textContent = 'Back to ' + currentSubject.title;
+                    
+                    // Reset existing listeners and add back button listener
+                    resetCloseButton(false); 
+                    closeBtn.addEventListener('click', function backToSubject() {
+                        openSubjectModal(currentSubject); // विषय सूची पर वापस जाएँ
+                    });
+
+                } else {
+                    // लिंक वैध है, एक नए टैब में खोलें
+                    window.open(quiz.link, '_blank');
+                }
             }
+            
+            // 6. 'Adding Soon' संदेश दिखाना - 'notes' या 'quiz' के लिए अनुकूलित
+            function showAddingSoonMessage(itemTitle, type) {
+                const emoji = document.createElement('p');
+                emoji.style.cssText = "font-size: 3.5em; text-align: center; margin-bottom: 20px; opacity: 0.8;";
+                emoji.textContent = '🚧'; // Construction emoji
+                
+                const message = document.createElement('h2');
+                message.style.cssText = "color: #e74c3c; text-align: center; padding: 20px 0; font-size: 1.3em; margin-top: 10px; font-weight: 700;";
+                
+                let contentText = (type === 'notes') ? ' are' : 'quiz is';
 
-            closeBtn.addEventListener('click',closeModals);
-            // Close modal when clicking outside
-            modalBg.addEventListener('click',(e)=>{if(e.target===modalBg) closeModals();});
+                message.textContent = `📝 ${itemTitle} ${contentText} being prepared and will be added soon!`; 
+                
+                topicList.appendChild(emoji);
+                topicList.appendChild(message);
+            }
             
         } else {
-             dashboard.innerHTML = "<h2 style='color: white; text-align: center; margin-top: 50px;'>Quiz Data failed to load. Please check quizData.js.</h2>";
+             dashboard.innerHTML = "<h2 style='color: white; text-align: center; margin-top: 50px;'>Quiz Data failed to load. Please check quizData.js and ensure it is in the same folder.</h2>";
         }
     </script>
 </body>

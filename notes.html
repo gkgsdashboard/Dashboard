@@ -189,16 +189,57 @@
         const modalBg = document.getElementById('modal-bg');
         const modalTitle = document.getElementById('modal-title');
         const topicList = document.getElementById('topic-list');
-        const closeBtn = document.getElementById('close-btn');
+        // Close button reference
+        let closeBtn = document.getElementById('close-btn');
+        
+        const PLACEHOLDER_PREFIX = 'YOUR_LINK_FOR_';
+        const ADDING_SOON_TEXT = 'Adding Soon'; // **NEW: 'Adding Soon' कॉन्स्टेंट जोड़ा गया**
+        let currentSubject = null; // Store the currently open subject
 
+        
+        // Function to remove and re-add the Close button to clear all listeners
+        function resetCloseButton(defaultAction) {
+            // Clone the button to replace it, effectively removing all old listeners
+            const oldCloseBtn = document.getElementById('close-btn');
+            const newCloseBtn = oldCloseBtn.cloneNode(true);
+            oldCloseBtn.parentNode.replaceChild(newCloseBtn, oldCloseBtn);
+            
+            // Update the global reference
+            closeBtn = newCloseBtn;
+
+            // Add the new listener
+            if (defaultAction) {
+                closeBtn.addEventListener('click', closeModals);
+            } else {
+                 // For custom actions like 'Back to Subject', the caller will add the listener
+            }
+        }
+        
+        // 7. Close modal functions (Default closing function)
+        function closeModals(){
+            modalBg.classList.remove('active');
+            currentSubject = null; // Clear current subject
+            resetCloseButton(true); // Ensure the default close listener is set back
+            closeBtn.textContent = 'Close Dashboard'; // Reset text
+            modalTitle.textContent = ''; // Clear title
+            topicList.innerHTML = ''; // Clear list
+        }
         
         if(data.length > 0) {
             
+            // Initial setup for close events (using the global closeBtn reference)
+            resetCloseButton(true); // Set the default close action initially
+            // Close modal when clicking outside
+            modalBg.addEventListener('click',(e)=>{
+                if(e.target===modalBg) {
+                    closeModals();
+                }
+            });
+
             // 3. Dashboard Cards Render
             data.forEach(sub => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                // Using subject's color for card background if defined, otherwise default
                 card.style.backgroundColor = sub.color ? sub.color : 'rgba(52, 73, 94, 0.85)';
                 
                 const title = document.createElement('h2');
@@ -212,42 +253,97 @@
                 dashboard.appendChild(card);
 
                 card.addEventListener('click', () => {
-                    openModal(sub); 
+                    openSubjectModal(sub); 
                 });
             });
-
-            // 4. Modal खोलना
-            function openModal(subject){
+            
+            // 4. विषय (Subject) Modal खोलना
+            function openSubjectModal(subject){
+                currentSubject = subject; // Set current subject
                 modalTitle.textContent = subject.title + ' Notes';
-                topicList.innerHTML = '';
-                
-                subject.notes.forEach(note => {
-                    const link = document.createElement('a');
-                    link.className = 'topic-btn';
-                    link.textContent = note.name;
-                    
-                    link.href = note.link; 
-                    link.target = '_blank';
-                    
-                    topicList.appendChild(link);
-                });
-                
+                topicList.innerHTML = ''; // Clear content first
+                resetCloseButton(true); // Reset button to default action
                 closeBtn.textContent = 'Close Dashboard';
+
+                if (subject.notes.length > 0) {
+                    
+                    // Display note links
+                    subject.notes.forEach(note => {
+                        const link = document.createElement('button');
+                        link.className = 'topic-btn';
+                        link.textContent = note.name;
+
+                        // **NEW LOGIC: Visual distinction for 'Adding Soon' links**
+                        const isAddingSoon = note.link && (note.link.startsWith(PLACEHOLDER_PREFIX) || note.link === ADDING_SOON_TEXT);
+
+                        if (isAddingSoon) {
+                             link.style.backgroundColor = '#95a5a6'; // light grey
+                             link.style.cursor = 'not-allowed'; // change cursor
+                             // Optional: reduce opacity for a more 'disabled' look
+                             link.style.opacity = '0.7'; 
+                        }
+                        
+                        link.addEventListener('click', () => {
+                            handleNoteClick(note);
+                        });
+                        
+                        topicList.appendChild(link);
+                    });
+                    
+                } else {
+                    // This logic only runs if subject.notes is an empty array
+                    showAddingSoonMessage(subject.title);
+                }
+                
                 modalBg.classList.add('active');
             }
 
-            // 5. Close modal functions
-            function closeModals(){
-                modalBg.classList.remove('active');
-                closeBtn.textContent = 'Close Dashboard'; // Reset text
+            // 5. नोट क्लिक हैंडलर
+            function handleNoteClick(note) {
+                
+                // **UPDATED CHECK to include ADDING_SOON_TEXT**
+                const isAddingSoon = note.link && (note.link.startsWith(PLACEHOLDER_PREFIX) || note.link === ADDING_SOON_TEXT);
+
+                if (isAddingSoon) {
+                    // Link is a placeholder/Adding Soon, show "Adding Soon"
+                    
+                    // Clear topic list and set modal title
+                    modalTitle.textContent = 'Note Status';
+                    topicList.innerHTML = '';
+                    showAddingSoonMessage(note.name); 
+
+                    // Change close button action to "Go Back"
+                    closeBtn.textContent = 'Back to ' + currentSubject.title;
+                    
+                    // Reset existing listeners and add back button listener
+                    resetCloseButton(false); // Do NOT set default close action
+                    closeBtn.addEventListener('click', function backToSubject() {
+                        openSubjectModal(currentSubject); // Go back to subject list
+                    });
+
+                } else {
+                    // Link is valid, open in new tab
+                    window.open(note.link, '_blank');
+                }
             }
             
-            closeBtn.addEventListener('click',closeModals);
-            // Close modal when clicking outside
-            modalBg.addEventListener('click',(e)=>{if(e.target===modalBg) closeModals();});
+            // 6. 'Adding Soon' संदेश दिखाना
+            function showAddingSoonMessage(itemTitle) {
+                const emoji = document.createElement('p');
+                emoji.style.cssText = "font-size: 3.5em; text-align: center; margin-bottom: 20px; opacity: 0.8;";
+                emoji.textContent = '🚧'; // Construction emoji
+                
+                const message = document.createElement('h2');
+                message.style.cssText = "color: #e74c3c; text-align: center; padding: 20px 0; font-size: 1.3em; margin-top: 10px; font-weight: 700;";
+                // संदेश आपके अनुरोध के अनुसार नोट्स के लिए है
+                message.textContent = `📝 ${itemTitle} notes are being prepared and will be added soon!`; 
+                
+                topicList.appendChild(emoji);
+                topicList.appendChild(message);
+            }
             
         } else {
-             dashboard.innerHTML = "<h2 style='color: white; text-align: center; margin-top: 50px;'>Notes failed to load. Please check notesData.js.</h2>";
+             dashboard.innerHTML = "<h2 style='color: white; text-align: center; margin-top: 50px;'>Notes failed to load. Please check notesData.js and ensure it is in the same folder.</h2>";
         }
     </script>
 </body>
