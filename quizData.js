@@ -8,8 +8,8 @@ const quizSubjects = [
         color: '#E67E22', // एक अलग रंग (Orange/Carrot)
         quizzes: [
             // आप यहाँ Weekly Tests जोड़ सकते हैं, उदाहरण के लिए:
-             { name: 'Weekly Test 1 - Geography', link: 'quiz_files/Weekly/week_1_geo.html' },
-             { name: 'Weekly Test 2 - Geography', link: 'quiz_files/Weekly/week_2_geo.html' },
+            { name: 'Weekly Test 1 - Geography', link: 'quiz_files/Weekly/week_1_geo.html' },
+            { name: 'Weekly Test 2 - Geography', link: 'quiz_files/Weekly/week_2_geo.html' },
             { name: 'Weekly Test 3 - Geography', link: 'quiz_files/Weekly/week_3_geo.html' }
         ]
     },
@@ -19,7 +19,7 @@ const quizSubjects = [
         color: 'violet',
         quizzes: [ 
             
-            // Geography के मौजूदा 14 टॉपिक्स
+            // Geography के मौजूदा 16 टॉपिक्स
             { name: '1. 🌌 SOLAR SYSTEM Quiz', link: 'quiz_files/Geography/geo_1_solar_system.html' },
             { name: '2. 📍 LATITUDE AND LONGITUDE Quiz', link: 'quiz_files/Geography/geo_2_lat_long.html' },
             { name: '3. 🌋 ROCKS AND VOLCANOES Quiz', link: 'quiz_files/Geography/geo_3_rocks.html' },
@@ -35,7 +35,13 @@ const quizSubjects = [
             { name: '13. 🏔️ HIMALAYAS Quiz', link: 'quiz_files/Geography/geo_13_himalayas.html' }, 
             { name: '14. 🏞️ PENINSULAR PLATEAU Quiz', link: 'quiz_files/Geography/geo_14_plateau.html' },
             { name: '15. 🌊 HIMALAYAN RIVER SYSTEM Quiz', link: 'quiz_files/Geography/geo_15_himalayan_river.html' },
-            { name: '16. 🌾 PLAINS AND 🏝️ ISLANDS Quiz', link: 'quiz_files/Geography/geo_16_plains_islands.html' }
+            { name: '16. 🌾 PLAINS AND 🏝️ ISLANDS Quiz', link: 'quiz_files/Geography/geo_16_plains_islands.html' },
+
+            // ✅ NEWLY ADDED TOPICS Quizzes
+            { name: '17. 🌊 PENINSULAR RIVERS Quiz', link: 'quiz_files/Geography/geo_17_peninsular_rivers.html' }, 
+            { name: '18. 🏞️ DAMS, LAKES AND WATERFALLS Quiz', link: 'quiz_files/Geography/geo_18_dams_lakes_waterfalls.html' },
+            { name: '19. ⛈️ MONSOON Quiz', link: 'quiz_files/Geography/geo_19_monsoon.html' }
+
         ]
     },
 

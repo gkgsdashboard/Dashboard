@@ -47,8 +47,13 @@ const subjects = [
 
             { name: '15. 🏝️ PLAINS AND ISLANDS', link: 'https://drive.google.com/file/d/1THfAO6cZ6svUa2q7edel5VWCL4FH0omz/view?usp=drive_link' },
 
-            { name: '16. 🌊 HIMALAYAN RIVER SYSTEMS ', link: 'https://drive.google.com/file/d/1xBVEiQWi1XrBj8f-e0zKIK0km5so170S/view?usp=drive_link' }
-        ]
+            { name: '16. 🌊 HIMALAYAN RIVER SYSTEMS ', link: 'https://drive.google.com/file/d/1xBVEiQWi1XrBj8f-e0zKIK0km5so170S/view?usp=drive_link' },
+
+            { name: '**17. 🌊 PENINSULAR RIVERS**', link: 'https://drive.google.com/file/d/1g1pxLj_ZngUeA1EHmSvwSXdLio-lfBBh/view?usp=drive_link' }, 
+
+            { name: '**18. 🏞️ DAMS, LAKES AND WATERFALLS**', link: 'https://drive.google.com/file/d/1qgJV8QLm3e6ScjpZ4MMiEBaItdJMetDL/view?usp=drive_link' },
+
+            { name: '**19. ⛈️ MONSOON**', link: 'YOUR_LINK_FOR_MONSOON' } ]
 
     },
 
