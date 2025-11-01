@@ -24,7 +24,7 @@ const subjects = [
             { name: '16. 🌊 HIMALAYAN RIVER SYSTEMS ', link: 'https://drive.google.com/file/d/1xBVEiQWi1XrBj8f-e0zKIK0km5so170S/view?usp=drive_link' },
             { name: '17. 🌊 PENINSULAR RIVERS', link: 'https://drive.google.com/file/d/1g1pxLj_ZngUeA1EHmSvwSXdLio-lfBBh/view?usp=drive_link' }, 
             { name: '18. 🏞️ DAMS, LAKES AND WATERFALLS', link: 'https://drive.google.com/file/d/1qgJV8QLm3e6ScjpZ4MMiEBaItdJMetDL/view?usp=drive_link' },
-            { name: '19. ⛈️ MONSOON', link: 'YOUR_LINK_FOR_MONSOON' },
+            { name: '19. ⛈️ MONSOON', link: 'https://drive.google.com/file/d/1KP-oyEOs3pMuMHz8lVLbBl7AYW5lS0Vo/view?usp=drive_link' },
             { name: '20. 🌳 Forest and Grassland', link: 'YOUR_LINK_FOR_FOREST_AND_GRASSLAND' },
             { name: '21. 🌾 Soil and Agriculture', link: 'YOUR_LINK_FOR_SOIL_AND_AGRICULTURE' },
             { name: '22. ⛏️ Minerals', link: 'YOUR_LINK_FOR_MINERALS' },
@@ -207,4 +207,5 @@ const subjects = [
             { name: '13. 🏆 Awards and Honours', link: 'YOUR_LINK_FOR_AWARDS_AND_HONOURS' }
         ]
     }
+
 ];
