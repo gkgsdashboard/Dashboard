@@ -39,9 +39,9 @@ const quizSubjects = [
             { name: '17. 🌊 PENINSULAR RIVERS Quiz', link: 'quiz_files/Geography/geo_17_peninsular_rivers.html' }, 
             { name: '18. 🏞️ DAMS, LAKES AND WATERFALLS Quiz', link: 'quiz_files/Geography/geo_18_dams_lakes_waterfalls.html' },
             { name: '19. ⛈️ MONSOON Quiz', link: 'quiz_files/Geography/geo_19_monsoon.html' },
-            { name: '20. 🌳 Forest and Grassland Quiz', link: 'Adding Soon' },
-            { name: '21. 🌾 Soil and Agriculture Quiz', link: 'Adding Soon' },
-            { name: '22. ⛏️ Minerals Quiz', link: 'Adding Soon' },
+            { name: '20. 🌳 Forest and Grassland Quiz', link: 'quiz_files/Geography/geo_20_forest_grassland.html' },
+            { name: '21. 🌾 Soil  Quiz', link: 'quiz_files/Geography/geo_21_soil.html' },
+            { name: '22. ⛏️ Agriculture Quiz', link: 'quiz_files/Geography/geo_22_agriculture.html' },
             { name: '23. 🗺️ World Map Quiz', link: 'Adding Soon' },
             { name: '24. 🏞️ National Parks Quiz', link: 'Adding Soon' },
             { name: '25. 🚗 Transport Quiz', link: 'Adding Soon' }
@@ -222,5 +222,4 @@ const quizSubjects = [
             { name: '13. 🏆 Awards and Honours Quiz', link: 'Adding Soon' }
         ]
     }
-
 ];

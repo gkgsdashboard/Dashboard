@@ -25,9 +25,9 @@ const subjects = [
             { name: '17. 🌊 PENINSULAR RIVERS', link: 'https://drive.google.com/file/d/1g1pxLj_ZngUeA1EHmSvwSXdLio-lfBBh/view?usp=drive_link' }, 
             { name: '18. 🏞️ DAMS, LAKES AND WATERFALLS', link: 'https://drive.google.com/file/d/1qgJV8QLm3e6ScjpZ4MMiEBaItdJMetDL/view?usp=drive_link' },
             { name: '19. ⛈️ MONSOON', link: 'https://drive.google.com/file/d/1KP-oyEOs3pMuMHz8lVLbBl7AYW5lS0Vo/view?usp=drive_link' },
-            { name: '20. 🌳 Forest and Grassland', link: 'YOUR_LINK_FOR_FOREST_AND_GRASSLAND' },
-            { name: '21. 🌾 Soil and Agriculture', link: 'YOUR_LINK_FOR_SOIL_AND_AGRICULTURE' },
-            { name: '22. ⛏️ Minerals', link: 'YOUR_LINK_FOR_MINERALS' },
+            { name: '20. 🌳 Forest and Grassland', link: 'https://drive.google.com/file/d/1MfmY9neaXNKsB5ayKkiiwxX-_U6BWYBg/view?usp=drive_link' },
+            { name: '21. 🌾 Soil ', link: 'https://drive.google.com/file/d/10DFmz-FB_IBB2XVjYEPQHdTNADvRm_ng/view?usp=drive_link' },
+            { name: '22. ⛏️ Agriculture', link: 'https://drive.google.com/file/d/1NKfshFzlqdtNLQp8JOaBAi5zEmLxG-3v/view?usp=drive_link' },
             { name: '23. 🗺️ World Map', link: 'YOUR_LINK_FOR_WORLD_MAP' },
             { name: '24. 🏞️ National Parks', link: 'YOUR_LINK_FOR_NATIONAL_PARKS' },
             { name: '25. 🚗 Transport', link: 'YOUR_LINK_FOR_TRANSPORT' }
@@ -207,5 +207,4 @@ const subjects = [
             { name: '13. 🏆 Awards and Honours', link: 'YOUR_LINK_FOR_AWARDS_AND_HONOURS' }
         ]
     }
-
 ];
