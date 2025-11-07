@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY TEST -4</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 GEOGRAPHY TEST -4</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Which of the following rivers does not originate from the Himalayas?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी हिमालय से उत्पन्न नहीं होती है<b>?</b></p>",
+      "option1": "<p> Ganga / गंगा</p>",
+      "option2": "<p> Yamuna / यमुना</p>",
+      "option3": "<p> Godavari / गोदावरी</p>",
+      "option4": "<p> Indus / सिंधु</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Godavari originates from the Western Ghats near Nashik, not from the Himalayas.<br/> गोदावरी नदी की उत्पत्ति नासिक के पास पश्चिमी घाट से होती है, हिमालय से नहीं।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which of the following plains is formed by the deposition of rivers originating from the Himalayas?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा मैदान हिमालय से उत्पन्न नदियों के निक्षेप से बना है<b>?</b></p>",
+      "option1": "<p> Indo-Gangetic Plain / इंडो-गंगा मैदान</p>",
+      "option2": "<p> Malwa Plateau / मालवा पठार</p>",
+      "option3": "<p> Deccan Plain / दक्कन मैदान</p>",
+      "option4": "<p> Kathiawar Plain / काठियावाड़ मैदान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Indo-Gangetic Plain was formed by alluvial deposits from the Indus, Ganga, and Brahmaputra rivers.<br/> इंडो-गंगा मैदान का निर्माण सिंधु, गंगा और ब्रह्मपुत्र नदियों द्वारा लाए गए जलोढ़ निक्षेपों से हुआ है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Which of the following dams is built across the Krishna River?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा बाँध कृष्णा नदी पर बना है<b>?</b></p>",
+      "option1": "<p> Nagarjuna Sagar Dam / नागार्जुन सागर बाँध</p>",
+      "option2": "<p> Hirakud Dam / हीराकुंड बाँध</p>",
+      "option3": "<p> Bhakra Nangal Dam / भाखड़ा नांगल बाँध</p>",
+      "option4": "<p> Sardar Sarovar Dam / सरदार सरोवर बाँध</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nagarjuna Sagar Dam, one of the largest masonry dams, is on the Krishna River in Telangana.<br/> नागार्जुन सागर बाँध कृष्णा नदी पर तेलंगाना में बना एक विशाल पत्थर का बाँध है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>The Ganga River is formed by the confluence of which two rivers?<br/> </b>गंगा नदी किन दो नदियों के संगम से बनती है<b>?</b></p>",
+      "option1": "<p> Mandakini and Pindar / मंदाकिनी और पिंदर</p>",
+      "option2": "<p> Yamuna and Tons / यमुना और टोंस</p>",
+      "option3": "<p> Alaknanda and Bhagirathi / अलकनंदा और भागीरथी</p>",
+      "option4": "<p> Dhauliganga and Kali / धौलीगंगा और काली</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> At Devprayag, the Bhagirathi and Alaknanda merge to form the Ganga.<br/> देवप्रयाग में भागीरथी और अलकनंदा के संगम से गंगा का निर्माण होता है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Consider the following statements regarding the Brahmaputra River:<br/> </b>ब्रह्मपुत्र नदी के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is known as Tsangpo in Tibet. / </b>इसे तिब्बत में त्सांगपो के नाम से जाना जाता है।<b><br/> (b) It joins the Ganga River in Bangladesh. / </b>यह बांग्लादेश में गंगा नदी से मिलती है।<b><br/> (c) It forms the world’s largest river island, Majuli. / </b>यह विश्व के सबसे बड़े नदी द्वीप माजुली का निर्माण करती है।</p>",
+      "option1": "<p> b and c only / केवल b और c</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> a and b only / केवल a और b</p>",
+      "option4": "<p> a, b, and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Brahmaputra is Tsangpo in Tibet and forms Majuli Island; it meets the Ganga only after entering Bangladesh as Jamuna, not before.<br/> ब्रह्मपुत्र को तिब्बत में सियांग या त्सांगपो कहा जाता है और यह माजुली द्वीप बनाती है; गंगा से यह बांग्लादेश में जाकर मिलती है।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Consider the following statements about the Indus River System:<br/> </b>सिंधु नदी तंत्र के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Its source is near Lake Mansarovar in Tibet./ </b>इसका उद्गम तिब्बत में मानसरोवर झील के निकट होता है।<b><br/> (b) It flows mainly through India./ </b>यह मुख्यतः भारत से होकर बहती है।<b><br/> (c) It drains into the Arabian Sea./ </b>यह अरब सागर में गिरती है।</p>",
+      "option1": "<p> Only (a) and (b) / केवल (a) और (b)</p>",
+      "option2": "<p> Only (a) and (c) / केवल (a) और (c)</p>",
+      "option3": "<p> Only (b) and (c) / केवल (b) और (c)</p>",
+      "option4": "<p> All (a), (b), and (c) / सभी (a), (b), और (c)</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Indus rises near Mansarovar Lake in Tibet, flows mainly through Pakistan, and empties into the Arabian Sea.<br/> सिंधु नदी की उत्पत्ति तिब्बत के मानसरोवर झील के पास होती है, यह मुख्यतः पाकिस्तान से होकर अरब सागर में गिरती है।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Consider the following statements about the Ghaghara River:<br/> </b>घाघरा नदी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It originates in the Himalayas of Nepal./ </b>यह नेपाल की हिमालय से उत्पन्न होती है।<b><br/> (b) It is a left-bank tributary of the Ganga./ </b>यह गंगा की बाईं किनारे की सहायक नदी है।<b><br/> (c) It flows through the Indo-Gangetic Plain./ </b>यह इंडो<b>-</b>गंगा मैदान से होकर बहती है।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> Only (a) and (b) / केवल (a) और (b)</p>",
+      "option2": "<p> Only (b) and (c) / केवल (b) और (c)</p>",
+      "option3": "<p> Only (a) and (c) / केवल (a) और (c)</p>",
+      "option4": "<p> All (a), (b), and (c) / सभी (a), (b) और (c)</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All three statements are correct.<br/> सभी कथन सही हैं।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>Which of the following is the largest artificial lake in India?<br/> </b>भारत की सबसे बड़ी कृत्रिम झील कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Pulicat Lake / पुलिकट झील</p>",
+      "option2": "<p> Chilika Lake / चिलिका झील</p>",
+      "option3": "<p> Vembanad Lake / वेम्बनाड झील</p>",
+      "option4": "<p> Govind Ballabh Pant Sagar / गोविंद बल्लभ पंत सागर</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Govind Ballabh Pant Sagar, formed by Rihand Dam, is India’s largest man-made lake.<br/> रिहंद बाँध द्वारा निर्मित गोविंद बल्लभ पंत सागर भारत की सबसे बड़ी कृत्रिम झील है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Which of the following lakes is a volcanic crater lake?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी झील ज्वालामुखी क्रेटर झील है<b>?</b></p>",
+      "option1": "<p> Wular Lake / वुलर झील</p>",
+      "option2": "<p> Lonar Lake / लोणार झील</p>",
+      "option3": "<p> Chilika Lake / चिल्का झील</p>",
+      "option4": "<p> Pushkar Lake / पुष्कर झील</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lonar Lake in Maharashtra was formed due to a meteor impact on basalt rock, creating a crater lake.<br/> महाराष्ट्र की लोणार झील बेसाल्ट चट्टानों पर उल्का पिंड के टकराने से बनी एक क्रेटर झील है।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Which of the following dams is constructed across the Damodar River?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा बाँध दामोदर नदी पर बनाया गया है<b>?</b></p>",
+      "option1": "<p> Maithan Dam / मैथान बाँध</p>",
+      "option2": "<p> Koyna Dam / कोयना बाँध</p>",
+      "option3": "<p> Mettur Dam / मेट्टूर बाँध</p>",
+      "option4": "<p> Ukai Dam / उकाई बाँध</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Maithan Dam is constructed on the Damodar River in Jharkhand. It is one of the major dams of the Damodar Valley Corporation (DVC) project along with Panchet and Maithon dams. The Damodar is an important tributary of the Ganges.<br/> मैथान बाँध झारखंड में दामोदर नदी पर बनाया गया है। यह दामोदर घाटी निगम (DVC) परियोजना के प्रमुख बाँधों में से एक है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Which of the following tributaries joins the Ganga from the south?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी सहायक नदी गंगा में दक्षिण से मिलती है<b>?</b></p>",
+      "option1": "<p> Yamuna / यमुना</p>",
+      "option2": "<p> Ghaghara / घाघरा</p>",
+      "option3": "<p> Gandak / गंडक</p>",
+      "option4": "<p> Kosi / कोसी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Yamuna meets the Ganga at Prayagraj from the southern side.<br/> यमुना नदी दक्षिण से प्रयागराज में गंगा से मिलती है।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Which of the following statements is true about the Western Ghats?<br/> </b>पश्चिमी घाट के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सत्य है<b>?</b></p>",
+      "option1": "<p> They receive more rainfall than the Eastern Ghats. / इन्हें पूर्वी घाटों की तुलना में अधिक वर्षा प्राप्त होती है।</p>",
+      "option2": "<p> They are older than the Himalayas. / ये हिमालय से अधिक प्राचीन हैं।</p>",
+      "option3": "<p> They run parallel to the eastern coast. / ये भारत के पूर्वी तट के समानांतर चलती हैं।</p>",
+      "option4": "<p> They are formed by volcanic activity. / इनका निर्माण ज्वालामुखीय क्रिया से हुआ है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Western Ghats receive heavy rainfall due to southwest monsoon winds striking the windward side.<br/> दक्षिण-पश्चिम मानसून की हवाओं के कारण पश्चिमी घाट के पवनाभिमुख भाग में अधिक वर्षा होती है।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>The Brahmaputra River is known by which name in Tibet?<br/> </b>तिब्बत में ब्रह्मपुत्र नदी को किस नाम से जाना जाता है<b>?</b></p>",
+      "option1": "<p> Manas / मानस</p>",
+      "option2": "<p> Tsangpo / सांगपो</p>",
+      "option3": "<p> Dihang / दिहांग</p>",
+      "option4": "<p> Lohit / लोहित</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In Tibet, the Brahmaputra is called Tsangpo, meaning “the purifier.”<br/> तिब्बत में ब्रह्मपुत्र को “सांगपो” कहा जाता है, जिसका अर्थ है “पवित्र करने वाली।”</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>The Hirakud Dam is constructed on which river?<br/> </b>हीराकुंड बाँध किस नदी पर बनाया गया है<b>?</b></p>",
+      "option1": "<p> Kaveri / कावेरी</p>",
+      "option2": "<p> Godavari / गोदावरी</p>",
+      "option3": "<p> Krishna / कृष्णा</p>",
+      "option4": "<p> Mahanadi / महानदी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Hirakud Dam is built on Mahanadi River in Odisha and is one of the longest earthen dams in the world.<br/> हीराकुंड बाँध ओडिशा की महानदी पर बना है और यह विश्व के सबसे लंबे मिट्टी के बाँधों में से एक है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Which lake is known for being the only floating national park in the world?<br/> </b>कौन<b>-</b>सी झील विश्व का एकमात्र तैरता हुआ राष्ट्रीय उद्यान होने के लिए प्रसिद्ध है<b>?</b></p>",
+      "option1": "<p> Sambhar Lake / सांभर झील</p>",
+      "option2": "<p> Loktak Lake / लोकतक झील</p>",
+      "option3": "<p> Chilika Lake / चिलिका झील</p>",
+      "option4": "<p> Wular Lake / वुलर झील</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Loktak Lake in Manipur hosts Keibul Lamjao National Park, the world’s only floating park.<br/> मणिपुर की लोकतक झील में केइबुल लामजाओ राष्ट्रीय उद्यान स्थित है, जो विश्व का एकमात्र तैरता उद्यान है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Which of the following statements regarding the Yamuna River is correct?<br/> </b>यमुना नदी के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?<br/> (a) It originates from Yamunotri Glacier. / </b>इसका उद्गम यमुनोत्री हिमनद से होता है।<b><br/> (b) It is the largest tributary of the Ganga. / </b>यह गंगा की सबसे बड़ी उपनदी है।<b><br/> (c) Its water is used in the Indira Gandhi Canal. / </b>इसके जल का उपयोग इंदिरा गांधी नहर में किया जाता है।</p>",
+      "option1": "<p> Only (b) and (c) / केवल (b) और (c)</p>",
+      "option2": "<p> Only (a) and (b) / केवल (a) और (b)</p>",
+      "option3": "<p> Only (a) and (c) / केवल (a) और (c)</p>",
+      "option4": "<p> All (a), (b), and (c) / सभी (a), (b) और (c)</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Yamuna rises from the Yamunotri Glacier and is the main tributary of the Ganga; it doesn’t feed the Indira Gandhi Canal.<br/> यमुना यमुनोत्री हिमनद से निकलती है और गंगा की सबसे बड़ी सहायक है; इसकी जलधारा इंदिरा गांधी नहर में प्रयुक्त नहीं होती।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>The Sabarmati River originates from which hill range?<br/> </b>साबरमती नदी की उत्पत्ति किस पर्वतमाला से होती है<b>?</b></p>",
+      "option1": "<p> Western Ghats / पश्चिमी घाट</p>",
+      "option2": "<p> Satpura Hills / सतपुड़ा पर्वतमाला</p>",
+      "option3": "<p> Vindhya Range / विंध्याचल श्रृंखला</p>",
+      "option4": "<p> Aravalli Hills / अरावली पर्वतमाला</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sabarmati originates from the Aravalli Hills in Rajasthan near Udaipur.<br/> साबरमती नदी राजस्थान के उदयपुर के पास अरावली पर्वतमाला से निकलती है।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Consider the following statements about monsoon in India:<br/> </b>भारत में मानसून के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The southwest monsoon covers the whole country by mid-July. / </b>दक्षिण<b>-</b>पश्चिम मानसून मध्य जुलाई तक पूरे देश को आच्छादित कर लेता है।<b><br/> (b) The retreating monsoon begins in October. / </b>प्रतिगामी मानसून अक्टूबर में प्रारंभ होता है।<b><br/> (c) Tamil Nadu receives most rainfall from the southwest monsoon. / </b>तमिलनाडु को अधिकतर वर्षा दक्षिण<b>-</b>पश्चिम मानसून से प्राप्त होती है।<b><br/> Which are correct? / </b>कौन से सही हैं<b>?</b></p>",
+      "option1": "<p> b and c only / केवल b और c</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b, and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The southwest monsoon covers India by July, while withdrawal starts from northwest in October. Tamil Nadu mainly receives rain from northeast monsoon.<br/> दक्षिण-पश्चिम मानसून जुलाई तक पूरे भारत को ढक लेता है, और अक्टूबर में उत्तर-पश्चिम से वापसी शुरू होती है। तमिलनाडु को वर्षा उत्तर-पूर्व मानसून से मिलती है।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>The Sutlej River enters India from which mountain pass?<br/> </b>सतलज नदी भारत में किस दर्रे से प्रवेश करती है<b>?</b></p>",
+      "option1": "<p> Shipki La / शिपकी ला</p>",
+      "option2": "<p> Rohtang Pass / रोहतांग दर्रा</p>",
+      "option3": "<p> Nathu La / नाथू ला</p>",
+      "option4": "<p> Zoji La / ज़ोजी ला</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Sutlej enters India through Shipki La pass in Himachal Pradesh.<br/> सतलज नदी हिमाचल प्रदेश में शिपकी ला दर्रे से भारत में प्रवेश करती है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Which of the following waterfalls is the highest waterfall in India?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा भारत का सबसे ऊँचा जलप्रपात है<b>?</b></p>",
+      "option1": "<p> Kunchikal Falls / कुंचिकल जलप्रपात</p>",
+      "option2": "<p> Nohsngithiang Falls / नोह्सन्गिथियांग जलप्रपात</p>",
+      "option3": "<p> Jog Falls / जोग जलप्रपात</p>",
+      "option4": "<p> Dudhsagar Falls / दूधसागर जलप्रपात</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Kunchikal Falls in Karnataka has a height of 455 meters, making it the highest waterfall in India. It is formed by the Varahi River in the Western Ghats near Shimoga district. Nohsngithiang Falls (India's second highest at 340 meters) is located in Meghalaya.<br/> कुंचिकल जलप्रपात कर्नाटक में 455 मीटर ऊँचाई के साथ भारत का सबसे ऊँचा जलप्रपात है। यह वरही नदी द्वारा पश्चिमी घाट में बनाया गया है।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>Which of the following is the left-bank tributary of the Indus River?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी सिंधु नदी की बाएँ किनारे की सहायक है<b>?</b></p>",
+      "option1": "<p> Chenab / चिनाब</p>",
+      "option2": "<p> Jhelum / झेलम</p>",
+      "option3": "<p> Ravi / रावी</p>",
+      "option4": "<p> Shyok / श्योक</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Shyok joins the Indus from the left bank in Ladakh region.<br/> श्योक नदी लद्दाख क्षेत्र में सिंधु में बाएँ किनारे से मिलती है।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Which island group is known for its coral origin?<br/> </b>कौन<b>-</b>सा द्वीप समूह मूँगे की उत्पत्ति के लिए प्रसिद्ध है<b>?</b></p>",
+      "option1": "<p> Lakshadweep Islands / लक्षद्वीप द्वीप</p>",
+      "option2": "<p> Andaman Islands / अंडमान द्वीप</p>",
+      "option3": "<p> Nicobar Islands / निकोबार द्वीप</p>",
+      "option4": "<p> Minicoy Islands / मिनिकॉय द्वीप</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lakshadweep Islands are coral atolls formed by the accumulation of coral polyps.<br/> लक्षद्वीप द्वीप मूँगे के पॉलीप्स के संचयन से बने प्रवाल द्वीप (एटोल) हैं।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which of the following rivers flows through the Dandakaranya region?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी दंडकारण्य क्षेत्र से होकर बहती है<b>?</b></p>",
+      "option1": "<p> Wardha / वर्धा</p>",
+      "option2": "<p> Godavari / गोदावरी</p>",
+      "option3": "<p> Indravati / इंद्रावती</p>",
+      "option4": "<p> Mahanadi / महानदी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Indravati River, a tributary of Godavari, flows through the Dandakaranya plateau region.<br/> इंद्रावती नदी, जो गोदावरी की सहायक है, दंडकारण्य पठार क्षेत्र से होकर बहती है।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Which of the following waterfalls is formed by the Sharavathi River?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा जलप्रपात शरावती नदी द्वारा बनाया गया है<b>?</b></p>",
+      "option1": "<p> Chitrakote Falls / चित्रकोट जलप्रपात</p>",
+      "option2": "<p> Dhuandhar Falls / धुआंधार जलप्रपात</p>",
+      "option3": "<p> Hundru Falls / हुन्द्रू जलप्रपात</p>",
+      "option4": "<p> Jog Falls / जोग जलप्रपात</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jog Falls in Karnataka is formed by the Sharavathi River and is one of India’s highest waterfalls.<br/> कर्नाटक का जोग जलप्रपात शरावती नदी द्वारा निर्मित है और यह भारत के सबसे ऊँचे जलप्रपातों में से एक है।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>The Ganga River flows eastward because—<br/> </b>गंगा नदी पूर्व दिशा में बहती है क्योंकि—</p>",
+      "option1": "<p> The Himalayas block northward flow / हिमालय उत्तर दिशा में प्रवाह को रोकते हैं</p>",
+      "option2": "<p> The land slope is towards east / भूमि की ढाल पूर्व की ओर है</p>",
+      "option3": "<p> Prevailing winds blow eastward / प्रचलित हवाएँ पूर्व की ओर चलती हैं</p>",
+      "option4": "<p> Tectonic uplift in west / पश्चिम में भूगर्भीय उत्थान हुआ</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The natural slope of the plains directs the Ganga eastward to the Bay of Bengal.<br/> मैदानी भाग की प्राकृतिक ढाल पूर्व की ओर है, जिससे गंगा बंगाल की खाड़ी की ओर बहती है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Bhakra Nangal Dam is constructed jointly on which rivers?<br/> </b>भाखड़ा नांगल बाँध किन नदियों पर संयुक्त रूप से बनाया गया है<b>?</b></p>",
+      "option1": "<p> Sutlej and Beas / सतलज और ब्यास</p>",
+      "option2": "<p> Ganga and Yamuna / गंगा और यमुना</p>",
+      "option3": "<p> Godavari and Krishna / गोदावरी और कृष्णा</p>",
+      "option4": "<p> Chambal and Betwa / चंबल और बेतवा</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Bhakra Dam is on Sutlej, while the Nangal Dam downstream regulates flow with Beas contribution.<br/> भाखड़ा बाँध सतलज पर बना है और नांगल बाँध ब्यास के जल से प्रवाह को नियंत्रित करता है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>Which Himalayan river forms the deep gorge near Namcha Barwa?<br/> </b>नमचा बरवा के पास गहरी घाटी कौन<b>-</b>सी हिमालयी नदी बनाती है<b>?</b></p>",
+      "option1": "<p> Manas / मानस</p>",
+      "option2": "<p> Teesta / तीस्ता</p>",
+      "option3": "<p> Subansiri / सुबसिरी</p>",
+      "option4": "<p> Brahmaputra / ब्रह्मपुत्र</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Brahmaputra carves a deep gorge while turning south near Namcha Barwa.<br/> नमचा बरवा के पास ब्रह्मपुत्र दक्षिण मुड़ते हुए गहरी घाटी बनाती है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>The Dhuandhar Falls is characterized by which of the following geological features?<br/> </b>धुआंधार जलप्रपात को निम्नलिखित में से किस भूगर्भीय विशेषता द्वारा चिह्नित किया जाता है<b>?</b></p>",
+      "option1": "<p> Basaltic rock formations / बेसाल्ट चट्टान निर्माण</p>",
+      "option2": "<p> Granite gorge / ग्रेनाइट घाटी</p>",
+      "option3": "<p> Marble rocks / संगमरमर शिलाएँ</p>",
+      "option4": "<p> Limestone cliffs / चूना पत्थर की चट्टानें</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Dhuandhar Falls, formed by the Narmada River at Bhedaghat near Jabalpur, is famous for its spectacular marble rocks. The river cuts through white marble formations, creating a beautiful gorge known as Marble Rocks. The falls drop about 30 meters and is a popular tourist destination.<br/> धुआंधार जलप्रपात जबलपुर के निकट भेड़ाघाट पर संगमरमर शिलाओं के लिए प्रसिद्ध है। नर्मदा नदी सफेद संगमरमर से होकर बहती है, जिससे संगमरमर चट्टानें (Marble Rocks) नामक सुंदर घाटी बनती है।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>The Kaveri River forms a delta along which coast?<br/> </b>कावेरी नदी का डेल्टा किस तट पर बनता है<b>?</b></p>",
+      "option1": "<p> Malabar Coast / मालाबार तट</p>",
+      "option2": "<p> Konkan Coast / कोंकण तट</p>",
+      "option3": "<p> Coromandel Coast / कोरमंडल तट</p>",
+      "option4": "<p> Gujarat Coast / गुजरात तट</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Kaveri forms a fertile delta on the Coromandel Coast before entering the Bay of Bengal.<br/> कावेरी बंगाल की खाड़ी में गिरने से पहले कोरमंडल तट पर उपजाऊ डेल्टा बनाती है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Which of the following statements is true about the Ganga’s tributaries in Bihar?<br/> </b>बिहार में गंगा की सहायक नदियों के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?<br/> (a) Gandak and Kosi originate in Nepal. / </b>गंडक और कोसी का उद्गम नेपाल में होता है।<b><br/> (b) They cause recurrent floods. / </b>ये बार<b>-</b>बार बाढ़ लाती हैं।<b><br/> (c) They join the Ganga from the south. / </b>ये गंगा में दक्षिण दिशा से मिलती हैं।</p>",
+      "option1": "<p> Only (a) and (b) / केवल (a) और (b)</p>",
+      "option2": "<p> Only (b) and (c) / केवल (b) और (c)</p>",
+      "option3": "<p> Only (a) and (c) / केवल (a) और (c)</p>",
+      "option4": "<p> All (a), (b), and (c) / सभी (a), (b), और (c)</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gandak and Kosi rise in Nepal and often cause floods in Bihar; both join Ganga from the north.<br/> गंडक और कोसी नेपाल में उत्पन्न होती हैं और बिहार में बार-बार बाढ़ लाती हैं; ये उत्तर से गंगा में मिलती हैं।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements about the Ganga River:<br/> </b>गंगा नदी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It originates from Gangotri Glacier. / </b>इसका उद्गम गंगोत्री हिमनद से होता है।<b><br/> (b) Its main tributary Yamuna meets it at Prayagraj. / </b>इसकी प्रमुख उपनदी यमुना प्रयागराज में इससे मिलती है।<b><br/> (c) It flows into the Bay of Bengal. / </b>यह बंगाल की खाड़ी में गिरती है।<b><br/> Which statements are correct? / </b>कौन से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct — Ganga originates from Gangotri Glacier, joined by Yamuna at Prayagraj, and empties into the Bay of Bengal.<br/> सभी कथन सही हैं — गंगा गंगोत्री हिमनद से निकलती है, प्रयागराज में यमुना से मिलती है और बंगाल की खाड़ी में गिरती है।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which is the deepest lake in India?<br/> </b>भारत की सबसे गहरी झील कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Manasbal Lake / मानसबल झील</p>",
+      "option2": "<p> Wular Lake / वुलर झील</p>",
+      "option3": "<p> Dal Lake / डल झील</p>",
+      "option4": "<p> Tsomgo Lake / त्सोमगो झील</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Manasbal Lake in Jammu &amp; Kashmir is considered the deepest freshwater lake in India.<br/> जम्मू-कश्मीर की मानसबल झील भारत की सबसे गहरी मीठे पानी की झील मानी जाती है।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>The river ‘Teesta’ is a tributary of which major river?<br/> </b>तीस्ता नदी किस प्रमुख नदी की सहायक है<b>?</b></p>",
+      "option1": "<p> Ganga / गंगा</p>",
+      "option2": "<p> Brahmaputra / ब्रह्मपुत्र</p>",
+      "option3": "<p> Mahananda / महानंदा</p>",
+      "option4": "<p> Torsa / तोरसा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Teesta flows from Sikkim to join the Brahmaputra in Bangladesh.<br/> तीस्ता सिक्किम से बहकर बांग्लादेश में ब्रह्मपुत्र में मिलती है।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Which of the following is a tributary of the Krishna River?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी कृष्णा नदी की सहायक है<b>?</b></p>",
+      "option1": "<p> Mahanadi / महानदी</p>",
+      "option2": "<p> Godavari / गोदावरी</p>",
+      "option3": "<p> Bhima / भीमा</p>",
+      "option4": "<p> Subarnarekha / सुवर्णरेखा</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bhima River is a major right-bank tributary of the Krishna River.<br/> भीमा नदी कृष्णा की दाएँ किनारे की प्रमुख सहायक नदी है।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Which of the following is a saltwater lake?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी झील खारे पानी की है<b>?</b></p>",
+      "option1": "<p> Sambhar Lake / सांभर झील</p>",
+      "option2": "<p> Wular Lake / वुलर झील</p>",
+      "option3": "<p> Loktak Lake / लोकतक झील</p>",
+      "option4": "<p> Dal Lake / डल झील</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sambhar Lake in Rajasthan is India’s largest inland saltwater lake.<br/> राजस्थान की सांभर झील भारत की सबसे बड़ी अंतर्देशीय खारे पानी की झील है।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which of the following rivers is east-flowing?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी पूर्ववाहिनी है<b>?</b></p>",
+      "option1": "<p> Godavari / गोदावरी</p>",
+      "option2": "<p> Narmada / नर्मदा</p>",
+      "option3": "<p> Tapi / ताप्ती</p>",
+      "option4": "<p> Mahi / माही</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Godavari flows eastward into the Bay of Bengal; Narmada, Tapi, and Mahi flow westward.<br/> गोदावरी नदी पूर्व की ओर बहकर बंगाल की खाड़ी में गिरती है, जबकि नर्मदा, ताप्ती और माही पश्चिम की ओर बहती हैं।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Which of the following statements about the Indus Waters Treaty is correct?<br/> </b>सिंधु जल संधि के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?<br/> (a) It was signed in 1960. / </b>यह <b>1960 </b>में हस्ताक्षरित की गई थी।<b><br/> (b) It divides six rivers between India and Pakistan. / </b>यह भारत और पाकिस्तान के बीच छह नदियों का विभाजन करती है।<b><br/> (c) India got full rights over eastern rivers. / </b>भारत को पूर्वी नदियों पर पूर्ण अधिकार मिला।</p>",
+      "option1": "<p> Only (a) and (b) / केवल (a) और (b)</p>",
+      "option2": "<p> Only (a) and (c) / केवल (a) और (c)</p>",
+      "option3": "<p> Only (b) and (c) / केवल (b) और (c)</p>",
+      "option4": "<p> All (a), (b), and (c) / सभी (a), (b), और (c)</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The 1960 treaty gave India rights over eastern rivers (Ravi, Beas, Sutlej) and Pakistan over western ones.<br/> 1960 की संधि में भारत को पूर्वी नदियों (रावी, ब्यास, सतलज) और पाकिस्तान को पश्चिमी नदियों का अधिकार दिया गया।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Which dam is built across the Krishna River?<br/> </b>कृष्णा नदी पर कौन<b>-</b>सा बाँध बनाया गया है<b>?</b></p>",
+      "option1": "<p> Hirakud / हीराकुंड</p>",
+      "option2": "<p> Bhakra Nangal / भाखड़ा नांगल</p>",
+      "option3": "<p> Nagarjuna Sagar / नागार्जुन सागर</p>",
+      "option4": "<p> Sardar Sarovar / सरदार सरोवर</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nagarjuna Sagar Dam is located on Krishna River between Telangana and Andhra Pradesh.<br/> नागार्जुन सागर बाँध कृष्णा नदी पर तेलंगाना और आंध्र प्रदेश की सीमा पर स्थित है।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Which of the following waterfalls is also known as ‘Niagara of India’?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा जलप्रपात ‘भारत का नियाग्रा’ कहलाता है<b>?</b></p>",
+      "option1": "<p> Chitrakote Falls / चित्रकोट जलप्रपात</p>",
+      "option2": "<p> Jog Falls / जोग जलप्रपात</p>",
+      "option3": "<p> Hundru Falls / हुंद्रू जलप्रपात</p>",
+      "option4": "<p> Dhuandhar Falls / धुआंधार जलप्रपात</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Chitrakote Falls on the Indravati River in Chhattisgarh is often called the Niagara of India.<br/> छत्तीसगढ़ में इंद्रावती नदी पर स्थित चित्रकोट जलप्रपात को ‘भारत का नियाग्रा’ कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Consider the following statements about the Tapi River:<br/> </b>तापी नदी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It flows into the Bay of Bengal. / </b>यह बंगाल की खाड़ी में गिरती है।<b><br/> (b) It originates in Madhya Pradesh. / </b>इसका उद्गम मध्य प्रदेश में होता है।<b><br/> (c) It flows parallel to the Narmada. / </b>यह नर्मदा के समानांतर बहती है।</p>",
+      "option1": "<p> Only (a) and (b) / केवल (a) और (b)</p>",
+      "option2": "<p> Only (a) and (c) / केवल (a) और (c)</p>",
+      "option3": "<p> Only (b) and (c) / केवल (b) और (c)</p>",
+      "option4": "<p> All (a), (b), and (c) / सभी (a), (b), और (c)</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tapi originates in Madhya Pradesh and flows westward parallel to Narmada into the Arabian Sea.<br/> तापी मध्य प्रदेश में उत्पन्न होकर नर्मदा के समानांतर पश्चिम की ओर अरब सागर में गिरती है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Which of the following pairs is correctly matched?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा युग्म सही सुमेलित है<b>?</b></p>",
+      "option1": "<p> Dhauliganga – Siachen Glacier / धौलीगंगा – सियाचिन हिमनद</p>",
+      "option2": "<p> Bhagirathi – Pindari Glacier / भागीरथी – पिंदारी हिमनद</p>",
+      "option3": "<p> Mandakini – Zemu Glacier / मंदाकिनी – ज़ेमू हिमनद</p>",
+      "option4": "<p> Alaknanda – Satopanth Glacier / अलकनंदा – सतोपंथ हिमनद</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Alaknanda River rises from Satopanth Glacier near Badrinath.<br/> अलकनंदा नदी की उत्पत्ति बद्रीनाथ के पास सतोपंथ हिमनद से होती है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Gobind Sagar is a reservoir formed by which dam?<br/> </b>गोविंद सागर जलाशय किस बाँध द्वारा निर्मित है<b>?</b></p>",
+      "option1": "<p> Rihand Dam / रिहंद बाँध</p>",
+      "option2": "<p> Hirakud Dam / हीराकुंड बाँध</p>",
+      "option3": "<p> Tehri Dam / टिहरी बाँध</p>",
+      "option4": "<p> Bhakra Dam / भाखड़ा बाँध</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gobind Sagar Reservoir was created by the Bhakra Dam on the Sutlej River.<br/> गोविंद सागर जलाशय सतलज नदी पर बने भाखड़ा बाँध द्वारा निर्मित है।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Which river is called “Sorrow of Bihar”?<br/> </b>कौन<b>-</b>सी नदी “बिहार का शोक” कहलाती है<b>?</b></p>",
+      "option1": "<p> Gandak / गंडक</p>",
+      "option2": "<p> Kosi / कोसी</p>",
+      "option3": "<p> Son / सोन</p>",
+      "option4": "<p> Ghaghara / घाघरा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Due to frequent floods and course changes, the Kosi is known as the “Sorrow of Bihar.”<br/> लगातार बाढ़ और मार्ग परिवर्तन के कारण कोसी को “बिहार का शोक” कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>The monsoon winds are seasonal reversal of—<br/> </b>मानसूनी हवाएँ किनकी मौसमी परिवर्तनशीलता हैं—</p>",
+      "option1": "<p> Temperature and Humidity / तापमान और आर्द्रता</p>",
+      "option2": "<p> Pressure and Wind / दाब और पवन</p>",
+      "option3": "<p> Rainfall and Pressure / वर्षा और दाब</p>",
+      "option4": "<p> Humidity and Temperature / आर्द्रता और तापमान</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Monsoon represents seasonal reversal in pressure and wind direction between land and sea.<br/> मानसून भूमि और समुद्र के बीच दाब एवं पवन दिशा के मौसमी परिवर्तन का प्रतीक है।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>The Pennar River flows through which of the following states?<br/> </b>पेनार नदी निम्नलिखित में से किन राज्यों से होकर बहती है<b>?</b></p>",
+      "option1": "<p> Maharashtra and Gujarat / महाराष्ट्र और गुजरात</p>",
+      "option2": "<p> Tamil Nadu and Kerala / तमिलनाडु और केरल</p>",
+      "option3": "<p> Karnataka and Andhra Pradesh / कर्नाटक और आंध्र प्रदेश</p>",
+      "option4": "<p> Odisha and West Bengal / ओडिशा और पश्चिम बंगाल</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pennar rises in Karnataka and flows east through Andhra Pradesh to the Bay of Bengal.<br/> पेनार नदी कर्नाटक में उत्पन्न होकर आंध्र प्रदेश से पूर्व की ओर बंगाल की खाड़ी में गिरती है।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Which of the following is an impact crater lake formed by meteorite collision?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी झील उल्का पिंड के टकराने से बनी एक प्रभाव गड्ढा झील है<b>?</b></p>",
+      "option1": "<p> Vembanad Lake / वेम्बनाड झील</p>",
+      "option2": "<p> Wular Lake / वुलर झील</p>",
+      "option3": "<p> Lonar Lake / लोणार झील</p>",
+      "option4": "<p> Sambhar Lake / सांभर झील</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lonar Lake in Maharashtra is a unique impact crater lake formed by meteorite impact approximately 50,000-576,000 years ago.<br/> लोणार झील महाराष्ट्र में एक अद्वितीय प्रभाव गड्ढा झील है, जो उल्का पिंड के टकराने से बनी है।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Which of the following is India’s largest brackish lake?<br/> </b>भारत की सबसे बड़ी मीठे खारे की झील कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Vembanad Lake / वेम्बनाड झील</p>",
+      "option2": "<p> Kolleru Lake / कोल्लेरू झील</p>",
+      "option3": "<p> Pulicat Lake / पुलिकट झील</p>",
+      "option4": "<p> Chilika Lake / चिलिका झील</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Chilika Lake in Odisha is the largest brackish water lake in India. Located at the mouth of the Daya River, it covers an area of about 1,100 square kilometers.<br/> चिलिका झील ओडिशा में भारत की सबसे बड़ी खारे पानी की झील है। दया नदी के मुहाने पर स्थित, यह लगभग 1,100 वर्ग किलोमीटर का क्षेत्र कवर करती है।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Which meteorological department monitors India’s monsoon forecast?<br/> </b>भारत के मानसून पूर्वानुमान की निगरानी कौन<b>-</b>सा मौसम विभाग करता है<b>?</b></p>",
+      "option1": "<p> India Meteorological Department (IMD) / भारतीय मौसम विभाग</p>",
+      "option2": "<p> National Remote Sensing Centre / राष्ट्रीय दूरसंवेदी केन्द्र</p>",
+      "option3": "<p> Central Water Commission / केन्द्रीय जल आयोग</p>",
+      "option4": "<p> National Weather Bureau / राष्ट्रीय मौसम कार्यालय</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The India Meteorological Department (IMD) issues official monsoon forecasts and rainfall analysis.<br/> भारतीय मौसम विभाग (IMD) भारत के मानसून के पूर्वानुमान और वर्षा विश्लेषण जारी करता है।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Which of the following rivers forms the boundary between Maharashtra and Karnataka?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी महाराष्ट्र और कर्नाटक की सीमा बनाती है<b>?</b></p>",
+      "option1": "<p> Bhima / भीमा</p>",
+      "option2": "<p> Krishna / कृष्णा</p>",
+      "option3": "<p> Tungabhadra / तुंगभद्रा</p>",
+      "option4": "<p> Wardha / वर्धा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Krishna River forms part of the boundary between Maharashtra and Karnataka states.<br/> कृष्णा नदी महाराष्ट्र और कर्नाटक के बीच सीमा का हिस्सा बनाती है।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Which one of the following rivers forms a boundary between India and Nepal?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी भारत और नेपाल के बीच सीमा बनाती है<b>?</b></p>",
+      "option1": "<p> Kali / काली</p>",
+      "option2": "<p> Gandak / गंडक</p>",
+      "option3": "<p> Kosi / कोसी</p>",
+      "option4": "<p> Ghaghara / घाघरा</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Kali or Sharda River marks the boundary between India and Nepal in the Kumaon region.<br/> काली या शारदा नदी कुमाऊँ क्षेत्र में भारत – नेपाल सीमा बनाती है।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Which of the following statements about the Retreating Monsoon is correct?<br/> </b>प्रतिगामी मानसून के संबंध में कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It blows from sea to land / यह समुद्र से भूमि की ओर चलती है</p>",
+      "option2": "<p> It brings rain to northwest India / यह उत्तर-पश्चिम भारत में वर्षा लाता है</p>",
+      "option3": "<p> It is caused by Western Disturbances / यह पश्चिमी विक्षोभ से होता है</p>",
+      "option4": "<p> It occurs from October to December / यह अक्टूबर से दिसंबर तक होता है</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The retreating monsoon season occurs between October and December when winds reverse direction.<br/> प्रतिगामी मानसून अक्टूबर से दिसंबर के बीच होता है, जब हवाओं की दिशा बदल जाती है।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Which river is known as “the lifeline of Madhya Pradesh and Gujarat”?<br/> </b>कौन<b>-</b>सी नदी “मध्य प्रदेश और गुजरात की जीवनरेखा” कहलाती है<b>?</b></p>",
+      "option1": "<p> Tapi / तापी</p>",
+      "option2": "<p> Narmada / नर्मदा</p>",
+      "option3": "<p> Mahi / माही</p>",
+      "option4": "<p> Chambal / चंबल</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Narmada provides irrigation and power to both Madhya Pradesh and Gujarat, earning the title “lifeline.”<br/> नर्मदा नदी सिंचाई और ऊर्जा का मुख्य स्रोत है, इसलिए इसे “जीवनरेखा” कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Tehri Dam is located in which state?<br/> </b>टिहरी बाँध किस राज्य में स्थित है<b>?</b></p>",
+      "option1": "<p> Jharkhand / झारखंड</p>",
+      "option2": "<p> Himachal Pradesh / हिमाचल प्रदेश</p>",
+      "option3": "<p> Sikkim / सिक्किम</p>",
+      "option4": "<p> Uttarakhand / उत्तराखंड</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tehri Dam, built on the Bhagirathi River, is in Uttarakhand.<br/> टिहरी बाँध, जो भागीरथी नदी पर बना है, उत्तराखंड में स्थित है।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Which one of the following pairs is correctly matched?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा युग्म सही सुमेलित है<b>?</b></p>",
+      "option1": "<p> Kaveri – Hogenakkal Falls / कावेरी – होगेनक्कल जलप्रपात</p>",
+      "option2": "<p> Godavari – Jog Falls / गोदावरी – जोग जलप्रपात</p>",
+      "option3": "<p> Mahanadi – Dudhsagar Falls / महानदी – दूधसागर जलप्रपात</p>",
+      "option4": "<p> Krishna – Hundru Falls / कृष्णा – हुंद्रू जलप्रपात</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Hogenakkal Falls is located on the Kaveri River in Tamil Nadu.<br/> होगेनक्कल जलप्रपात तमिलनाडु में कावेरी नदी पर स्थित है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>Western Disturbances bring rain to which part of India in winter?<br/> </b>पश्चिमी विक्षोभ सर्दियों में भारत के किस भाग में वर्षा लाते हैं<b>?</b></p>",
+      "option1": "<p> Southern India / दक्षिण भारत</p>",
+      "option2": "<p> Northeastern India / उत्तर-पूर्वी भारत</p>",
+      "option3": "<p> Northwestern India / उत्तर-पश्चिमी भारत</p>",
+      "option4": "<p> Central India / मध्य भारत</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Western Disturbances cause winter rain in Punjab, Haryana and western Himalayas.<br/> पश्चिमी विक्षोभ पंजाब, हरियाणा और पश्चिमी हिमालय में शीतकालीन वर्षा लाते हैं।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>The Dhuandhar Falls is located on which river?<br/> </b>धुआंधार जलप्रपात किस नदी पर स्थित है<b>?</b></p>",
+      "option1": "<p> Tapi / तापी</p>",
+      "option2": "<p> Godavari / गोदावरी</p>",
+      "option3": "<p> Mahi / माही</p>",
+      "option4": "<p> Narmada / नर्मदा</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Dhuandhar Falls is formed by the Narmada River near Jabalpur, Madhya Pradesh.<br/> धुआंधार जलप्रपात मध्य प्रदेश के जबलपुर के पास नर्मदा नदी पर स्थित है।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which of the following years recorded a major El Niño event affecting Indian rainfall?<br/> </b>किस वर्ष में महत्वपूर्ण एल नीनो घटना से भारतीय वर्षा प्रभावित हुई<b>?</b></p>",
+      "option1": "<p> 2015</p>",
+      "option2": "<p> 2018</p>",
+      "option3": "<p> 2013</p>",
+      "option4": "<p> 2012</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The 2015 El Niño event led to below-normal monsoon rainfall in India.<br/> सन् 2015 के एल नीनो घटना से भारत में सामान्य से कम वर्षा हुई।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>The Godavari River empties into which of the following?<br/> </b>गोदावरी नदी निम्नलिखित में से किसमें गिरती है<b>?</b></p>",
+      "option1": "<p> Arabian Sea / अरब सागर</p>",
+      "option2": "<p> Bay of Bengal / बंगाल की खाड़ी</p>",
+      "option3": "<p> Indian Ocean / हिंद महासागर</p>",
+      "option4": "<p> Chilika Lake / चिलिका झील</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Godavari forms a large delta before entering the Bay of Bengal.<br/> गोदावरी बंगाल की खाड़ी में गिरने से पहले विशाल डेल्टा बनाती है।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>The Krishna River originates from which place?<br/> </b>कृष्णा नदी की उत्पत्ति कहाँ से होती है<b>?</b></p>",
+      "option1": "<p> Amarkantak / अमरकंटक</p>",
+      "option2": "<p> Mahabaleshwar / महाबलेश्वर</p>",
+      "option3": "<p> Nasik / नासिक</p>",
+      "option4": "<p> Chikmagalur / चिकमगलूर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Krishna River rises from Mahabaleshwar in the Western Ghats of Maharashtra.<br/> कृष्णा नदी की उत्पत्ति महाराष्ट्र के पश्चिमी घाट स्थित महाबलेश्वर से होती है।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Which of the following regions gets rainfall from both Southwest and Northeast Monsoon?<br/> </b>कौन<b>-</b>सा क्षेत्र दक्षिण<b>-</b>पश्चिम और उत्तर<b>-</b>पूर्व दोनों मानसून से वर्षा प्राप्त करता है<b>?</b></p>",
+      "option1": "<p> Rajasthan / राजस्थान</p>",
+      "option2": "<p> Western Ghats / पश्चिमी घाट</p>",
+      "option3": "<p> Coromandel Coast / कोरोमंडल तट</p>",
+      "option4": "<p> Punjab / पंजाब</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Coromandel Coast of Tamil Nadu receives rain from both monsoon branches.<br/> तमिल नाडु का कोरोमंडल तट दोनों मानसूनी शाखाओं से वर्षा प्राप्त करता है।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Which of the following is India’s largest freshwater lake?<br/> </b>भारत की सबसे बड़ी मीठे पानी की झील कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Loktak Lake / लोकतक झील</p>",
+      "option2": "<p> Dal Lake / डल झील</p>",
+      "option3": "<p> Chilika Lake / चिलिका झील</p>",
+      "option4": "<p> Wular Lake / वुलर झील</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Wular Lake in Jammu &amp; Kashmir is the largest freshwater lake in India.<br/> जम्मू-कश्मीर की वुलर झील भारत की सबसे बड़ी मीठे पानी की झील है।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Which of the following regions receives scanty rainfall from the monsoon?<br/> </b>मानसून से कौन<b>-</b>सा क्षेत्र बहुत कम वर्षा प्राप्त करता है<b>?</b></p>",
+      "option1": "<p> Konkan Coast / कोंकण तट</p>",
+      "option2": "<p> Leh–Ladakh / लेह-लद्दाख</p>",
+      "option3": "<p> Assam Valley / असम घाटी</p>",
+      "option4": "<p> Kerala Plains / केरल मैदान</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Leh–Ladakh lies in the rain-shadow zone of the Himalayas and receives very little rain.<br/> लेह-लद्दाख हिमालय की वर्षा छाया क्षेत्र में है, जहाँ बहुत कम वर्षा होती है।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Which of the following is the longest west-flowing river of Peninsular India?<br/> </b>प्रायद्वीपीय भारत की सबसे लंबी पश्चिममुखी नदी कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Narmada / नर्मदा</p>",
+      "option2": "<p> Tapi / तापी</p>",
+      "option3": "<p> Mahi / माही</p>",
+      "option4": "<p> Sabarmati / साबरमती</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Narmada is the longest west-flowing river, forming the Narmada valley.<br/> नर्मदा भारत की सबसे लंबी पश्चिममुखी नदी है, जो नर्मदा घाटी बनाती है।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>Which month marks the onset of the Southwest Monsoon over Kerala?<br/> </b>दक्षिण<b>-</b>पश्चिम मानसून केरल में किस महीने में प्रवेश करता है<b>?</b></p>",
+      "option1": "<p> June / जून</p>",
+      "option2": "<p> May / मई</p>",
+      "option3": "<p> July / जुलाई</p>",
+      "option4": "<p> August / अगस्त</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The monsoon usually sets over Kerala around 1st June, marking its onset in India.<br/> मानसून आमतौर पर 1 जून के आस-पास केरल में प्रवेश करता है, जो भारत में इसकी शुरुआत मानी जाती है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Which of the following statements about the Narmada River is correct?<br/> </b>नर्मदा नदी के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?<br/> (a) It flows through a rift valley. / </b>यह भ्रंशन घाटी से होकर बहती है।<b><br/> (b) It drains into the Arabian Sea. / </b>यह अरब सागर में गिरती है।<b><br/> (c) It forms the Dhuandhar Falls. / </b>यह धुआंधार जलप्रपात का निर्माण करती है।</p>",
+      "option1": "<p> Only (a) and (b) / केवल (a) और (b)</p>",
+      "option2": "<p> Only (b) and (c) / केवल (b) और (c)</p>",
+      "option3": "<p> All (a), (b), and (c) / सभी (a), (b) और (c)</p>",
+      "option4": "<p> Only (a) / केवल (a)</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Narmada flows west through a rift valley, forming Dhuandhar Falls and draining into the Arabian Sea.<br/> नर्मदा पश्चिम दिशा में भ्रंश घाटी से बहती है, धुआंधार जलप्रपात बनाती है और अरब सागर में गिरती है।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>Consider the following statements about El Niño:<br/> </b>एल नीनो से संबंधित निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> (a) It is a periodic warming of Pacific Ocean waters. / </b>यह प्रशांत महासागर के जल का आवधिक ऊष्मीकरण है।<b><br/> (b)It is beneficial for agriculture in India. / </b>यह भारत की कृषि के लिए लाभदायक है।<b><br/> (c) It reduces monsoon rainfall in India. / </b>यह भारत में मानसूनी वर्षा को कम कर देता है।<b><br/> Which of the above are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) और (b)</p>",
+      "option2": "<p> (b) and (c) / (b) और (c)</p>",
+      "option3": "<p> (a) and (c) / (a) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> El Niño warms Pacific waters and weakens Indian monsoon winds, causing reduced rainfall.<br/> एल नीनो प्रशांत महासागर को गरम करता है और भारत में मानसून कमज़ोर हो जाता है।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Which of the following rivers forms the Sardar Sarovar Reservoir?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी सरदार सरोवर जलाशय बनाती है<b>?</b></p>",
+      "option1": "<p> Tapi / तापी</p>",
+      "option2": "<p> Narmada / नर्मदा</p>",
+      "option3": "<p> Godavari / गोदावरी</p>",
+      "option4": "<p> Mahanadi / महानदी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Sardar Sarovar Dam is constructed on the Narmada River in Gujarat.<br/> सरदार सरोवर बाँध गुजरात में नर्मदा नदी पर निर्मित है।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>El Niño phenomenon is associated with which ocean?<br/> </b>एल नीनो प्रभाव किस महासागर से संबंधित है<b>?</b></p>",
+      "option1": "<p> Pacific Ocean / प्रशांत महासागर</p>",
+      "option2": "<p> Atlantic Ocean / अटलांटिक महासागर</p>",
+      "option3": "<p> Indian Ocean / हिन्द महासागर</p>",
+      "option4": "<p> Arctic Ocean / आर्कटिक महासागर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> El Niño originates in the central and eastern Pacific Ocean and affects global monsoon patterns.<br/> एल नीनो प्रभाव प्रशांत महासागर के केन्द्रीय भाग में उत्पन्न होता है और विश्व भर के मानसूनी पैटर्न को प्रभावित करता है।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>The Northeast Monsoon brings rain mainly to which region of India?<br/> </b>उत्तर<b>-</b>पूर्व मानसून मुख्यतः भारत के किस क्षेत्र में वर्षा लाता है<b>?</b></p>",
+      "option1": "<p> Himalayan states / हिमालयी राज्य</p>",
+      "option2": "<p> Rajasthan and Punjab / राजस्थान और पंजाब</p>",
+      "option3": "<p> Western Ghats / पश्चिमी घाट</p>",
+      "option4": "<p> Tamil Nadu and Southeast coast / तमिल नाडु और दक्षिण-पूर्व तट</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The northeast monsoon brings rain to Tamil Nadu and southeastern coast between October and December.<br/> उत्तर-पूर्व मानसून अक्टूबर से दिसंबर तक तमिल नाडु और दक्षिण-पूर्व तट पर वर्षा लाता है।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p><strong>The Krishna River is also known as which of the following names?</strong><br/> कृष्णा नदी को निम्नलिखित में से किस नाम से भी जाना जाता है<strong>?</strong></p>",
+      "option1": "<p>Leitha / लेइथा</p>",
+      "option2": "<p>Dakshina Vaidarbhi / दक्षिण वैदर्भी</p>",
+      "option3": "<p>Ponni / पोन्नी</p>",
+      "option4": "<p>Dakshina Ganga / दक्षिण गंगा</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Krishna River is also known as Dakshina Ganga. It is the second-longest river in southern India after the Godavari.<br/> कृष्णा नदी को दक्षिण गंगा के नाम से भी जाना जाता है। यह गोदावरी के बाद दक्षिण भारत की दूसरी सबसे लंबी नदी है।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Consider the following statements regarding Southwest Monsoon:<br/> </b>दक्षिण<b>-</b>पश्चिम मानसून से संबंधित निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> (a) It arrives in India by early June. / </b>यह भारत में जून की शुरुआत तक पहुँचती है।<b><br/> (b) It withdraws from northwestern India by September. / </b>यह सितंबर तक उत्तर<b>-</b>पश्चिम भारत से लौट जाती है।<b><br/> (c) It causes rainfall only in southern India. / </b>यह केवल दक्षिण भारत में वर्षा कराती है।<b><br/> Which of the above are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (c) / (a) और (c)</p>",
+      "option2": "<p> (b) and (c) / (b) और (c)</p>",
+      "option3": "<p> (a) and (b) / (a) और (b)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The southwest monsoon reaches India in June and starts retreating by September; it covers most of the country, not just the south.<br/> दक्षिण-पश्चिम मानसून जून में भारत में प्रवेश करता है और सितंबर तक वापस होने लगता है; यह केवल दक्षिण नहीं बल्कि पूरे देश को प्रभावित करता है।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Which of the following pairs is correctly matched?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा युग्म सही सुमेलित है<b>?</b></p>",
+      "option1": "<p> Bhavanisagar Dam – Mahanadi / भवानीसागर बाँध – महानदी</p>",
+      "option2": "<p> Rihand Dam – Son River / रिहंद बाँध – सोन नदी</p>",
+      "option3": "<p> Tehri Dam – Alaknanda / टिहरी बाँध – अलकनंदा</p>",
+      "option4": "<p> Hirakud Dam – Krishna River / हीराकुंड बाँध – कृष्णा नदी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rihand Dam is built on the Rihand, a tributary of the Son River in Uttar Pradesh.<br/> रिहंद बाँध उत्तर प्रदेश में सोन नदी की सहायक रिहंद नदी पर बना है।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Which one of the following causes monsoon in India?<br/> </b>भारत में मानसून का मुख्य कारण क्या है<b>?</b></p>",
+      "option1": "<p> Coriolis Effect / कोरिओलिस प्रभाव</p>",
+      "option2": "<p> Differential heating of land and sea / भूमि और समुद्र के असमान ताप</p>",
+      "option3": "<p> Jet Streams / जेट धाराएँ</p>",
+      "option4": "<p> El Niño / एल नीनो</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Monsoon winds arise due to unequal heating of land and sea causing seasonal pressure differences.<br/> भूमि और समुद्र के असमान ताप से दबाव अंतर उत्पन्न होता है जो मानसूनी हवाओं का मुख्य कारण है।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Which of the following rivers flows eastward?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी पूर्व की ओर बहती है<b>?</b></p>",
+      "option1": "<p> Mandovi / मांडोवी</p>",
+      "option2": "<p> Narmada / नर्मदा</p>",
+      "option3": "<p> Tapi / तापी</p>",
+      "option4": "<p> Mahanadi / महानदी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mahanadi flows eastward into the Bay of Bengal, while Narmada and Tapi flow westward.<br/> महानदी पूर्व की ओर बंगाल की खाड़ी में गिरती है, जबकि नर्मदा व तापी पश्चिम की ओर बहती हैं।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Which of the following brings most of the annual rainfall to India?<br/> </b>भारत में वार्षिक वर्षा का अधिकांश भाग किससे प्राप्त होता है<b>?</b></p>",
+      "option1": "<p> Southwest Monsoon / दक्षिण-पश्चिम मानसून</p>",
+      "option2": "<p> Northeast Monsoon / उत्तर-पूर्व मानसून</p>",
+      "option3": "<p> Western Disturbances / पश्चिमी विक्षोभ</p>",
+      "option4": "<p> Local Thunderstorms / स्थानीय आंधी वर्षाएँ</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> About 75% of India’s rainfall occurs during the southwest monsoon (June–September).<br/> भारत की लगभग 75% वर्षा जून से सितंबर के दक्षिण-पश्चिम मानसून दौरान होती है।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEOGRAPHY TEST -4</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
