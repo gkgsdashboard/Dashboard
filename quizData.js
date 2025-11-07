@@ -10,7 +10,8 @@ const quizSubjects = [
             // **TESTING PLACEHOLDER:** यह लिंक अब 'Adding Soon' संदेश दिखाएगा और 'Back to Subject' बटन सक्रिय करेगा।
             { name: 'Weekly Test 1 - Geography', link: 'quiz_files/Weekly/week_1_geo.html' }, 
             { name: 'Weekly Test 2 - Geography', link: 'quiz_files/Weekly/week_2_geo.html' },
-            { name: 'Weekly Test 3 - Geography', link: 'quiz_files/Weekly/week_3_geo.html' }
+            { name: 'Weekly Test 3 - Geography', link: 'quiz_files/Weekly/week_3_geo.html' },
+            { name: 'Weekly Test 4 - Geography', link: 'quiz_files/Weekly/week_4_geo.html' }
         ]
     },
     
