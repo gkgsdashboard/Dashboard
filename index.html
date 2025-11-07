@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard</title>
   <style>
-    /* --- Existing CSS --- */
+    
     * {
       margin: 0;
       padding: 0;
@@ -63,82 +63,10 @@
     .btns button:hover {
       transform: scale(1.1);
     }
-
-    /* --- Popup/Modal CSS (Unchanged) --- */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 450px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    }
-
-    .modal-content h2 {
-      color: #7c1919;
-      margin-bottom: 15px;
-    }
-
-    .modal-content p {
-      margin-bottom: 20px;
-      color: #333;
-      font-size: 1rem;
-      line-height: 1.5;
-      text-align: left; /* Aligned text left for better readability */
-    }
-
-    .modal-content button {
-      padding: 10px 25px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      color: white;
-      background: #764ba2;
-      transition: background 0.2s;
-    }
-
-    .modal-content button:hover {
-      background: #667eea;
-    }
-
-    .contact-info {
-        font-weight: bold;
-        color: #7c1919;
-    }
   </style>
 </head>
 <body>
 
-  <div id="disclaimerModal" class="modal-overlay">
-    <div class="modal-content">
-      <h2>📜 Copyright & Educational Disclaimer</h2>
-      <p>
-        **This content is for non-commercial, educational use only.**
-        <br><br>
-        All rights to the original materials remain with their respective owners and this content is used under the principle of **fair dealing** for teaching purposes.
-        <br><br>
-        **To Parmar Sir and other Copyright Holders:** If you object to this use, please contact us at the email below, and we will remove the content immediately.
-        <br><br>
-        Contact: <span class="contact-info">chotu69dada@gmail.com</span>
-      </p>
-      <button onclick="closeModal()">I Understand & Proceed</button>
-    </div>
-  </div>
   <div class="content">
     <h1>PARMAR SSC GK BATCH 4.0</h1>
     <h1>NOTES AND QUIZES</h1>
@@ -149,11 +77,7 @@
   </div>
 
   <script>
-    // Function to close the modal
-    function closeModal() {
-      const modal = document.getElementById('disclaimerModal');
-      modal.style.display = 'none';
-    }
+    // All previous popup-related JavaScript has been removed.
   </script>
 </body>
 </html>
