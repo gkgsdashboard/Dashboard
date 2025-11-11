@@ -28,9 +28,11 @@ const subjects = [
             { name: '20. 🌳 Forest and Grassland', link: 'https://drive.google.com/file/d/1MfmY9neaXNKsB5ayKkiiwxX-_U6BWYBg/view?usp=drive_link' },
             { name: '21. 🌾 Soil ', link: 'https://drive.google.com/file/d/10DFmz-FB_IBB2XVjYEPQHdTNADvRm_ng/view?usp=drive_link' },
             { name: '22. ⛏️ Agriculture', link: 'https://drive.google.com/file/d/1NKfshFzlqdtNLQp8JOaBAi5zEmLxG-3v/view?usp=drive_link' },
-            { name: '23. 🗺️ World Map', link: 'YOUR_LINK_FOR_WORLD_MAP' },
-            { name: '24. 🏞️ National Parks', link: 'YOUR_LINK_FOR_NATIONAL_PARKS' },
-            { name: '25. 🚗 Transport', link: 'YOUR_LINK_FOR_TRANSPORT' }
+            { name: '23. 🗺️ Minerals', link: 'https://drive.google.com/file/d/1elWz5Cftwjo69AcsnOCjmwx_g0QH5U6-/view?usp=drive_link' },
+            { name: '24. 🚗 Transport', link: 'https://drive.google.com/file/d/14jLiZlgf2EVUeFbiQ8RUiG99YkU8T6TT/view?usp=drive_link' },
+            { name: '25. 🏞️ National Parks', link: 'YOUR_LINK_FOR_NATIONAL_PARKS' },
+            { name: '26. 🏞️ World Maps', link: 'YOUR_LINK_FOR_NATIONAL_PARKS' }
+
         ]
     },
 
@@ -86,7 +88,7 @@ const subjects = [
     // 5. 📜 Polity
     {
         title: '📜 Polity',
-        color: 'yellow',
+        color: '#FFC300',
         notes: [
             { name: '1. ✍️ Making of Constitution', link: 'YOUR_LINK_FOR_MAKING_OF_CONSTITUTION' },
             { name: '2. ✨ Salient Features of the Constitution', link: 'YOUR_LINK_FOR_SALIENT_FEATURES_OF_THE_CONSTITUTION' },

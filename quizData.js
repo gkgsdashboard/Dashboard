@@ -43,9 +43,11 @@ const quizSubjects = [
             { name: '20. 🌳 Forest and Grassland Quiz', link: 'quiz_files/Geography/geo_20_forest_grassland.html' },
             { name: '21. 🌾 Soil  Quiz', link: 'quiz_files/Geography/geo_21_soil.html' },
             { name: '22. ⛏️ Agriculture Quiz', link: 'quiz_files/Geography/geo_22_agriculture.html' },
-            { name: '23. 🗺️ World Map Quiz', link: 'Adding Soon' },
-            { name: '24. 🏞️ National Parks Quiz', link: 'Adding Soon' },
-            { name: '25. 🚗 Transport Quiz', link: 'Adding Soon' }
+            { name: '23. 🗺️ Minerals', link: 'quiz_files/Geography/geo_23_minerals.html' },
+            { name: '24. 🏞️ Transport', link: 'quiz_files/Geography/geo_24_transport.html' },
+            { name: '25. 🚗 World Map', link: 'quiz_files/Geography/geo_25_world_map.html' },
+            { name: '26. 🏞️ National Parks', link: 'Adding Soon' }
+
 
         ]
     },
