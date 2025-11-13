@@ -44,8 +44,8 @@ const quizSubjects = [
             { name: '21. 🌾 Soil  Quiz', link: 'quiz_files/Geography/geo_21_soil.html' },
             { name: '22. ⛏️ Agriculture Quiz', link: 'quiz_files/Geography/geo_22_agriculture.html' },
             { name: '23. 🗺️ Minerals', link: 'quiz_files/Geography/geo_23_minerals.html' },
-            { name: '24. 🏞️ Transport', link: 'quiz_files/Geography/geo_24_transport.html' },
-            { name: '25. 🚗 World Map', link: 'quiz_files/Geography/geo_25_world_map.html' },
+            { name: '24. 🚗 Transport', link: 'quiz_files/Geography/geo_24_transport.html' },
+            { name: '25. 🏞️ World Map', link: 'quiz_files/Geography/geo_25_world_map.html' },
             { name: '26. 👨‍👨‍👦 Human Geography', link: 'Adding Soon' }
 
 
@@ -227,3 +227,4 @@ const quizSubjects = [
     }
 
 ];
+
