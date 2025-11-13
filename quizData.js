@@ -46,12 +46,36 @@ const quizSubjects = [
             { name: '23. 🗺️ Minerals', link: 'quiz_files/Geography/geo_23_minerals.html' },
             { name: '24. 🏞️ Transport', link: 'quiz_files/Geography/geo_24_transport.html' },
             { name: '25. 🚗 World Map', link: 'quiz_files/Geography/geo_25_world_map.html' },
-            { name: '26. 🏞️ National Parks', link: 'Adding Soon' }
+            { name: '26. 🏞️ Human Geography', link: 'Adding Soon' }
 
 
         ]
     },
 
+      // Polity Quizzes
+    {
+        title: '📜 Polity Quizzes',
+        color: '#FFC300',
+        quizzes: [
+            { name: '1. ✍️ Making of Constitution Quiz', link: 'Adding Soon' },
+            { name: '2. ✨ Salient Features of the Constitution Quiz', link: 'Adding Soon' },
+            { name: '3. 📖 Preamble Quiz', link: 'Adding Soon' },
+            { name: '4. 📚 Parts of the Constitution Quiz', link: 'Adding Soon' },
+            { name: '5. ⚖️ Fundamental Rights Quiz', link: 'Adding Soon' },
+            { name: '6. 🎯 Directive Principles and Fundamental Duties Quiz', link: 'Adding Soon' },
+            { name: '7. 🤵 President and Vice President of India Quiz', link: 'Adding Soon' },
+            { name: '8. 🏛️ Prime Minister and Council of Ministers Quiz', link: 'Adding Soon' },
+            { name: '9. 🏛️ Parliament Quiz', link: 'Adding Soon' },
+            { name: '10. 🏘️ State Legislature Quiz', link: 'Adding Soon' },
+            { name: '11. 🚨 Emergency & Constitutional Amendment Quiz', link: 'Adding Soon' },
+            { name: '12. ⚖️ Supreme Court and High Court Quiz', link: 'Adding Soon' },
+            { name: '13. 🏡 Local Government Quiz', link: 'Adding Soon' },
+            { name: '14. 👥 Constitutional and Non-Constitutional Bodies Quiz', link: 'Adding Soon' },
+            { name: '15. 📜 Important Acts Quiz', link: 'Adding Soon' },
+            { name: '16. 🗺️ Sources of the Indian Constitution Quiz', link: 'Adding Soon' }
+        ]
+    },
+    
     // Ancient History Quizzes
     {
         title: '🏺 Ancient History Quizzes',
@@ -98,30 +122,6 @@ const quizSubjects = [
             { name: '7. ✊ CDM and Simon Commission Resolution Quiz', link: 'Adding Soon' },
             { name: '8. 🇮🇳 Quit India Movement Quiz', link: 'Adding Soon' },
             { name: '9. 🎩 Governor-General and Viceroy Quiz', link: 'Adding Soon' }
-        ]
-    },
-
-    // Polity Quizzes
-    {
-        title: '📜 Polity Quizzes',
-        color: '#FFC300',
-        quizzes: [
-            { name: '1. ✍️ Making of Constitution Quiz', link: 'Adding Soon' },
-            { name: '2. ✨ Salient Features of the Constitution Quiz', link: 'Adding Soon' },
-            { name: '3. 📖 Preamble Quiz', link: 'Adding Soon' },
-            { name: '4. 📚 Parts of the Constitution Quiz', link: 'Adding Soon' },
-            { name: '5. ⚖️ Fundamental Rights Quiz', link: 'Adding Soon' },
-            { name: '6. 🎯 Directive Principles and Fundamental Duties Quiz', link: 'Adding Soon' },
-            { name: '7. 🤵 President and Vice President of India Quiz', link: 'Adding Soon' },
-            { name: '8. 🏛️ Prime Minister and Council of Ministers Quiz', link: 'Adding Soon' },
-            { name: '9. 🏛️ Parliament Quiz', link: 'Adding Soon' },
-            { name: '10. 🏘️ State Legislature Quiz', link: 'Adding Soon' },
-            { name: '11. 🚨 Emergency & Constitutional Amendment Quiz', link: 'Adding Soon' },
-            { name: '12. ⚖️ Supreme Court and High Court Quiz', link: 'Adding Soon' },
-            { name: '13. 🏡 Local Government Quiz', link: 'Adding Soon' },
-            { name: '14. 👥 Constitutional and Non-Constitutional Bodies Quiz', link: 'Adding Soon' },
-            { name: '15. 📜 Important Acts Quiz', link: 'Adding Soon' },
-            { name: '16. 🗺️ Sources of the Indian Constitution Quiz', link: 'Adding Soon' }
         ]
     },
 
