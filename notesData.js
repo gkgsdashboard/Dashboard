@@ -31,7 +31,7 @@ const subjects = [
             { name: '23. 🗺️ Minerals', link: 'https://drive.google.com/file/d/1elWz5Cftwjo69AcsnOCjmwx_g0QH5U6-/view?usp=drive_link' },
             { name: '24. 🚗 Transport', link: 'https://drive.google.com/file/d/14jLiZlgf2EVUeFbiQ8RUiG99YkU8T6TT/view?usp=drive_link' },
             { name: '25. 🏞️ World Maps', link: 'https://drive.google.com/file/d/1S9R6S02ox35OwU7orJQgB5dlfKjvRRx_/view?usp=drive_link' },
-            { name: '26. 🏞️ Human Geography', link: 'https://drive.google.com/file/d/1OgSiNhTkENd3Ih71DH6UYQuNWaUwjOu5/view?usp=drive_link' }
+            { name: '26. 👨‍👨‍👦 Human Geography', link: 'https://drive.google.com/file/d/1OgSiNhTkENd3Ih71DH6UYQuNWaUwjOu5/view?usp=drive_link' }
 
         ]
     },
@@ -213,4 +213,5 @@ const subjects = [
             { name: '13. 🏆 Awards and Honours', link: 'YOUR_LINK_FOR_AWARDS_AND_HONOURS' }
         ]
     }
+
 ];
