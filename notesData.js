@@ -1,6 +1,26 @@
 // notesData.js फ़ाइल
 
 const subjects = [
+
+// 12. 📚 Merged PDFs (or 📚 संयुक्त PDF)
+    {
+    "title": "📚 Merged PDFs",
+    "color": "purple",
+    "notes": [
+        { "name": "🌍 Geography", "link": "https://drive.google.com/file/d/1efaU406d55pWG-5naguYSR0UYS4pDKOQ/view?usp=drive_link" },
+        { "name": "📜 Polity", "link": "" },
+        { "name": "🏺 Ancient History", "link": "" },
+        { "name": "⚔️ Medieval History", "link": "" },
+        { "name": "🇮🇳 Modern History", "link": "" },
+        { "name": "💰 Economics", "link": "" },
+        { "name": "🧲 Physics", "link": "" },
+        { "name": "⚗️ Chemistry", "link": "" },
+        { "name": "🧬 Biology", "link": "" },
+        { "name": "🌱 Environment", "link": "" },
+        { "name": "📚 Static GK", "link": "" }
+    ]
+},
+
     // 1. 🌍 Geography
     {
         title: '🌍 Geography✔️',
@@ -31,7 +51,7 @@ const subjects = [
             { name: '23. 🗺️ Minerals', link: 'https://drive.google.com/file/d/1elWz5Cftwjo69AcsnOCjmwx_g0QH5U6-/view?usp=drive_link' },
             { name: '24. 🚗 Transport', link: 'https://drive.google.com/file/d/14jLiZlgf2EVUeFbiQ8RUiG99YkU8T6TT/view?usp=drive_link' },
             { name: '25. 🏞️ World Maps', link: 'https://drive.google.com/file/d/1S9R6S02ox35OwU7orJQgB5dlfKjvRRx_/view?usp=drive_link' },
-            { name: '26. 👨‍👨‍👦 Human Geography', link: 'https://drive.google.com/file/d/1OgSiNhTkENd3Ih71DH6UYQuNWaUwjOu5/view?usp=drive_link' }
+            { name: '26. 🏞️ Human Geography', link: 'https://drive.google.com/file/d/1OgSiNhTkENd3Ih71DH6UYQuNWaUwjOu5/view?usp=drive_link' }
 
         ]
     },
@@ -41,9 +61,9 @@ const subjects = [
         title: '📜 Polity',
         color: '#FFC300',
         notes: [
-            { name: '1. ✍️ Making of Constitution', link: 'YOUR_LINK_FOR_MAKING_OF_CONSTITUTION' },
-            { name: '2. ✨ Salient Features of the Constitution', link: 'YOUR_LINK_FOR_SALIENT_FEATURES_OF_THE_CONSTITUTION' },
-            { name: '3. 📖 Preamble', link: 'YOUR_LINK_FOR_PREAMBLE' },
+            { name: '1. ✍️ Making of Constitution', link: 'https://drive.google.com/file/d/12UEjd4BIlXxkzMBqDNHvAmicK3TYU-Me/view?usp=drive_link' },
+            { name: '2. ✨ Salient Features of the Constitution', link: 'https://drive.google.com/file/d/1omP5JDD4bXmA7o2xeIWLisYTaDrSDFRD/view?usp=drive_link' },
+            { name: '3. 📖 Preamble', link: 'https://drive.google.com/file/d/1VtY7dalZS9Jh5w2VpO7DiD_OraV5MCAY/view?usp=drive_link' },
             { name: '4. 📚 Parts of the Constitution', link: 'YOUR_LINK_FOR_PARTS_OF_THE_CONSTITUTION' },
             { name: '5. ⚖️ Fundamental Rights', link: 'YOUR_LINK_FOR_FUNDAMENTAL_RIGHTS' },
             { name: '6. 🎯 Directive Principles and Fundamental Duties', link: 'YOUR_LINK_FOR_DIRECTIVE_PRINCIPLES_AND_FUNDAMENTAL_DUTIES' },
@@ -213,5 +233,4 @@ const subjects = [
             { name: '13. 🏆 Awards and Honours', link: 'YOUR_LINK_FOR_AWARDS_AND_HONOURS' }
         ]
     }
-
 ];

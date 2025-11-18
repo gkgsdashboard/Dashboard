@@ -242,8 +242,8 @@
                 }
             });
 
-            // 3. Dashboard Cards Render
-            data.forEach(sub => {
+            // 3. Dashboard Cards Render (UPDATED to handle Merged PDFs separately)
+            data.forEach((sub, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.style.backgroundColor = sub.color ? sub.color : 'rgba(52, 73, 94, 0.85)';
@@ -258,12 +258,20 @@
                 card.appendChild(hint);
                 dashboard.appendChild(card);
 
-                card.addEventListener('click', () => {
-                    openSubjectModal(sub); 
-                });
+                // 🚩 Merged PDFs (Index 0) के लिए कस्टम क्लिक हैंडलर
+                if (index === 0) {
+                    card.addEventListener('click', () => {
+                        openMergedSubjectModal(sub); // नया फ़ंक्शन
+                    });
+                } else {
+                    // बाकी सभी विषयों के लिए सामान्य हैंडलर
+                    card.addEventListener('click', () => {
+                        openSubjectModal(sub); 
+                    });
+                }
             });
             
-            // 4. विषय (Subject) Modal खोलना
+            // 4. विषय (Subject) Modal खोलना (सामान्य विषयों के लिए)
             function openSubjectModal(subject){
                 currentSubject = subject; // Set current subject
                 modalTitle.textContent = subject.title + ' Notes';
@@ -279,7 +287,7 @@
                         link.className = 'topic-btn';
                         link.textContent = note.name;
 
-                        // **NEW LOGIC: Visual distinction for 'Adding Soon' links**
+                        // **LOGIC: Visual distinction for 'Adding Soon' links**
                         const isAddingSoon = note.link && (note.link.startsWith(PLACEHOLDER_PREFIX) || note.link === ADDING_SOON_TEXT);
 
                         if (isAddingSoon) {
@@ -304,11 +312,52 @@
                 modalBg.classList.add('active');
             }
 
+            // 4.1. 📚 Merged PDFs के लिए विशेष Modal खोलना
+            function openMergedSubjectModal(subject){
+                currentSubject = subject; // Set current subject
+                modalTitle.textContent = subject.title + ' Notes';
+                topicList.innerHTML = ''; // Clear content first
+                resetCloseButton(true); // Reset button to default action
+                closeBtn.textContent = 'Close Dashboard';
+
+                if (subject.notes.length > 0) {
+                    
+                    // Display note links
+                    subject.notes.forEach(note => {
+                        const linkBtn = document.createElement('button');
+                        linkBtn.className = 'topic-btn';
+                        linkBtn.textContent = note.name;
+
+                        // Merged PDFs में लिंक चेक करने के लिए कस्टम लॉजिक: Placeholder या खाली स्ट्रिंग चेक करें
+                        const isAddingSoon = !note.link || note.link.startsWith(PLACEHOLDER_PREFIX) || note.link === ADDING_SOON_TEXT || note.link === "";
+
+                        if (isAddingSoon) {
+                             linkBtn.style.backgroundColor = '#95a5a6'; // light grey
+                             linkBtn.style.cursor = 'not-allowed'; // change cursor
+                             linkBtn.style.opacity = '0.7'; 
+                        }
+                        
+                        linkBtn.addEventListener('click', () => {
+                            // Merged PDFs के लिए 'handleNoteClick' को सीधे उपयोग करें 
+                            handleNoteClick(note); 
+                        });
+                        
+                        topicList.appendChild(linkBtn);
+                    });
+                    
+                } else {
+                    showAddingSoonMessage(subject.title);
+                }
+                
+                modalBg.classList.add('active');
+            }
+
+
             // 5. नोट क्लिक हैंडलर
             function handleNoteClick(note) {
                 
-                // **UPDATED CHECK to include ADDING_SOON_TEXT**
-                const isAddingSoon = note.link && (note.link.startsWith(PLACEHOLDER_PREFIX) || note.link === ADDING_SOON_TEXT);
+                // **UPDATED CHECK to include empty string and ADDING_SOON_TEXT**
+                const isAddingSoon = !note.link || note.link === "" || note.link.startsWith(PLACEHOLDER_PREFIX) || note.link === ADDING_SOON_TEXT;
 
                 if (isAddingSoon) {
                     // Link is a placeholder/Adding Soon, show "Adding Soon"
@@ -324,7 +373,12 @@
                     // Reset existing listeners and add back button listener
                     resetCloseButton(false); // Do NOT set default close action
                     closeBtn.addEventListener('click', function backToSubject() {
-                        openSubjectModal(currentSubject); // Go back to subject list
+                        // Merged PDFs के लिए, उनके स्पेसिफिक मॉडल पर वापस जाएँ
+                        if(currentSubject.title.includes('Merged PDFs')){
+                             openMergedSubjectModal(currentSubject); 
+                        } else {
+                             openSubjectModal(currentSubject); // Go back to regular subject list
+                        }
                     });
 
                 } else {
