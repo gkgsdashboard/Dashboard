@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - HUMAN GEOGRAPHY QUIZ - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - HUMAN GEOGRAPHY QUIZ</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>What was the population density of India according to the Census of 2011?<br/> 2011 </b>की जनगणना के अनुसार भारत का जनसंख्या घनत्व कितना था<b>?</b></p>",
+    "option1": "<p> 325 persons per sq. km / 325 व्यक्ति प्रति वर्ग किमी</p>",
+    "option2": "<p> 382 persons per sq. km / 382 व्यक्ति प्रति वर्ग किमी</p>",
+    "option3": "<p> 412 persons per sq. km / 412 व्यक्ति प्रति वर्ग किमी</p>",
+    "option4": "<p> 1106 persons per sq. km / 1106 व्यक्ति प्रति वर्ग किमी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Population density refers to the number of people living per square kilometer of a country or region. This density was 325 people per square kilometer in the 2001 census, and increased to 382 people per square kilometer in 2011. This increase is primarily due to India's rapid population growth and limited geographical area.<br/> जनसंख्या घनत्व का अर्थ है — किसी देश या क्षेत्र के प्रति वर्ग किलोमीटर क्षेत्रफल में रहने वाले लोगों की संख्या। 2001 की जनगणना में यह घनत्व 325 व्यक्ति प्रति वर्ग किमी था, जो 2011 में बढ़कर 382 व्यक्ति प्रति वर्ग किमी हो गया। इस वृद्धि का मुख्य कारण भारत में जनसंख्या की तेज़ी से बढ़ोतरी और सीमित भौगोलिक क्षेत्र है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which Indian state had the highest population density according to the 2011 Census?<br/> 2011 </b>की जनगणना के अनुसार किस भारतीय राज्य का जनसंख्या घनत्व सबसे अधिक था<b>?</b></p>",
+    "option1": "<p> Uttar Pradesh / उत्तर प्रदेश</p>",
+    "option2": "<p> West Bengal / पश्चिम बंगाल</p>",
+    "option3": "<p> Bihar / बिहार</p>",
+    "option4": "<p> Kerala / केरल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Bihar recorded the highest population density among all Indian states with 1106 persons per square kilometer in 2011. This high density is mainly attributed to the highly fertile plain land of the Ganga river basin.<br/> 2011 में सभी भारतीय राज्यों में बिहार ने 1106 व्यक्ति प्रति वर्ग किलोमीटर के साथ सबसे अधिक जनसंख्या घनत्व दर्ज किया। इस उच्च घनत्व का मुख्य कारण गंगा नदी बेसिन की अत्यधिक उपजाऊ मैदानी भूमि है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which of the following is a key 'Geographical Factor' that influences population distribution?<br/> </b>निम्नलिखित में से कौन सा एक प्रमुख <b>'</b>भौगोलिक कारक<b>' </b>है जो जनसंख्या वितरण को प्रभावित करता है<b>?</b></p>",
+    "option1": "<p> Urbanisation / शहरीकरण</p>",
+    "option2": "<p> Availability of Water / जल की उपलब्धता</p>",
+    "option3": "<p> Peace and Stability / शांति और स्थिरता</p>",
+    "option4": "<p> Mineral Deposits / खनिज भंडार</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Water availability is a major geographical factor that greatly influences population distribution. Where water sources (rivers, lakes, groundwater, etc.) are abundant, settlement is more concentrated. For example, the Ganga, Yamuna, and Brahmaputra valleys have high population densities because water is readily available there for irrigation, drinking water, and other needs. Urbanization and mineral deposits are classified as economic factors.<br/> जल की उपलब्धता एक प्रमुख भौगोलिक कारक है जो जनसंख्या वितरण को बहुत अधिक प्रभावित करता है। जहाँ जल स्रोत (नदियाँ, झीलें, भूजल आदि) प्रचुर मात्रा में उपलब्ध होते हैं, वहाँ बसावट अधिक होती है। उदाहरण के लिए — गंगा, यमुना और ब्रह्मपुत्रा घाटियों में जनसंख्या घनत्व बहुत अधिक है क्योंकि वहाँ सिंचाई, पेयजल और अन्य आवश्यकताओं के लिए जल आसानी से उपलब्ध है। शहरीकरण और खनिज भंडार को आर्थिक कारक के रूप में वर्गीकृत किया गया है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>What is the working age population (15-59 years) of a country generally referred to as in the context of economic growth?<br/> </b>आर्थिक विकास के संदर्भ में किसी देश की कार्यशील आयु की जनसंख्या <b>(15-59 </b>वर्ष<b>) </b>को आम तौर पर क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Dependent Population / आश्रित जनसंख्या</p>",
+    "option2": "<p> Stagnant Population / स्थिर जनसंख्या</p>",
+    "option3": "<p> Demographic Dividend / जनसांख्यिकीय लाभांश</p>",
+    "option4": "<p> Elderly Dependency / वृद्ध निर्भरता</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Demographic Dividend refers to the economic growth potential that results from shifts in a population's age structure, specifically when the share of the working-age population (15-59) is larger than the non-working-age share.<br/> जनसांख्यिकीय लाभांश उस आर्थिक विकास क्षमता को संदर्भित करता है जो जनसंख्या की आयु संरचना में बदलाव से उत्पन्न होती है, विशेष रूप से जब कार्यशील आयु की जनसंख्या (15-59) का हिस्सा गैर-कार्यशील आयु के हिस्से से बड़ा होता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>The number of deaths per 1,000 people in a given population is termed as the:<br/> </b>किसी दी गई जनसंख्या में प्रति <b>1,000 </b>लोगों पर होने वाली मौतों की संख्या को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Crude Birth Rate (CBR) / अशोधित जन्म दर (सीबीआर)</p>",
+    "option2": "<p> Total Fertility Rate (TFR) / कुल प्रजनन दर (टीएफआर)</p>",
+    "option3": "<p> Crude Death Rate (CDR) / अशोधित मृत्यु दर (सीडीआर)</p>",
+    "option4": "<p> Infant Mortality Rate (IMR) / शिशु मृत्यु दर (आईएमआर)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Crude Death Rate (CDR) is a basic measure of mortality, calculated as the number of deaths per 1,000 people in a population per year. Along with the Crude Birth Rate, it is a key component of natural population change.<br/> अशोधित मृत्यु दर (सीडीआर) मृत्यु दर का एक बुनियादी माप है, जिसकी गणना प्रति वर्ष प्रति 1,000 लोगों पर होने वाली मौतों की संख्या के रूप में की जाती है। अशोधित जन्म दर के साथ, यह प्राकृतिक जनसंख्या परिवर्तन का एक प्रमुख घटक है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>What term is used for a person who moves out of their country or region of origin?<br/> </b>उस व्यक्ति के लिए किस शब्द का प्रयोग किया जाता है जो अपने मूल देश या क्षेत्र से बाहर चला जाता है<b>?</b></p>",
+    "option1": "<p> Immigrant / अप्रवासी</p>",
+    "option2": "<p> Emigrant / उत्प्रवासी</p>",
+    "option3": "<p> Refugee / शरणार्थी</p>",
+    "option4": "<p> Migrant / प्रवासी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> An Emigrant (E- for Exit) is a person who leaves one country or region to settle in another. Conversely, an Immigrant (I- for in) is a person who moves into a new country or region.<br/> एक उत्प्रवासी (Emigrant) (E- का अर्थ है Exit) वह व्यक्ति होता है जो दूसरे देश या क्षेत्र में बसने के लिए एक देश या क्षेत्र से बाहर निकलता है। इसके विपरीत, एक अप्रवासी (Immigrant) (I- का अर्थ है in) वह व्यक्ति होता है जो किसी नए देश या क्षेत्र में आता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which factor is considered a 'Push Factor' for migration?<br/> </b>निम्नलिखित में से कौन सा कारक प्रवासन के लिए <b>'</b>पुश कारक<b>' (</b>दबाव कारक<b>) </b>माना जाता है<b>?</b></p>",
+    "option1": "<p> Better Job Opportunities / बेहतर रोजगार के अवसर</p>",
+    "option2": "<p> Peace and Stability / शांति और स्थिरता</p>",
+    "option3": "<p> Political Turmoil and War / राजनीतिक अशांति और युद्ध</p>",
+    "option4": "<p> Good Living Conditions / अच्छी जीवन स्थितियाँ</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Push factors are circumstances that compel people to leave their places of origin. Situations such as political unrest, war, unemployment, natural disasters, or insecurity \"push\" people out of their region. Therefore, political unrest and war are a major push factor for migration.<br/> Better employment, peace, and good living conditions are all pull factors.<br/> ‘पुश कारक’ (दबाव कारक) वे परिस्थितियाँ होती हैं जो लोगों को अपने मूल स्थान को छोड़ने के लिए मजबूर करती हैं। राजनीतिक अशांति, युद्ध, बेरोजगारी, प्राकृतिक आपदाएँ या असुरक्षा जैसी स्थितियाँ लोगों को अपने क्षेत्र से बाहर जाने के लिए \"धकेलती\" हैं। इसलिए राजनीतिक अशांति और युद्ध प्रवासन का एक प्रमुख पुश कारक है।<br/> बेहतर रोजगार, शांति और अच्छी जीवन स्थितियाँ सभी 'पुल कारक (खिचाव कारक)' हैं।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The time period from 1901 to 1921 in India's demographic history is described as the period of:<br/> </b>भारत के जनसांख्यिकीय इतिहास में <b>1901 </b>से <b>1921 </b>तक की समयावधि को किस अवधि के रूप में वर्णित किया गया है<b>?</b></p>",
+    "option1": "<p> Population Explosion / जनसंख्या विस्फोट</p>",
+    "option2": "<p> Steady Growth / स्थिर वृद्धि</p>",
+    "option3": "<p> Stagnant Population / स्थिर जनसंख्या</p>",
+    "option4": "<p> Slowing Down / धीमी गति</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The period from 1901 to 1921 in India is called the \"period of stagnant population.\" During this time, population growth was very slow or almost stagnant.<br/> 5. The main reasons were frequent famines, epidemics (such as plague, flu, etc.), and a lack of health facilities.<br/> 6. The 1921 census is also called the \"Great Demographic Divide\" in India's demographic history, because after this, the population began to grow steadily.<br/> भारत में 1901 से 1921 की अवधि को \"स्थिर जनसंख्या की अवधि\" कहा जाता है। इस समय जनसंख्या वृद्धि बहुत धीमी थी या लगभग रुकी हुई थी।<br/> 7. मुख्य कारण — बार-बार आने वाले अकाल, महामारियाँ (जैसे प्लेग, फ्लू आदि) और स्वास्थ्य सुविधाओं की कमी थे।<br/> 8. 1921 की जनगणना को भारत के जनसांख्यिकीय इतिहास में “महान जनसांख्यिकीय विभाजन रेखा” भी कहा जाता है, क्योंकि इसके बाद जनसंख्या में निरंतर वृद्धि शुरू हुई।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which shape of the Age-Sex Pyramid is typically observed in developed nations like the USA and Australia, indicating a stable or stagnant population?<br/> </b>आयु<b>-</b>लिंग पिरामिड का कौन सा आकार आमतौर पर संयुक्त राज्य अमेरिका और ऑस्ट्रेलिया जैसे विकसित देशों में देखा जाता है<b>, </b>जो एक स्थिर या ठहराव वाली जनसंख्या को दर्शाता है<b>?</b></p>",
+    "option1": "<p> Triangular / त्रिकोणीय</p>",
+    "option2": "<p> Rectangular / आयताकार</p>",
+    "option3": "<p> Inverted Triangular / उल्टा त्रिकोणीय</p>",
+    "option4": "<p> Diamond-shaped / हीराकार</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> In developed countries such as the United States and Australia, the age-sex pyramid is rectangular in shape. This shape reflects the low birth and death rates in these countries, leading to stable or stagnant population growth.<br/> In contrast, in developing countries, the pyramid is typically triangular, reflecting a rapidly growing population.<br/> संयुक्त राज्य अमेरिका और ऑस्ट्रेलिया जैसे विकसित देशों में आयु-लिंग पिरामिड का आकार आयताकार होता है। यह आकार दर्शाता है कि इन देशों में जन्म दर और मृत्यु दर दोनों कम हैं, जिससे जनसंख्या वृद्धि स्थिर या ठहरी हुई रहती है।<br/> इसके विपरीत, विकासशील देशों में पिरामिड आमतौर पर त्रिकोणीय होता है, जो तेजी से बढ़ती जनसंख्या को दर्शाता है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The Malthusian Theory states that population increases by 'Geometric Progression', which is much faster than the growth of:<br/> </b>माल्थस के सिद्धांत के अनुसार जनसंख्या <b>'</b>ज्यामितीय प्रगति<b>' </b>से बढ़ती है<b>, </b>जो निम्नलिखित में से किसकी वृद्धि से कहीं अधिक तेज़ है<b>?</b></p>",
+    "option1": "<p> Literacy Rate / साक्षरता दर</p>",
+    "option2": "<p> Technological Advancement / प्रौद्योगिकी उन्नति</p>",
+    "option3": "<p> Food Supply / खाद्य आपूर्ति</p>",
+    "option4": "<p> Urbanisation Rate / शहरीकरण दर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> According to Thomas Robert Malthus,<br/> 5. population increases in geometric progression—e.g., 1, 2, 4, 8, 16…<br/> 6. while food supply increases only in arithmetic progression—e.g., 1, 2, 3, 4, 5...<br/> According to this theory, the rate of population growth is much higher than food production, which can lead to problems such as famine, starvation, and poverty over time.<br/> थॉमस रॉबर्ट माल्थस के अनुसार,<br/> 7. जनसंख्या ज्यामितीय प्रगति से बढ़ती है — जैसे 1, 2, 4, 8, 16...<br/> 8. जबकि खाद्य आपूर्ति केवल अंकगणितीय प्रगति से बढ़ती है — जैसे 1, 2, 3, 4, 5...<br/> इस सिद्धांत के अनुसार, जनसंख्या वृद्धि की दर खाद्य उत्पादन की तुलना में बहुत अधिक होती है, जिससे समय के साथ अकाल, भूखमरी और गरीबी जैसी समस्याएँ उत्पन्न हो सकती हैं।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Assertion (A): The low population density in Himalayan regions is mainly due to geographical factors.<br/> Reason (R): Rugged terrain, steep slopes, and unfavourable cold climate limit the development of agriculture, transport, and habitation in these areas.<br/> </b>अभिकथन <b>(A): </b>हिमालयी क्षेत्रों में जनसंख्या घनत्व कम होने का मुख्य कारण भौगोलिक कारक हैं।<b><br/> </b>कारण <b>(R): </b>दुर्गम स्थलाकृति<b>, </b>तीव्र ढलानें और प्रतिकूल ठंडा जलवायु इन क्षेत्रों में कृषि<b>, </b>परिवहन और आवास के विकास को सीमित करती हैं।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The assertion is true, as geographical factors like landforms and climate are critical. The reason correctly explains that these unfavorable geographical features (rugged land, cold climate) are what make the regions unattractive for dense settlement and economic activities.<br/> अभिकथन सत्य है, क्योंकि स्थलरूप और जलवायु जैसे भौगोलिक कारक अत्यंत महत्वपूर्ण हैं। कारण भी सही रूप से समझाता है कि ये प्रतिकूल भौगोलिक विशेषताएँ (दुर्गम भूमि, ठंडा जलवायु) ही इन क्षेत्रों को घनी बस्तियों और आर्थिक गतिविधियों के लिए अनुपयुक्त बनाती हैं।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Statement I: The second stage of the Demographic Transition Model is characterized by high population growth.<br/> Statement II: This high growth is caused by a low Birth Rate and a rapidly declining Death Rate.<br/> </b>कथन <b>I: </b>जनसांख्यिकीय संक्रमण मॉडल का दूसरा चरण उच्च जनसंख्या वृद्धि की विशेषता रखता है।<b><br/> </b>कथन <b>II: </b>यह उच्च वृद्धि निम्न जन्म दर और तेजी से घटती मृत्यु दर के कारण होती है।</p>",
+    "option1": "<p> Both Statement I and Statement II are true. / कथन I और कथन II दोनों सत्य हैं।</p>",
+    "option2": "<p> Statement I is true, but Statement II is false. / कथन I सत्य है, लेकिन कथन II असत्य है।</p>",
+    "option3": "<p> Statement I is false, but Statement II is true. / कथन I असत्य है, लेकिन कथन II सत्य है।</p>",
+    "option4": "<p> Both Statement I and Statement II are false. / कथन I और कथन II दोनों असत्य हैं।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement I is true, as the second stage is one of rapid growth. Statement II is false because the second stage is characterized by a High Birth Rate and a rapidly declining Death Rate, not a low Birth Rate.<br/> कथन I सत्य है, क्योंकि दूसरा चरण तीव्र वृद्धि का है। कथन II असत्य है क्योंकि दूसरे चरण की विशेषता उच्च जन्म दर और तेजी से घटती मृत्यु दर है, न कि निम्न जन्म दर।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): The period from 1951 to 1981 in India saw a 'Population Explosion'.<br/> Reason (R): This explosion was mainly due to the combination of a high Birth Rate, a controlled Death Rate.<br/> </b>अभिकथन <b>(A): </b>भारत में <b>1951 </b>से <b>1981 </b>की अवधि के दौरान ‘जनसंख्या विस्फोट’ देखा गया।<b><br/> </b>कारण <b>(R): </b>यह विस्फोट मुख्य रूप से उच्च जन्म दर और नियंत्रित मृत्यु दर के संयोजन के कारण हुआ।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The assertion correctly names the phase. The reason provides the complete set of factors—natural increase (High BR, Low DR) and net migration—that led to the unprecedented and rapid population growth during this phase in India.<br/> अभिकथन चरण का सही नामकरण करता है। कारण कारकों का पूरा समूह प्रदान करता है—प्राकृतिक वृद्धि (उच्च जन्म दर, निम्न मृत्यु दर) और शुद्ध प्रवासन—जिसके कारण भारत में इस चरण के दौरान अभूतपूर्व और तीव्र जनसंख्या वृद्धि हुई।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which pair of factors correctly represents a 'Push Factor' and a 'Pull Factor', respectively, for migration?<br/> </b>कौन<b>-</b>सा कारकों का जोड़ा क्रमशः प्रवासन के लिए ‘पुश कारक’<b>(</b>दबाव कारक<b>) </b>और ‘पुल कारक’ <b>(</b>खिचाव कारक<b>) </b>को सही रूप में दर्शाता है<b>?</b></p>",
+    "option1": "<p> Better Housing; Natural Disasters / बेहतर आवास; प्राकृतिक आपदाएँ</p>",
+    "option2": "<p> High Unemployment; Peace and Stability / उच्च बेरोजगारी; शांति और स्थिरता</p>",
+    "option3": "<p> Unpleasant Climate; Political Turmoil / अप्रिय जलवायु; राजनीतिक अशांति</p>",
+    "option4": "<p> Socio-Economic Backwards; Poor Living Conditions / सामाजिक-आर्थिक पिछड़ापन; खराब जीवन स्थितियाँ</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 5. ‘Push factors’ are circumstances that force people to leave their native place, such as unemployment, poverty, political instability, or natural disasters.<br/> 6. ‘Pull factors’ are circumstances that attract people to a new place, such as peace, stability, employment opportunities, better living standards, etc.<br/> 7. ‘पुश कारक’ (दबाव कारक) वे परिस्थितियाँ होती हैं जो लोगों को अपने मूल स्थान को छोड़ने के लिए मजबूर करती हैं, जैसे — बेरोजगारी, गरीबी, राजनीतिक अस्थिरता, या प्राकृतिक आपदाएँ।<br/> 8. ‘पुल कारक’ (खिचाव कारक) वे परिस्थितियाँ हैं जो लोगों को किसी नए स्थान की ओर आकर्षित करती हैं, जैसे — शांति, स्थिरता, रोजगार के अवसर, बेहतर जीवन स्तर आदि।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Assertion (A): The Age-Sex Pyramid for India is 'Triangular' with a broad base.<br/> Reason (R): This shape reflects a high number of children (high birth rate), indicating a strong potential for population explosion in the future.<br/> </b>अभिकथन <b>(A): </b>भारत की आयु<b>-</b>लिंग पिरामिड ‘त्रिकोणीय’ है<b>, </b>जिसकी नींव चौड़ी है।<b><br/> </b>कारण <b>(R): </b>यह आकार बच्चों की अधिक संख्या <b>(</b>उच्च जन्म दर<b>) </b>को दर्शाता है<b>, </b>जो भविष्य में जनसंख्या विस्फोट की मजबूत संभावना को इंगित करता है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The triangular shape is a direct consequence of a high birth rate, leading to a broad base of young people. As this large base enters the reproductive age, it ensures continued high population growth, supporting the assertion.<br/> त्रिकोणीय आकार उच्च जन्म दर का सीधा परिणाम है, जिससे युवाओं का एक चौड़ा आधार बनता है। चूंकि यह बड़ा आधार प्रजनन आयु में प्रवेश करता है, यह निरंतर उच्च जनसंख्या वृद्धि सुनिश्चित करता है, जो अभिकथन का समर्थन करता है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which statement accurately describes the characteristics of the Demographic Transition's Final Stage?<br/> </b>जनसांख्यिकीय संक्रमण के अंतिम चरण की विशेषताओं का सही रूप से वर्णन करने वाला कथन कौन<b>-</b>सा है<b>?</b></p>",
+    "option1": "<p> High Birth Rate, High Death Rate, Stagnant Population. / उच्च जन्म दर, उच्च मृत्यु दर, स्थिर जनसंख्या।</p>",
+    "option2": "<p> High Birth Rate, Low Death Rate, Rapid Growth. / उच्च जन्म दर, निम्न मृत्यु दर, तीव्र वृद्धि।</p>",
+    "option3": "<p> Low Birth Rate, Low Death Rate, Slow/Stagnant Population. / निम्न जन्म दर, निम्न मृत्यु दर, धीमी/स्थिर जनसंख्या।</p>",
+    "option4": "<p> Declining Birth Rate, High Death Rate, Declining Population. / घटती जन्म दर, उच्च मृत्यु दर, घटती जनसंख्या।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The final stage is reached in developed societies where both fertility and mortality rates are considerably low due to high literacy, better health, and urban living, resulting in minimal or no population growth.<br/> अंतिम चरण विकसित समाजों में पहुँचता है जहाँ उच्च साक्षरता, बेहतर स्वास्थ्य और शहरी जीवन के कारण प्रजनन और मृत्यु दर दोनों काफी कम होती हैं, जिसके परिणामस्वरूप न्यूनतम या कोई जनसंख्या वृद्धि नहीं होती है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Assertion (A): Mineral-rich regions often show high population densities in India.<br/> Reason (R): The presence of minerals is an 'Economic Factor' that attracts industries and generates employment, making the region a destination for migrants.<br/> </b>अभिकथन <b>(A): </b>भारत में खनिज<b>-</b>संपन्न क्षेत्र अक्सर उच्च जनसंख्या घनत्व प्रदर्शित करते हैं।<b><br/> </b>कारण <b>(R): </b>खनिजों की उपस्थिति एक ‘आर्थिक कारक’ है जो उद्योगों को आकर्षित करती है और रोजगार उत्पन्न करती है<b>, </b>जिससे यह क्षेत्र प्रवासियों के लिए आकर्षण का केंद्र बन जाता है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The assertion is correct; regions like the Chota Nagpur Plateau are densely populated. The reason accurately explains that the economic opportunity created by minerals is the cause of this high density, thus R explains A.<br/> अभिकथन सही है; छोटा नागपुर पठार जैसे क्षेत्र घनी आबादी वाले हैं। कारण सही ढंग से बताता है कि खनिजों द्वारा बनाए गए आर्थिक अवसर इस उच्च घनत्व का कारण हैं, इस प्रकार R, A की व्याख्या करता है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Consider the following statements about India's demographic history:<br/> </b>भारत के जनसांख्यिकीय इतिहास के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The period 1901-1921 was one of stagnation with both high birth and death rates. / 1901 </b>से <b>1921 </b>की अवधि स्थिरता की थी<b>, </b>जिसमें जन्म दर और मृत्यु दर दोनों उच्च थीं।<b><br/> 2. The period 1921-1951 was characterized by steady population growth. / 1921 </b>से <b>1951 </b>की अवधि निरंतर जनसंख्या वृद्धि की विशेषता रखती थी।<b><br/> 3. The period 1981-2011 showed a growth but with signs of a slowdown. / 1981 </b>से <b>2011 </b>की अवधि में वृद्धि हुई<b>, </b>लेकिन मंदी के संकेत भी दिखाई दिए।<b><br/> Which of the statements given above are correct?<br/> </b>उपरोक्त दिए गए कथनों में से कौन से सही हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> India's demographic history is divided into different phases—<br/> 1. 1901–1921:<br/> This is called the \"period of stagnant population\"—<br/> During this period, both birth rates and death rates were high, leading to a near halt in population growth.<br/> 2. 1921–1951:<br/> This is called the \"period of sustained growth\"—<br/> Death rates began to decline, but birth rates remained high, leading to a steady increase in population.<br/> 3. 1981–2011:<br/> This was the period of \"deceleration in population growth\"—<br/> The population did increase, but the pace of growth began to slow due to a decline in the birth rate.<br/> Therefore, all three statements are correct.<br/> भारत के जनसांख्यिकीय इतिहास को विभिन्न चरणों में बाँटा गया है —<br/> 1️. 1901–1921:<br/> इसे \"स्थिर जनसंख्या की अवधि\" कहा जाता है —<br/> इस समय जन्म दर और मृत्यु दर दोनों उच्च थीं, जिससे जनसंख्या वृद्धि लगभग रुकी हुई थी।<br/> 2. 1921–1951:<br/> इस अवधि को \"निरंतर वृद्धि की अवधि\" कहा जाता है —<br/> मृत्यु दर घटने लगी लेकिन जन्म दर अभी भी उच्च रही, जिससे जनसंख्या लगातार बढ़ी।<br/> 3️. 1981–2011:<br/> यह \"जनसंख्या वृद्धि में मंदी\" की अवधि थी —<br/> जनसंख्या तो बढ़ी, परंतु जन्म दर में गिरावट के कारण वृद्धि की गति धीमी होने लगी।<br/> इसलिए तीनों कथन सही हैं।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which statement is correct regarding the key components of population change in any area?<br/> </b>किसी भी क्षेत्र में जनसंख्या परिवर्तन के प्रमुख घटकों के संबंध में कौन सा कथन सही है<b>?</b></p>",
+    "option1": "<p> Population change is determined only by Births and Deaths. / जनसंख्या परिवर्तन केवल जन्म और मृत्यु से निर्धारित होता है।</p>",
+    "option2": "<p> Migration always leads to an increase in a region's total population. / प्रवासन हमेशा किसी क्षेत्र की कुल जनसंख्या में वृद्धि करता है।</p>",
+    "option3": "<p> The three components of population change are Births, Deaths, and Migration. / जनसंख्या परिवर्तन के तीन घटक जन्म, मृत्यु और प्रवासन हैं।</p>",
+    "option4": "<p> A drop-in Death Rate, even with a constant Birth Rate, does not affect population size. / जन्म दर स्थिर रहने पर भी मृत्यु दर में गिरावट जनसंख्या के आकार को प्रभावित नहीं करती है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Population change is influenced by Births (Crude Birth Rate), Deaths (Crude Death Rate), and Migration (Immigration and Emigration). Changes in any of these three will cause a change in the total population.<br/> जनसंख्या परिवर्तन जन्म (अशोधित जन्म दर), मृत्यु (अशोधित मृत्यु दर), और प्रवासन (आप्रवासन और उत्प्रवासन) से प्रभावित होता है। इन तीनों में से किसी में भी परिवर्तन कुल जनसंख्या में परिवर्तन का कारण बनेगा।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): Developed countries like Italy and Japan often show an 'Inverted Triangular' Age-Sex Pyramid.<br/> Reason (R): These countries have a very low Birth Rate (narrow base) and a high proportion of the elderly (broad top), indicating a population in decline.<br/> </b>अभिकथन <b>(A): </b>इटली और जापान जैसे विकसित देशों में अक्सर ‘उल्टा त्रिकोणीय’ आयु<b>-</b>लिंग पिरामिड देखा जाता है।<b><br/> </b>कारण <b>(R): </b>इन देशों में जन्म दर बहुत कम होती है <b>(</b>संकीर्ण आधार<b>) </b>और वृद्ध जनसंख्या का अनुपात अधिक होता है <b>(</b>चौड़ा शीर्ष<b>), </b>जो घटती हुई जनसंख्या को दर्शाता है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The assertion is true, and the reason correctly explains the shape's demographic meaning. An inverted pyramid signifies that fewer people are being born to replace the older, dying population, leading to a shrinking total population.<br/> अभिकथन सत्य है, और कारण उस आकार के जनसांख्यिकीय अर्थ को सही रूप से समझाता है। एक उल्टा पिरामिड इस बात का संकेत देता है कि वृद्ध होती जनसंख्या को प्रतिस्थापित करने के लिए कम लोग जन्म ले रहे हैं, जिससे कुल जनसंख्या में कमी आती है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>If an area has a Crude Birth Rate (CBR) of 30 per 1,000 and a Crude Death Rate (CDR) of 15 per 1,000, what is the approximate 'Natural Rate of Increase' per year (ignoring migration)?<br/> </b>यदि किसी क्षेत्र में सकल जन्म दर <b>(CBR) 1,000 </b>पर <b>30 </b>है और सकल मृत्यु दर <b>(CDR) 1,000 </b>पर <b>15 </b>है<b>, </b>तो प्रवासन की अनदेखी करते हुए ‘प्राकृतिक वृद्धि दर’ लगभग क्या होगी<b>?</b></p>",
+    "option1": "<p> 0.5%</p>",
+    "option2": "<p> 1.5%</p>",
+    "option3": "<p> 3.0%</p>",
+    "option4": "<p> 4.5%</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Natural Rate of Increase is calculated as (CBR - CDR) / 10. In this case, (30 - 15) / 10 = 1.5%. This is the rate at which the population is growing naturally per year.<br/> प्राकृतिक वृद्धि दर की गणना (CBR - CDR) / 10 के रूप में की जाती है। इस मामले में, (30 - 15) / 10 = 1.5%। यह वह दर है जिस पर जनसंख्या प्रति वर्ष स्वाभाविक रूप से बढ़ रही है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following best explains the 'Slowing Down' trend of population growth observed in India after 1981?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा विकल्प <b>1981 </b>के बाद भारत में देखी गई जनसंख्या वृद्धि की ‘मंदी’ प्रवृत्ति को सबसे अच्छी तरह समझाता है<b>?</b></p>",
+    "option1": "<p> Significant increase in Death Rate due to new epidemics. / नई महामारियों के कारण मृत्यु दर में उल्लेखनीय वृद्धि।</p>",
+    "option2": "<p> A rise in international emigration from India. / भारत से अंतरराष्ट्रीय उत्प्रवासन में वृद्धि।</p>",
+    "option3": "<p> Improvements in Literacy and widespread adoption of family planning leading to a fall in the Birth Rate. / साक्षरता में सुधार और परिवार नियोजन को व्यापक रूप से अपनाने से जन्म दर में गिरावट।</p>",
+    "option4": "<p> Increased government expenditure on infrastructure projects. / बुनियादी ढांचा परियोजनाओं पर सरकारी व्यय में वृद्धि।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> After 1981, India experienced a slowdown in population growth.<br/> This was primarily due to<br/> 5. improvements in literacy and education levels,<br/> 6. the widespread implementation of family planning programs,<br/> 7. and increased awareness and workforce participation among women.<br/> These factors led to a steady decline in the birth rate, slowing population growth.<br/> 1981 के बाद भारत में जनसंख्या वृद्धि की दर में धीमी गति देखी गई।<br/> इसका प्रमुख कारण था —<br/> 8. साक्षरता और शिक्षा स्तर में सुधार,<br/> 9. परिवार नियोजन कार्यक्रमों का व्यापक प्रसार,<br/> 10. और महिलाओं में जागरूकता एवं कार्यबल में भागीदारी में वृद्धि।<br/> इन कारणों से जन्म दर में निरंतर गिरावट आई, जिससे जनसंख्या वृद्धि की गति धीमी हुई।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which Indian Five-Year Plan saw the implementation of the National Family Planning Program, a key measure for population control?<br/> </b>भारत की किस पंचवर्षीय योजना के दौरान जनसंख्या नियंत्रण के लिए एक प्रमुख कदम राष्ट्रीय परिवार नियोजन कार्यक्रम लागू किया गया था<b>?</b></p>",
+    "option1": "<p> Second Five-Year Plan (1956-1961) / दूसरी पंचवर्षीय योजना (1956-1961)</p>",
+    "option2": "<p> Third Five-Year Plan (1961-1966) / तीसरी पंचवर्षीय योजना (1961-1966)</p>",
+    "option3": "<p> Fourth Five-Year Plan (1969-1974) / चौथी पंचवर्षीय योजना (1969-1974)</p>",
+    "option4": "<p> Fifth Five-Year Plan (1974-1979) / पाँचवीं पंचवर्षीय योजना (1974-1979)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The National Family Planning Program was officially implemented during India's Fourth Five-Year Plan (1969-1974). This initiative was one of the earliest governmental efforts aimed at reducing the birth rate and managing population growth.<br/> राष्ट्रीय परिवार नियोजन कार्यक्रम को आधिकारिक तौर पर भारत की चौथी पंचवर्षीय योजना (1969-1974) के दौरान लागू किया गया था। यह पहल जन्म दर को कम करने और जनसंख्या वृद्धि को प्रबंधित करने के उद्देश्य से शुरुआती सरकारी प्रयासों में से एक थी।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>In the context of economic factors, why do people generally migrate to cities like Mumbai, Delhi, or Bengaluru?<br/> </b>आर्थिक कारकों के संदर्भ में लोग सामान्यतः मुंबई<b>, </b>दिल्ली या बेंगलुरु जैसे शहरों में क्यों प्रवास करते हैं<b>?</b></p>",
+    "option1": "<p> Pleasant Climate and Fertile Soil / सुखद जलवायु और उपजाऊ मिट्टी</p>",
+    "option2": "<p> Social and Cultural Attractions / सामाजिक और सांस्कृतिक आकर्षण</p>",
+    "option3": "<p> Urbanisation and Industrialisation / शहरीकरण और औद्योगीकरण</p>",
+    "option4": "<p> Security of Life and Property / जीवन और संपत्ति की सुरक्षा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> People typically migrate to cities like Mumbai, Delhi, or Bengaluru due to better employment opportunities, industrial growth, and urban amenities.<br/> In these cities—<br/> 5. Industrialization creates jobs in factories, IT companies, and the service sector.<br/> 6. Urbanization provides better education, health, transportation, and lifestyle facilities.<br/> Therefore, from an economic perspective, the main causes of migration are urbanization and industrialization.<br/> लोग आमतौर पर बेहतर रोजगार के अवसर, उद्योगों का विकास, और शहरी सुविधाओं के कारण मुंबई, दिल्ली या बेंगलुरु जैसे शहरों में प्रवास करते हैं।<br/> इन शहरों में —<br/> 7. औद्योगीकरण के कारण फैक्ट्रियों, आईटी कंपनियों और सेवा क्षेत्रों में नौकरियाँ मिलती हैं,<br/> 8. शहरीकरण से शिक्षा, स्वास्थ्य, परिवहन और जीवनशैली की बेहतर सुविधाएँ उपलब्ध होती हैं।<br/> इसलिए, आर्थिक दृष्टि से प्रवास का मुख्य कारण शहरीकरण और औद्योगीकरण है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>According to Thomas Malthus, what ultimate result would occur if population growth continued to outpace food production?<br/> </b>थॉमस माल्थस के अनुसार<b>, </b>यदि जनसंख्या वृद्धि खाद्य उत्पादन से अधिक तेजी से बढ़ती रही<b>, </b>तो अंतिम परिणाम क्या होगा<b>?</b></p>",
+    "option1": "<p> Demographic Dividend / जनसांख्यिकीय लाभांश</p>",
+    "option2": "<p> Population Stagnation / जनसंख्या स्थिरता</p>",
+    "option3": "<p> A population crash caused by famine, disease, and war / अकाल, रोग और युद्ध के कारण जनसंख्या का पतन</p>",
+    "option4": "<p> A stable rectangular Age-Sex Pyramid / स्थिर आयताकार आयु-लिंग पिरामिड</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> According to Thomas Malthus, if population growth continues to increase faster than food production, this imbalance will lead to disasters such as famine, disease, and war.<br/> These factors will cause a sudden decline in population. This theory is called the Malthusian Theory of Population.<br/> थॉमस माल्थस के अनुसार, यदि जनसंख्या वृद्धि खाद्य उत्पादन से अधिक तेज़ी से बढ़ती रही, तो यह असंतुलन अकाल, रोग और युद्ध जैसी आपदाओं को जन्म देगा।<br/> इन कारकों के कारण जनसंख्या में अचानक गिरावट आएगी। इस सिद्धांत को माल्थसियन थ्योरी ऑफ पॉपुलेशन (Malthusian Theory of Population) कहा जाता है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
