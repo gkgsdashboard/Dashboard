@@ -233,7 +233,7 @@
 
   <script>
     // --- Configuration ---
-    const CORRECT_PASSWORD = "123"; // <-- **CHANGE THIS TO YOUR DESIRED PASSWORD**
+    const CORRECT_PASSWORD = "143"; // <-- **CHANGE THIS TO YOUR DESIRED PASSWORD**
     const ACCESS_DURATION = 15 * 1000; // 15 seconds in milliseconds
 
     const overlay = document.getElementById('password-overlay');
@@ -316,7 +316,7 @@
           unlockBtn.textContent = 'Unlock Dashboard'; // Reset button text
           unlockBtn.disabled = false; // Re-enable button
           
-          errorMsg.textContent = '❌ Incorrect Password. Try again.';
+          errorMsg.textContent = '❌ Wrong Password or has changed Please Check telegram.';
           
           // 3. Error Auto-Clear: Hide error message after 4 seconds
           errorTimeout = setTimeout(() => {
@@ -334,4 +334,5 @@
     });
   </script>
 </body>
+
 </html>
