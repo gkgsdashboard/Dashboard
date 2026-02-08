@@ -8,10 +8,10 @@ const subjects = [
     "color": "purple",
     "notes": [
         { "name": "🌍 Geography", "link": "https://drive.google.com/file/d/1efaU406d55pWG-5naguYSR0UYS4pDKOQ/view?usp=drive_link" },
-        { "name": "📜 Polity", "link": "" },
-        { "name": "🏺 Ancient History", "link": "" },
-        { "name": "⚔️ Medieval History", "link": "" },
-        { "name": "🇮🇳 Modern History", "link": "" },
+        { "name": "📜 Polity", "link": "https://drive.google.com/file/d/1Go0FPD1sNmc55YoobthPtsXHUHAMLi1c/view?usp=drive_link" },
+        { "name": "🏺 Ancient History", "link": "https://drive.google.com/file/d/1y1dgfYrGfAqWdM9tTLJ1B8zKbox9J3JX/view?usp=drive_link" },
+        { "name": "⚔️ Medieval History", "link": "https://drive.google.com/file/d/1BMQ1OArwOdt3a9JXVpSd7mlz7TS33WD-/view?usp=drive_link" },
+        { "name": "🇮🇳 Modern History", "link": "https://drive.google.com/file/d/1YKp3q9AL5p02yFXVuUp1Fx0yLR5l6tkJ/view?usp=drive_link" },
         { "name": "💰 Economics", "link": "" },
         { "name": "🧲 Physics", "link": "" },
         { "name": "⚗️ Chemistry", "link": "" },
@@ -86,17 +86,18 @@ const subjects = [
         title: '🏺 Ancient History',
         color: 'indigo',
         notes: [
-            { name: '1. 🗿 Stone Age', link: 'YOUR_LINK_FOR_STONE_AGE' },
-            { name: '2. 🏛️ Indus Valley Civilization', link: 'YOUR_LINK_FOR_INDUS_VALLEY_CIVILIZATION' },
-            { name: '3. 📜 Vedic Age', link: 'YOUR_LINK_FOR_VEDIC_AGE' },
-            { name: '4. 🧘 Jainism and Buddhism', link: 'YOUR_LINK_FOR_JAINISM_AND_BUDDHISM' },
-            { name: '5. ⚔️ Mahajanpadas', link: 'YOUR_LINK_FOR_MAHAJANPADAS' },
-            { name: '6. 👑 Maurya Dynasty', link: 'YOUR_LINK_FOR_MAURYA_DYNASTY' },
-            { name: '7. 🛡️ Post-Maurya Dynasties', link: 'YOUR_LINK_FOR_POST_MAURYA_DYNASTIES' },
-            { name: '8. 🪙 Gupta Dynasty', link: 'YOUR_LINK_FOR_GUPTA_DYNASTY' },
-            { name: '9. 🏰 Post-Gupta Dynasties', link: 'YOUR_LINK_FOR_POST_GUPTA_DNYASTIES' },
-            { name: '10. ⛵ Sangam Age', link: 'YOUR_LINK_FOR_SANGAM_AGE' },
-            { name: '11. ⚔️ Tripartite Struggle and Cholas', link: 'YOUR_LINK_FOR_TRIPARTITE_STRUGGLE_AND_CHOLAS' }
+            { name: '1. 🗿 Stone Age', link: 'https://drive.google.com/file/d/1GGeIYuFXz1pzIjx8iY8ODec9JrLbDuQa/view?usp=drive_link' },
+            { name: '2. 🏛️ Indus Valley Civilization', link: 'https://drive.google.com/file/d/1ojwePbKa1ncZvkCS-8eh08cknrpNUp0v/view?usp=drive_link' },
+            { name: '3. 📜 Vedic Age', link: 'https://drive.google.com/file/d/1D_l3YcDz2dCuQspx8Jmb7oPk7FhFaUmT/view?usp=drive_link' },
+            { name: '4. 🧘 Jainism and Buddhism', link: 'https://drive.google.com/file/d/1XlqPJYSLFmWHKRvRpsTdEjptEjXZzEab/view?usp=drive_link' },
+            { name: '5. ⚔️ Mahajanpadas and Magadha', link: 'https://drive.google.com/file/d/1Cv9RGmIzLseM-zaN0X-8Na8xs1vpMYBd/view?usp=drive_link' },
+            { name: '6. 👑 Mauryan Empire', link: 'https://drive.google.com/file/d/1qr5Q09QZBqk0MzOwoSlgklAEr3m72Te8/view?usp=drive_link' },
+            { name: '7. 🛡️ Post-Mauryan Empire', link: 'https://drive.google.com/file/d/1QZvIUwtmmarO-Bova6JdINQxWfDdQscf/view?usp=drive_link' },
+            { name: '8. 🪙 Gupta Empire', link: 'https://drive.google.com/file/d/1P1WWyfy42pB3NyYlkiSzQ8R0jG_pwvFL/view?usp=drive_link' },
+            { name: '9. 🏰 Post-Gupta 1', link: 'https://drive.google.com/file/d/1sy5feK8uA41VfbbPPrZRzfs8m9n0oyd1/view?usp=drive_link' },
+            { name: '10. 🏰 Post-Gupta 2', link: 'hhttps://drive.google.com/file/d/1xnH-cHYrHSJcqTVl7I7knUSll0ARerMU/view?usp=drive_link' },
+            { name: '11. ⛵ Sangam Age', link: 'https://drive.google.com/file/d/1TY6lEp4jdE83vE69zdda722cjJPQl-wo/view?usp=drive_link' },
+            { name: '12. ⚔️ Tripartite Struggle and Cholas', link: 'https://drive.google.com/file/d/1a3tjvce_IB0CuuEVx6VwYnG9TvQxiGPb/view?usp=drive_link' }
         ]
     },
 
@@ -105,11 +106,14 @@ const subjects = [
         title: '⚔️ Medieval History',
         color: 'blue',
         notes: [
-            { name: '1. 🕌 Delhi Sultanate', link: 'YOUR_LINK_FOR_DELHI_SULTANATE' },
-            { name: '2. 💎 Vijayanagara and Bahmani Kingdom', link: 'YOUR_LINK_FOR_VIJAYANAGARA_AND_BAHMANI_KINGDOM' },
-            { name: '3. 🏰 Mughal Empire', link: 'YOUR_LINK_FOR_MUGHAL_EMPIRE' },
-            { name: '4. 🚩 Marathas', link: 'YOUR_LINK_FOR_MARATHAS' },
-            { name: '5. 🙏 Bhakti and Sufi Movements', link: 'YOUR_LINK_FOR_BHAKTI_AND_SUFI_MOVEMENTS' }
+            { name: '1. 🏰 Invasion of Islam ', link: 'https://drive.google.com/file/d/1dsMMA7hu5x0dJuywTlx_oDI82an7uxhh/view?usp=drive_link' },
+            { name: '2. 🕌 Delhi Sultanate 1', link: 'https://drive.google.com/file/d/18Pq2CU-sWRVTiV8IA3g43KvFMVLfwnF-/view?usp=drive_link' },
+            { name: '3. 🕌 Delhi Sultanate 2', link: 'https://drive.google.com/file/d/1Y_amDdUHAdQ_35a88wAe6K8F2DEo8Wbw/view?usp=drive_link' },
+            { name: '4. 💎 Vijayanagara and Bahmani Kingdom', link: 'https://drive.google.com/file/d/1OeDEfuGt1g7RkA-gb1THLxvq_opQXhxa/view?usp=drive_link' },
+            { name: '5. 🏰 Mughal Empire 1', link: 'https://drive.google.com/file/d/1PZl9C86_zSwsWOy9fa2FR_5QRQWxB8-Z/view?usp=drive_link' },
+            { name: '6. 🏰 Mughal Empire 2', link: 'https://drive.google.com/file/d/1eigkqZIULSDwDloZU_JPnjBnnq8ZgNph/view?usp=drive_link' },
+            { name: '7. 🚩 Marathas', link: 'https://drive.google.com/file/d/12VK_ikpig5rV4CucJQOCXX_3pJnrAD14/view?usp=drive_link' },
+            { name: '8. 🙏 Auranzeb and later mughals', link: 'https://drive.google.com/file/d/1GYnkmTNhKOpLLLLu1VQqCjcBhf9Bqo6f/view?usp=drive_link' }
         ]
     },
 
@@ -118,15 +122,15 @@ const subjects = [
         title: '🇮🇳 Modern History',
         color: 'green',
         notes: [
-            { name: '1. 🚢 Advent of Europeans', link: 'YOUR_LINK_FOR_ADVENT_OF_EUROPEANS' },
-            { name: '2. 💡 Socio-Religious Reforms', link: 'YOUR_LINK_FOR_SOCIO_RELIGIOUS_REFORMS' },
-            { name: '3. 💥 Revolt of 1857', link: 'YOUR_LINK_FOR_REVOLT_OF_1857' },
-            { name: '4. 🤝 Indian National Congress', link: 'YOUR_LINK_FOR_INDIAN_NATIONAL_CONGRESS' },
-            { name: '5. 💔 Bengal Partition', link: 'YOUR_LINK_FOR_BENGAL_PARTITION' },
-            { name: '6. 🕊️ Gandhian Era', link: 'YOUR_LINK_FOR_GANDHIAN_ERA' },
-            { name: '7. ✊ CDM and Simon Commission Resolution', link: 'YOUR_LINK_FOR_CDM_AND_SIMON_COMMISSION_RESOLUTION' },
-            { name: '8. 🇮🇳 Quit India Movement', link: 'YOUR_LINK_FOR_QUIT_INDIA_MOVEMENT' },
-            { name: '9. 🎩 Governor-General and Viceroy', link: 'YOUR_LINK_FOR_GOVERNOR_GENERAL_AND_VICEROY' }
+            { name: '1. 🚢 Advent of Europeans', link: 'https://drive.google.com/file/d/1UKIoS4pHRP138oofyQDdUMaTkSsXdi9L/view?usp=drive_link' },
+            { name: '2. 💡 Socio-Religious Reforms', link: 'https://drive.google.com/file/d/1vDQ2JKvYNA04b86myYePRjTQjlr9ZnYF/view?usp=drive_link' },
+            { name: '3. 💥 Revolt of 1857', link: 'https://drive.google.com/file/d/1dMDi10vT-NIRpz0sqpKN5zTeRuUO6IuE/view?usp=drive_link' },
+            { name: '4. 🤝 Indian National Congress', link: 'https://drive.google.com/file/d/10urtyZ6iKrAXyFX-Tc72kdh5NNlA8mcH/view?usp=drive_link' },
+            { name: '5. 💔 Bengal Partition', link: 'https://drive.google.com/file/d/1J5DcZc2knTRpu174SJQ1k1gBf4hpXqVs/view?usp=drive_link' },
+            { name: '6. 🕊️ Gandhian Era', link: 'https://drive.google.com/file/d/1jqYMP2ppi-4XzDhXW8--Pib1G1aUnssx/view?usp=drive_link' },
+            { name: '7. ✊ Bhagat Singh and revolutionary activities', link: 'https://drive.google.com/file/d/1_E4EI0JwqE0XyTB_zES7-TxF3CN9HDTY/view?usp=drive_link' },
+            { name: '8. 🇮🇳 Quit India Movement', link: 'https://drive.google.com/file/d/1hceq0Dm1_1RTE-rqoN-mS8MQt3DzrWEx/view?usp=drive_link' },
+            { name: '9. 🎩Civil Disobedience movement', link: 'https://drive.google.com/file/d/1HMisKoAHb8wAAgUwwX51w206D-T2mb75/view?usp=drive_link' }
         ]
     },
 
